@@ -38,7 +38,8 @@
                 android:text="Login as Guest"
                 android:background="@drawable/login_btn_guest"
                 android:textAllCaps="false"
-                android:textStyle="bold"/>
+                android:textColor="@color/white"
+                android:textSize="@dimen/txtBigButtn"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
                 android:gravity="center|center_horizontal"
                 android:background="@drawable/login_btn_google"
                 android:textAllCaps="false"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/txtBigButtn"/>
 
 
 
