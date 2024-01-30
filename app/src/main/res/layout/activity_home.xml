@@ -123,11 +123,12 @@
     <LinearLayout
         android:id="@+id/bottonBg"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@drawable/bottombg">
 
         <RelativeLayout
             android:layout_width="0dp"
