@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<style name="Base.Theme.PannyPal" parent="Theme.AppCompat.NoActionBar">
+        &lt;!&ndash; Customize your light theme here. &ndash;&gt;
+        &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;
+        &lt;!&ndash;<item name= "android:fontFamily" > @font/heebo_medium </item>&ndash;&gt;
+    </style>-->
+</resources>
