@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="txtBigButtn">15sp</dimen>
-    <dimen name="txtBigL1">30sp</dimen>
-    <dimen name="txtBigL2">25sp</dimen>
+    <dimen name="txtL1">30sp</dimen>
+    <dimen name="txtL2">23sp</dimen>
+    <dimen name="txtS1">20sp</dimen>
+    <dimen name="txtS2">15sp</dimen>
+    <dimen name="txtS3">12sp</dimen>
 </resources>

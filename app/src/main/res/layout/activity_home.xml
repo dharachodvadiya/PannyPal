@@ -15,7 +15,7 @@
     <RelativeLayout
         android:id="@+id/topBg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:gravity="center"
         android:padding="10dp">
 
@@ -37,6 +37,7 @@
             </RelativeLayout>
 
             <ImageButton
+                android:id="@+id/imgbtnSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_search"
@@ -84,16 +85,17 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColorLight"
                         android:text="Balance"
-                        android:textSize="@dimen/txtBigL2"
+                        android:textSize="@dimen/txtL2"
                         android:textAlignment="center"
-                        android:textStyle="b"/>
+                        android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/txtTotalBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColorDark"
                         android:text="000000"
-                        android:textSize="@dimen/txtBigL1"
+                        android:textSize="@dimen/txtL1"
                         android:textAlignment="center"/>
 
                 </LinearLayout>
@@ -104,6 +106,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleviewData"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/totalBg"
@@ -133,6 +136,7 @@
             android:gravity="center">
 
             <ImageButton
+                android:id="@+id/imgbtnContact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_contact"
@@ -148,6 +152,7 @@
             android:gravity="center">
 
             <ImageButton
+                android:id="@+id/imgbtnHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_home"
@@ -163,6 +168,7 @@
             android:gravity="center">
 
             <ImageButton
+                android:id="@+id/imgbtnCalculator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_calculator"
