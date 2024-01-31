@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/layoutCredit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/contact_selected_data_credit_bg"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS1"
+                android:text="Amount"
+                android:textColor="@color/textColorDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS2"
+                android:text="Payment type"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/textColorDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS3"
+                android:text="description"
+                android:textColor="@color/textColorDark"
+                android:layout_marginTop="10dp"
+                android:alpha="0.5"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM"
+            android:textColor="@color/textColorDark"
+            android:alpha="0.5"
+            android:textSize="@dimen/txtS3"
+            android:layout_marginTop="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutDebit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/contact_selected_data_debit_bg"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS1"
+                android:text="Amount"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS2"
+                android:text="Payment type"
+                android:layout_marginTop="5dp"
+                android:textAlignment="textEnd"
+                android:textColor="@color/textColorDark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS3"
+                android:text="description"
+                android:textColor="@color/textColorDark"
+                android:layout_marginTop="10dp"
+                android:textAlignment="textEnd"
+                android:alpha="0.5"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00 AM"
+            android:textColor="@color/textColorDark"
+            android:alpha="0.5"
+            android:textSize="@dimen/txtS3"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -10,4 +10,5 @@
     <color name="debitLight">#FDECEC</color>
     <color name="textColorLight">#545A66</color>
     <color name="textColorDark">#FF000000</color>
+    <color name="contactDataBg">#F7F7F7</color>
 </resources>

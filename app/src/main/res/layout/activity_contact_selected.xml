@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactSelectedActivity">
+
+    <RelativeLayout
+        android:id="@+id/topBg"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/contact_selected_topbg">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:background="@color/trasnperent"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/contact_avatar"
+            android:layout_toRightOf="@id/btnBack"
+            android:layout_marginLeft="20dp"
+            android:layout_cernterVertical="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txtS1"
+            android:text="Name"
+            android:layout_toRightOf="@id/img"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/textColorDark"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/topBg"
+        android:padding="10dp"/>
+
+</RelativeLayout>

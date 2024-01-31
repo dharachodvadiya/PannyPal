@@ -57,12 +57,12 @@
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_below="@+id/topBg"
-        android:background="@drawable/totalbg_gradient_home_credit">
+        android:background="@drawable/home_totalbg_gradient_credit">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/totalbg_home_credit"
+            android:background="@drawable/home_totalbg_credit"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp">
@@ -70,7 +70,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/totalbg_home"
+                android:background="@drawable/home_totalbg"
                 android:layout_marginTop="3dp"
                 android:gravity="center">
 
@@ -116,7 +116,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_newentry1"
+        android:background="@drawable/home_btn_newentry"
         android:layout_above="@+id/bottonBg"
         android:layout_alignParentRight="true"/>
     
