@@ -31,7 +31,7 @@
                     android:layout_height="match_parent"
                     android:hint="Search contact"
                     android:textSize="@dimen/txtS2"
-                    android:background="null"
+                    android:background="@color/trasnperent"
                     android:layout_marginLeft="10dp"></EditText>
 
                 <ImageView
