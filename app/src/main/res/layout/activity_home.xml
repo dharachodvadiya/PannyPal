@@ -24,17 +24,14 @@
             android:layout_height="wrap_content"
             >
 
-            <RelativeLayout
+            <ImageButton
+                android:id="@+id/imgbtnProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/profile_bg"
+                android:src="@drawable/profile_bg"
+                android:background="@color/trasnperent"
                 android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/profile_default"/>
-            </RelativeLayout>
+           </ImageButton>
 
             <ImageButton
                 android:id="@+id/imgbtnSearch"
