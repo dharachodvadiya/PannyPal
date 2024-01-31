@@ -111,6 +111,7 @@
         android:paddingTop="15dp"/>
 
     <Button
+        android:id="@+id/btnNewEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/home_btn_newentry"
