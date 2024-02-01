@@ -14,24 +14,31 @@
         tools:targetApi="31">
         <activity
             android:name=".ContactEntryActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".CalculatorActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".ContactSelectedActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".ContactActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:noHistory="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

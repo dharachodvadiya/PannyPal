@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnGuestLogin, btnGoogleLogin;
     @Override
@@ -18,19 +18,21 @@ public class MainActivity extends AppCompatActivity {
         btnGuestLogin = findViewById(R.id.btn_login_guest);
         btnGoogleLogin = findViewById(R.id.btn_login_google);
 
-        btnGuestLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnGuestLogin.setOnClickListener(this);
+        btnGoogleLogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.btn_login_guest:
                 Intent i = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(i);
-            }
-        });
+                break;
+            case R.id.btn_login_google:
+                break;
 
-        btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        }
     }
 }

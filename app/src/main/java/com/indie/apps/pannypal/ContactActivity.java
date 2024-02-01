@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageButton imgbtnContact, imgbtnHome, imgbtnCalculator;
     @Override
@@ -23,20 +23,31 @@ public class ContactActivity extends AppCompatActivity {
         imgbtnContact.setSelected(true);
         imgbtnCalculator.setSelected(false);
 
+        imgbtnHome.setOnClickListener(this);
+        imgbtnContact.setOnClickListener(this);
+        imgbtnCalculator.setOnClickListener(this);
 
-        imgbtnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.imgbtnContact:
+                break;
+            case R.id.imgbtnHome:
                 Intent i = new Intent(ContactActivity.this, HomeActivity.class);
                 startActivity(i);
-            }
-        });
-        imgbtnCalculator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(ContactActivity.this, CalculatorActivity.class);
-                startActivity(i);
-            }
-        });
+                overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_out_left);
+                break;
+            case R.id.imgbtnCalculator:
+                Intent i1 = new Intent(ContactActivity.this, CalculatorActivity.class);
+                startActivity(i1);
+                overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_out_left);
+                break;
+
+        }
     }
 }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class HomeActivity extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener
 {
 
     ImageButton imgbtnContact, imgbtnHome, imgbtnCalculator;
@@ -31,38 +31,40 @@ public class HomeActivity extends AppCompatActivity
         imgbtnProfile = findViewById(R.id.imgbtnProfile);
         btnNewEntry = findViewById(R.id.btnNewEntry);
 
-
-        imgbtnContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, ContactActivity.class);
-                startActivity(i);
-            }
-        });
-        imgbtnCalculator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, CalculatorActivity.class);
-                startActivity(i);
-            }
-        });
-
-        imgbtnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
-                startActivity(i);
-            }
-        });
-
-        btnNewEntry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, ContactEntryActivity.class);
-                startActivity(i);
-            }
-        });
+        imgbtnContact.setOnClickListener(this);
+        imgbtnHome.setOnClickListener(this);
+        imgbtnCalculator.setOnClickListener(this);
+        imgbtnProfile.setOnClickListener(this);
+        btnNewEntry.setOnClickListener(this);
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.imgbtnContact:
+                Intent i = new Intent(HomeActivity.this, ContactActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_in_left,
+                        R.anim.slide_out_right);
+                break;
+            case R.id.imgbtnHome:
+                break;
+            case R.id.imgbtnCalculator:
+                Intent i1 = new Intent(HomeActivity.this, CalculatorActivity.class);
+                startActivity(i1);
+                overridePendingTransition(R.anim.slide_in_right,
+                        R.anim.slide_out_left);
+                break;
+            case R.id.imgbtnProfile:
+                Intent i2 = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(i2);
+                break;
+            case R.id.btnNewEntry:
+                Intent i3 = new Intent(HomeActivity.this, ContactEntryActivity.class);
+                startActivity(i3);
+                break;
+        }
+    }
 }
