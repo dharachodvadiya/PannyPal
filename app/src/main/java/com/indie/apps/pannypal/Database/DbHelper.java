@@ -82,10 +82,12 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TABLE_PAYMENTTYPE);
         sqLiteDatabase.execSQL(CREATE_TABLE_CONTACTS);
         sqLiteDatabase.execSQL(CREATE_TABLE_CONTACT_DATA);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 }

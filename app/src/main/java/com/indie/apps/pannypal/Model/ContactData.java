@@ -10,6 +10,17 @@ public class ContactData {
     private String date;
     private String time;
 
+    public ContactData(String id, String c_id, String p_id, String type, String amount, String remark, String date, String time) {
+        this.id = id;
+        this.c_id = c_id;
+        this.p_id = p_id;
+        this.type = type;
+        this.amount = amount;
+        this.remark = remark;
+        this.date = date;
+        this.time = time;
+    }
+
     public ContactData(String c_id, String p_id, String type, String amount, String remark, String date, String time) {
         this.c_id = c_id;
         this.p_id = p_id;

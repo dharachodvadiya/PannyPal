@@ -5,6 +5,11 @@ public class PaymentType {
     private String id;
     private String type;
 
+    public PaymentType(String id, String type) {
+        this.id = id;
+        this.type = type;
+    }
+
     public PaymentType(String type) {
         this.type = type;
     }

@@ -14,6 +14,20 @@ public class Contacts {
     private String date;
     private String time;
 
+    public Contacts(String id, String name, String phno, String isLimit, String limitAmt, String profileURL, String creditAmt, String debitAmt, String totalAmt, String date, String time) {
+        this.id = id;
+        this.name = name;
+        this.phno = phno;
+        this.isLimit = isLimit;
+        this.limitAmt = limitAmt;
+        this.profileURL = profileURL;
+        this.creditAmt = creditAmt;
+        this.debitAmt = debitAmt;
+        this.totalAmt = totalAmt;
+        this.date = date;
+        this.time = time;
+    }
+
     public Contacts(String name, String phno, String isLimit, String limitAmt, String profileURL, String creditAmt, String debitAmt, String totalAmt, String date, String time) {
         this.name = name;
         this.phno = phno;
