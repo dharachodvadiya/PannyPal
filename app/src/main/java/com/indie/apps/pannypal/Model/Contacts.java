@@ -1,5 +1,7 @@
 package com.indie.apps.pannypal.Model;
 
+import android.renderscript.Double4;
+
 public class Contacts {
 
     private String id;
@@ -91,27 +93,27 @@ public class Contacts {
         this.profileURL = profileURL;
     }
 
-    public long getCreditAmt() {
-        return Long.parseLong(creditAmt);
+    public Double getCreditAmt() {
+        return Double.parseDouble(creditAmt);
     }
 
-    public void setCreditAmt(long creditAmt) {
+    public void setCreditAmt(Double creditAmt) {
         this.creditAmt = String.valueOf(creditAmt);
     }
 
-    public long getDebitAmt() {
-        return Long.parseLong(debitAmt);
+    public Double getDebitAmt() {
+        return Double.parseDouble(debitAmt);
     }
 
-    public void setDebitAmt(long debitAmt) {
+    public void setDebitAmt(Double debitAmt) {
         this.debitAmt = String.valueOf(debitAmt);
     }
 
-    public long getTotalAmt() {
-        return Long.parseLong(totalAmt);
+    public Double getTotalAmt() {
+        return Double.parseDouble(totalAmt);
     }
 
-    public void setTotalAmt(long totalAmt) {
+    public void setTotalAmt(Double totalAmt) {
         this.totalAmt = String.valueOf(totalAmt);
     }
 

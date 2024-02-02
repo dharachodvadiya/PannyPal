@@ -12,6 +12,7 @@ import android.util.Log;
 import com.indie.apps.pannypal.Model.ContactData;
 import com.indie.apps.pannypal.Model.Contacts;
 import com.indie.apps.pannypal.Model.PaymentType;
+import com.indie.apps.pannypal.Model.UserProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,73 @@ public class DbManager {
 
     public void close() {
         dbHelper.close();
+    }
+
+    public long add_UserProfile(UserProfile data) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(DbHelper.U_NAME,data.getName());
+        contentValue.put(DbHelper.U_EMAIL,data.getEmail());
+        contentValue.put(DbHelper.U_PROFILE_URL,data.getProfileURL());
+        contentValue.put(DbHelper.U_CREDIT,data.getCreditAmt());
+        contentValue.put(DbHelper.U_DEBIT,data.getDebitAmt());
+        contentValue.put(DbHelper.U_TOTAL,data.getTotalAmt());
+
+        long id = database.insert(DbHelper.TBL_USERPROFILE, null, contentValue);
+
+        Log.d("DbManager" , "Add UserProfile");
+
+        return  id;
+    }
+
+    public long edit_UserProfile(UserProfile data) {
+        ContentValues contentValue = new ContentValues();
+        contentValue.put(DbHelper.U_NAME,data.getName());
+        contentValue.put(DbHelper.U_EMAIL,data.getEmail());
+        contentValue.put(DbHelper.U_PROFILE_URL,data.getProfileURL());
+        contentValue.put(DbHelper.U_CREDIT,data.getCreditAmt());
+        contentValue.put(DbHelper.U_DEBIT,data.getDebitAmt());
+        contentValue.put(DbHelper.U_TOTAL,data.getTotalAmt());
+
+        long id = database.update(DbHelper.TBL_USERPROFILE, contentValue,DbHelper.ID + " = " + data.getId(),null);
+
+        Log.d("DbManager" , "Edit UserProfile");
+
+        return  id;
+    }
+
+    @SuppressLint("Range")
+    public UserProfile get_UserProfile() {
+        String[] columns = new String[] { DbHelper.ID,
+                DbHelper.U_NAME,
+                DbHelper.U_EMAIL,
+                DbHelper.U_PROFILE_URL,
+                DbHelper.U_CREDIT,
+                DbHelper.U_DEBIT,
+                DbHelper.U_TOTAL
+        };
+        UserProfile info = null;
+        try {
+            @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, null, null, null, null, null);
+
+            if (cursor != null && cursor.getCount() >0) {
+                cursor.moveToFirst();
+                info = new UserProfile(cursor.getString(cursor.getColumnIndex(DbHelper.ID)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.U_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.U_EMAIL)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.U_PROFILE_URL)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.U_CREDIT)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.U_DEBIT)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.U_TOTAL))
+                );
+
+                Log.d("dbManager" , "UserProfile  get ");
+            }
+        }catch (Exception e)
+        {
+
+        }finally {
+            return info;
+        }
     }
 
     public long add_PaymentType(PaymentType data) {
@@ -154,6 +222,7 @@ public class DbManager {
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_CREDITAMT)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_DEBITAMT)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_TOTALAMT)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.C_DATE)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_TIME))
                         );
 

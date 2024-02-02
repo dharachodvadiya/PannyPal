@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FEFEFE"
     tools:context=".ProfileActivity">
 
     <LinearLayout
+        android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
@@ -29,6 +31,7 @@
                 android:background="@color/trasnperent"/>
 
             <TextView
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
@@ -107,6 +110,7 @@
                     android:textColor="@color/textColorDark"
                     android:alpha="0.5"/>
                 <TextView
+                    android:id="@+id/txtTotalCredit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/txtS1"
@@ -143,6 +147,7 @@
                     android:textColor="@color/textColorDark"
                     android:alpha="0.5"/>
                 <TextView
+                    android:id="@+id/txtTotalDebit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/txtS1"

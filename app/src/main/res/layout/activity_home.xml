@@ -57,6 +57,7 @@
         android:background="@drawable/home_totalbg_gradient_credit">
 
         <RelativeLayout
+            android:id="@+id/totalBgLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/home_totalbg_credit"

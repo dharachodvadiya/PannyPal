@@ -7,14 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.indie.apps.pannypal.Database.DbManager;
+import com.indie.apps.pannypal.Model.UserProfile;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button btnGuestLogin, btnGoogleLogin;
+    DbManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dbManager= new DbManager(MainActivity.this);
+        dbManager.open();
+        init();
 
+
+    }
+
+    void init()
+    {
         btnGuestLogin = findViewById(R.id.btn_login_guest);
         btnGoogleLogin = findViewById(R.id.btn_login_google);
 
@@ -27,6 +39,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId())
         {
             case R.id.btn_login_guest:
+
+
+                Globle.MyProfile = dbManager.get_UserProfile();
+
+                if(Globle.MyProfile == null)
+                {
+                    Globle.MyProfile = new UserProfile("guest", null, null,0.0,0.0,0.0);
+                    dbManager.add_UserProfile(Globle.MyProfile);
+                }
+
+                dbManager.close();
                 Intent i = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(i);
                 break;

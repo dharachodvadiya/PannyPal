@@ -63,11 +63,11 @@ public class ContactData {
         this.type = type;
     }
 
-    public long getAmount() {
-        return Long.parseLong(amount);
+    public Double getAmount() {
+        return Double.parseDouble(amount);
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(Double amount) {
         this.amount = String.valueOf(amount);
     }
 

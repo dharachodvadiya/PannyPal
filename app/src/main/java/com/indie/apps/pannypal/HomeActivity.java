@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener
 {
 
+    RelativeLayout layoutTotalBg, layoutTotalBgLine;
+
+    TextView txtTotalBalance;
     ImageButton imgbtnContact, imgbtnHome, imgbtnCalculator;
     ImageButton imgbtnProfile;
 
@@ -19,6 +24,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        init();
+
+        txtTotalBalance.setText(Globle.getFormattedValue(Globle.MyProfile.getTotalAmt()));
+        if(Globle.MyProfile.getTotalAmt() >=0)
+        {
+            layoutTotalBg.setBackgroundResource(R.drawable.home_totalbg_gradient_credit);
+            layoutTotalBgLine.setBackgroundResource(R.drawable.home_totalbg_credit);
+        }else {
+            layoutTotalBg.setBackgroundResource(R.drawable.home_totalbg_gradient_debit);
+            layoutTotalBgLine.setBackgroundResource(R.drawable.home_totalbg_debit);
+        }
+    }
+
+    void init()
+    {
+        txtTotalBalance = findViewById(R.id.txtTotalBalance);
+        layoutTotalBg = findViewById(R.id.totalBg);
+        layoutTotalBgLine = findViewById(R.id.totalBgLine);
 
         imgbtnContact = findViewById(R.id.imgbtnContact);
         imgbtnHome = findViewById(R.id.imgbtnHome);
@@ -36,7 +59,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         imgbtnCalculator.setOnClickListener(this);
         imgbtnProfile.setOnClickListener(this);
         btnNewEntry.setOnClickListener(this);
-
     }
 
     @Override

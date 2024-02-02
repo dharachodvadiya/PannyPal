@@ -3,11 +3,14 @@ package com.indie.apps.pannypal.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Debug;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
 
+    public static final String TBL_USERPROFILE = "Profile";
     public static final String TBL_PAYMENTTYPE = "PaymentType";
     public static final String TBL_CONTACTS = "Contacts";
     public static final String TBL_CONTACTDATA = "ContactData";
@@ -15,6 +18,15 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "dbpannypal.DB";
 
     public static final String ID = "id";
+
+    //User_profile table
+    public static final String U_NAME = "u_name";
+    public static final String U_EMAIL = "u_email";
+    public static final String U_PROFILE_URL = "u_url";
+    public static final String U_CREDIT = "u_credit";
+    public static final String U_DEBIT = "u_debit";
+    public static final String U_TOTAL = "u_total";
+
 
     //Payment_type table
     public static final String P_TYPE = "p_type";
@@ -40,6 +52,16 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String CD_REMARK = "cd_remark";
     public static final String CD_DATE = "cd_date";
     public static final String CD_TIME = "cd_time";
+
+    private static final String CREATE_TABLE_USERPROFILE = "create table " + TBL_USERPROFILE + "(" + ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            U_NAME + " TEXT , " +
+            U_EMAIL + " TEXT , " +
+            U_PROFILE_URL + " TEXT , " +
+            U_CREDIT + " TEXT , " +
+            U_DEBIT + " TEXT , " +
+            U_TOTAL + " TEXT " +
+            ");";
 
     private static final String CREATE_TABLE_PAYMENTTYPE = "create table " + TBL_PAYMENTTYPE + "(" + ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -82,6 +104,9 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TABLE_PAYMENTTYPE);
         sqLiteDatabase.execSQL(CREATE_TABLE_CONTACTS);
         sqLiteDatabase.execSQL(CREATE_TABLE_CONTACT_DATA);
+        sqLiteDatabase.execSQL(CREATE_TABLE_USERPROFILE);
+
+        Log.d("aaaaa", "create table");
 
     }
 
