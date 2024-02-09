@@ -4,19 +4,18 @@ import android.renderscript.Double4;
 
 public class Contacts {
 
-    private String id;
+    private long id;
     private String name;
     private String phno;
-    private String isLimit;
-    private String limitAmt;
+    private int isLimit; // 0= false, 1= true
+    private Double limitAmt;
     private String profileURL;
-    private String creditAmt;
-    private String debitAmt;
-    private String totalAmt;
-    private String date;
-    private String time;
+    private Double creditAmt;
+    private Double debitAmt;
+    private Double totalAmt;
+    private long dateTime;
 
-    public Contacts(String id, String name, String phno, String isLimit, String limitAmt, String profileURL, String creditAmt, String debitAmt, String totalAmt, String date, String time) {
+    public Contacts(long id, String name, String phno, int isLimit, Double limitAmt, String profileURL, Double creditAmt, Double debitAmt, Double totalAmt, long dateTime) {
         this.id = id;
         this.name = name;
         this.phno = phno;
@@ -26,11 +25,10 @@ public class Contacts {
         this.creditAmt = creditAmt;
         this.debitAmt = debitAmt;
         this.totalAmt = totalAmt;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
-    public Contacts(String name, String phno, String isLimit, String limitAmt, String profileURL, String creditAmt, String debitAmt, String totalAmt, String date, String time) {
+    public Contacts(String name, String phno, int isLimit, Double limitAmt, String profileURL, Double creditAmt, Double debitAmt, Double totalAmt, long dateTime) {
         this.name = name;
         this.phno = phno;
         this.isLimit = isLimit;
@@ -39,15 +37,14 @@ public class Contacts {
         this.creditAmt = creditAmt;
         this.debitAmt = debitAmt;
         this.totalAmt = totalAmt;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -67,21 +64,21 @@ public class Contacts {
         this.phno = phno;
     }
 
-    public Boolean getIsLimit() {
-        return (this.isLimit == "1");
+    public int getIsLimit() {
+        return (this.isLimit);
     }
 
-    public void setIsLimit(boolean isLimit) {
+    public void setIsLimit(int isLimit) {
 
-        if(isLimit) this.isLimit="1"; else this.isLimit="0";
+        this.isLimit= isLimit;
 
     }
 
-    public String getLimitAmt() {
+    public Double getLimitAmt() {
         return limitAmt;
     }
 
-    public void setLimitAmt(String limitAmt) {
+    public void setLimitAmt(Double limitAmt) {
         this.limitAmt = limitAmt;
     }
 
@@ -94,42 +91,34 @@ public class Contacts {
     }
 
     public Double getCreditAmt() {
-        return Double.parseDouble(creditAmt);
+        return creditAmt;
     }
 
     public void setCreditAmt(Double creditAmt) {
-        this.creditAmt = String.valueOf(creditAmt);
+        this.creditAmt = creditAmt;
     }
 
     public Double getDebitAmt() {
-        return Double.parseDouble(debitAmt);
+        return debitAmt;
     }
 
     public void setDebitAmt(Double debitAmt) {
-        this.debitAmt = String.valueOf(debitAmt);
+        this.debitAmt = debitAmt;
     }
 
     public Double getTotalAmt() {
-        return Double.parseDouble(totalAmt);
+        return totalAmt;
     }
 
     public void setTotalAmt(Double totalAmt) {
-        this.totalAmt = String.valueOf(totalAmt);
+        this.totalAmt = totalAmt;
     }
 
-    public String getDate() {
-        return date;
+    public long getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateTime(long dateTime) {
+        this.dateTime = dateTime;
     }
 }

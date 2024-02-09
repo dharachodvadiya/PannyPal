@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.indie.apps.pannypal.Database.DbHelper;
 import com.indie.apps.pannypal.Database.DbManager;
+import com.indie.apps.pannypal.Model.Contacts;
 import com.indie.apps.pannypal.Model.UserProfile;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -20,7 +22,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         dbManager= new DbManager(MainActivity.this);
         dbManager.open();
-        init();
+
+        /*dbManager.add_Contacts(new Contacts("aaa", "",0,0.0,"",0.0,0.0,0.0,0));
+        dbManager.add_Contacts(new Contacts("bbb", "",0,0.0,"",0.0,0.0,0.0,0));
+        dbManager.add_Contacts(new Contacts("bb", "",0,0.0,"",0.0,0.0,0.0,0));
+        dbManager.add_Contacts(new Contacts("ccc", "",0,0.0,"",0.0,0.0,0.0,0));
+        */init();
 
 
     }
@@ -41,7 +48,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_login_guest:
 
 
-                Globle.MyProfile = dbManager.get_UserProfile();
+                Globle.MyProfile = null;
+
+                if(dbManager.isTableExists(DbHelper.TBL_USERPROFILE))
+                {
+                    Globle.MyProfile = dbManager.get_UserProfile();
+                }
 
                 if(Globle.MyProfile == null)
                 {

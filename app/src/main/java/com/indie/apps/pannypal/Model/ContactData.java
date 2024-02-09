@@ -1,75 +1,73 @@
 package com.indie.apps.pannypal.Model;
 
 public class ContactData {
-    private String id;
-    private String c_id;
-    private String p_id;
-    private String type; //[c/d]
-    private String amount;
+    private long id;
+    private long c_id;
+    private long p_id;
+    private int type; // credit = 1 debit = -1
+    private Double amount;
     private String remark;
-    private String date;
-    private String time;
+    private long dateTime;
 
-    public ContactData(String id, String c_id, String p_id, String type, String amount, String remark, String date, String time) {
+    public ContactData(long id, long c_id, long p_id, int type, Double amount, String remark, long dateTime) {
         this.id = id;
         this.c_id = c_id;
         this.p_id = p_id;
         this.type = type;
         this.amount = amount;
         this.remark = remark;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
-    public ContactData(String c_id, String p_id, String type, String amount, String remark, String date, String time) {
+    public ContactData(long c_id, long p_id, int type, Double amount, String remark, long dateTime) {
         this.c_id = c_id;
         this.p_id = p_id;
         this.type = type;
         this.amount = amount;
         this.remark = remark;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getC_id() {
+    public long getC_id() {
         return c_id;
     }
 
-    public void setC_id(String c_id) {
+    public void setC_id(long c_id) {
         this.c_id = c_id;
     }
 
-    public String getP_id() {
+    public long getP_id() {
         return p_id;
     }
 
-    public void setP_id(String p_id) {
+    public void setP_id(long p_id) {
         this.p_id = p_id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Double getAmount() {
-        return Double.parseDouble(amount);
+        return amount;
     }
 
     public void setAmount(Double amount) {
-        this.amount = String.valueOf(amount);
+        this.amount = amount;
     }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
 
     public String getRemark() {
         return remark;
@@ -79,19 +77,11 @@ public class ContactData {
         this.remark = remark;
     }
 
-    public String getDate() {
-        return date;
+    public long getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateTime(long dateTime) {
+        this.dateTime = dateTime;
     }
 }

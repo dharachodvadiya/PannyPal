@@ -43,6 +43,20 @@ public class DbManager {
         dbHelper.close();
     }
 
+    public boolean isTableExists(String tableName) {
+
+
+        Cursor cursor = database.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '"+tableName+"'", null);
+        if(cursor!=null) {
+            if(cursor.getCount()>0) {
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+        }
+        return false;
+    }
+
     public long add_UserProfile(UserProfile data) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DbHelper.U_NAME,data.getName());
@@ -91,13 +105,13 @@ public class DbManager {
 
             if (cursor != null && cursor.getCount() >0) {
                 cursor.moveToFirst();
-                info = new UserProfile(cursor.getString(cursor.getColumnIndex(DbHelper.ID)),
+                info = new UserProfile(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.U_NAME)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.U_EMAIL)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.U_PROFILE_URL)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.U_CREDIT)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.U_DEBIT)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.U_TOTAL))
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.U_CREDIT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.U_DEBIT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.U_TOTAL))
                 );
 
                 Log.d("dbManager" , "UserProfile  get ");
@@ -106,6 +120,7 @@ public class DbManager {
         {
 
         }finally {
+
             return info;
         }
     }
@@ -141,7 +156,7 @@ public class DbManager {
             cursor.moveToFirst();
 
             do{
-                @SuppressLint("Range") PaymentType info = new PaymentType(cursor.getString(cursor.getColumnIndex(DbHelper.ID)),
+                @SuppressLint("Range") PaymentType info = new PaymentType(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.P_TYPE)));
 
                 dataList.add(info);
@@ -163,8 +178,7 @@ public class DbManager {
         contentValue.put(DbHelper.C_CREDITAMT,data.getCreditAmt());
         contentValue.put(DbHelper.C_DEBITAMT,data.getDebitAmt());
         contentValue.put(DbHelper.C_TOTALAMT,data.getTotalAmt());
-        contentValue.put(DbHelper.C_DATE,data.getDate());
-        contentValue.put(DbHelper.C_TIME,data.getTime());
+        contentValue.put(DbHelper.C_DATE,data.getDateTime());
 
         long id = database.insert(DbHelper.TBL_CONTACTS, null, contentValue);
 
@@ -183,8 +197,7 @@ public class DbManager {
         contentValue.put(DbHelper.C_CREDITAMT,data.getCreditAmt());
         contentValue.put(DbHelper.C_DEBITAMT,data.getDebitAmt());
         contentValue.put(DbHelper.C_TOTALAMT,data.getTotalAmt());
-        contentValue.put(DbHelper.C_DATE,data.getDate());
-        contentValue.put(DbHelper.C_TIME,data.getTime());
+        contentValue.put(DbHelper.C_DATE,data.getDateTime());
 
         long id = database.update(DbHelper.TBL_CONTACTS, contentValue,DbHelper.ID + " = " + data.getId(),null);
 
@@ -203,8 +216,7 @@ public class DbManager {
                 DbHelper.C_CREDITAMT,
                 DbHelper.C_DEBITAMT,
                 DbHelper.C_TOTALAMT,
-                DbHelper.C_DATE,
-                DbHelper.C_TIME
+                DbHelper.C_DATE
         };
 
         @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, null, null, null, null, null);
@@ -213,17 +225,16 @@ public class DbManager {
             cursor.moveToFirst();
 
             do{
-                @SuppressLint("Range") Contacts info = new Contacts(cursor.getString(cursor.getColumnIndex(DbHelper.ID)),
+                @SuppressLint("Range") Contacts info = new Contacts(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_NAME)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_PHNO)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_ISLIMIT)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_LIMITAMT)),
+                        cursor.getInt(cursor.getColumnIndex(DbHelper.C_ISLIMIT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_LIMITAMT)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_PROFILEURL)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_CREDITAMT)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_DEBITAMT)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_TOTALAMT)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_DATE)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.C_TIME))
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_CREDITAMT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_DEBITAMT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_TOTALAMT)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.C_DATE))
                         );
 
                 dataList.add(info);
@@ -235,6 +246,21 @@ public class DbManager {
         return dataList;
     }
 
+    public Cursor get_Contacts_suggestion(String name) {
+        String[] columns = new String[] { DbHelper.ID,
+                DbHelper.C_NAME
+        };
+
+        String query ="select " + DbHelper.ID + " as _id," + DbHelper.C_NAME + " from " + DbHelper.TBL_CONTACTS + " where " + DbHelper.C_NAME + " Like '" + name + "%'" ;
+        @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query, null);
+        Log.d("dbManager" , "Suggested Contacts Count "+ cursor.getCount()+"");
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+return cursor;
+        }
+        return null;
+    }
+
     public long add_ContactData(ContactData data) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DbHelper.CD_CID,data.getC_id());
@@ -242,8 +268,7 @@ public class DbManager {
         contentValue.put(DbHelper.CD_TYPE,data.getType());
         contentValue.put(DbHelper.CD_AMT,data.getAmount());
         contentValue.put(DbHelper.CD_REMARK,data.getRemark());
-        contentValue.put(DbHelper.CD_DATE,data.getDate());
-        contentValue.put(DbHelper.CD_TIME,data.getTime());
+        contentValue.put(DbHelper.CD_DATE,data.getDateTime());
 
 
         long id = database.insert(DbHelper.TBL_CONTACTDATA, null, contentValue);
@@ -260,8 +285,7 @@ public class DbManager {
         contentValue.put(DbHelper.CD_TYPE,data.getType());
         contentValue.put(DbHelper.CD_AMT,data.getAmount());
         contentValue.put(DbHelper.CD_REMARK,data.getRemark());
-        contentValue.put(DbHelper.CD_DATE,data.getDate());
-        contentValue.put(DbHelper.CD_TIME,data.getTime());
+        contentValue.put(DbHelper.CD_DATE,data.getDateTime());
 
         long id = database.update(DbHelper.TBL_CONTACTDATA, contentValue,DbHelper.ID + " = " + data.getId(),null);
 
@@ -277,8 +301,7 @@ public class DbManager {
                 DbHelper.CD_TYPE,
                 DbHelper.CD_AMT,
                 DbHelper.CD_REMARK,
-                DbHelper.CD_DATE,
-                DbHelper.CD_TIME,
+                DbHelper.CD_DATE
         };
 
         @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, null, null, null, null, null);
@@ -287,14 +310,13 @@ public class DbManager {
             cursor.moveToFirst();
 
             do{
-                @SuppressLint("Range") ContactData info = new ContactData(cursor.getString(cursor.getColumnIndex(DbHelper.ID)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_CID)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_PID)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_TYPE)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_AMT)),
+                @SuppressLint("Range") ContactData info = new ContactData(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_CID)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_PID)),
+                        cursor.getInt(cursor.getColumnIndex(DbHelper.CD_TYPE)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.CD_AMT)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.CD_REMARK)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_DATE)),
-                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_TIME))
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_DATE))
                         );
 
                 dataList.add(info);

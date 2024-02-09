@@ -2,10 +2,10 @@ package com.indie.apps.pannypal.Model;
 
 public class PaymentType {
 
-    private String id;
+    private long id;
     private String type;
 
-    public PaymentType(String id, String type) {
+    public PaymentType(long id, String type) {
         this.id = id;
         this.type = type;
     }
@@ -13,14 +13,14 @@ public class PaymentType {
     public PaymentType(String type) {
         this.type = type;
     }
-    public String getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
-
     public String getType() {
         return type;
     }

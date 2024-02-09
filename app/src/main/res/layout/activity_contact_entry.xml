@@ -17,20 +17,23 @@
             android:gravity="center|left"
             android:text="Type"/>
 
-        <CheckBox
-            android:id="@+id/chkReceive"
+        <Button
+            android:id="@+id/btnReceive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:checked="true"
+            android:background="@color/unselectButton"
+            android:textColor="@color/white"
             android:text="Receive" />
 
-        <CheckBox
-            android:id="@+id/chkSpent"
+        <Button
+            android:id="@+id/btnSpent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="false"
+            android:background="@color/debit"
+            android:textColor="@color/white"
             android:text="Spent" />
 
     </LinearLayout>
@@ -45,11 +48,14 @@
             android:gravity="center|left"
             android:text="Contact"/>
 
-        <EditText
+        <SearchView
+            android:id="@+id/svContact"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:hint="search contact"
-            android:inputType="numberDecimal"/>
+            android:showDividers="middle"
+            android:iconifiedByDefault="false"
+            android:queryHint="enter"
+            />
 
         <Button
             android:layout_width="100dp"
@@ -69,6 +75,7 @@
             android:text="Amount"/>
 
         <EditText
+            android:id="@+id/etAmount"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:hint="enter amount"
@@ -88,11 +95,10 @@
             android:gravity="center|left"
             android:text="Payment Type"/>
 
-        <EditText
+        <Spinner
+            android:id="@+id/spPaymentType"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:hint="search Type"
-            android:inputType="numberDecimal"/>
+            android:layout_height="match_parent"/>
 
         <Button
             android:layout_width="100dp"
@@ -104,6 +110,26 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:text="Description"/>
+
+        <EditText
+            android:id="@+id/etDesc"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:hint="enter Desc"/>
+
+
+
+    </LinearLayout>
+
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -149,7 +175,7 @@
             android:layout_height="50dp"
             android:text="select"/>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -157,11 +183,13 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btnSave"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="Add"/>
 
         <Button
+            android:id="@+id/btnCancel"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="Cancel"/>

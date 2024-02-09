@@ -40,8 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String C_CREDITAMT = "c_creditAmt";
     public static final String C_DEBITAMT = "c_debitAmt";
     public static final String C_TOTALAMT = "c_totalAmt";
-    public static final String C_DATE = "c_date";
-    public static final String C_TIME = "c_time";
+    public static final String C_DATE = "c_dateTime";
 
     //Caontact data table
 
@@ -50,8 +49,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String CD_TYPE = "cd_type";
     public static final String CD_AMT = "cd_amount";
     public static final String CD_REMARK = "cd_remark";
-    public static final String CD_DATE = "cd_date";
-    public static final String CD_TIME = "cd_time";
+    public static final String CD_DATE = "cd_dateTime";
 
     private static final String CREATE_TABLE_USERPROFILE = "create table " + TBL_USERPROFILE + "(" + ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -78,8 +76,7 @@ public class DbHelper extends SQLiteOpenHelper {
             C_TOTALAMT + " TEXT ," +
             C_CREDITAMT + " TEXT ," +
             C_DEBITAMT + " TEXT ," +
-            C_DATE + " TEXT ," +
-            C_TIME + " TEXT " +
+            C_DATE + " TEXT " +
             ");";
 
     public static final String CREATE_TABLE_CONTACT_DATA = "create table " + TBL_CONTACTDATA + "(" + ID
@@ -89,8 +86,7 @@ public class DbHelper extends SQLiteOpenHelper {
             CD_TYPE + " TEXT , " +
             CD_AMT + " TEXT , " +
             CD_REMARK + " TEXT,  " +
-            CD_DATE + " TEXT,  " +
-            CD_TIME + " TEXT  " +
+            CD_DATE + " TEXT  " +
             ");";
 
     // database version
