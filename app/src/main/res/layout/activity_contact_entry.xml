@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,193 +7,483 @@
     android:orientation="vertical"
     tools:context=".ContactEntryActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Type"/>
+        <RelativeLayout
+            android:id="@+id/topBg"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:padding="10dp"
+            android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/btnReceive"
+            <ImageButton
+                android:id="@+id/imgbtnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:background="@color/trasnperent"/>
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add New Entry"
+                android:textStyle="bold"
+                android:textSize="@dimen/txtS1"
+                android:textColor="@color/textColorDark"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/unselectButton"
-            android:textColor="@color/white"
-            android:text="Receive" />
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_below="@+id/topBg">
 
-        <Button
-            android:id="@+id/btnSpent"
-            android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp">
+
+                <ImageButton
+                    android:id="@+id/imgbtnReceive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/add_entry_unselect_credit"/>
+
+                <ImageButton
+                    android:id="@+id/imgbtnSpent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:src="@drawable/add_entry_select_debit"
+                    android:background="@color/trasnperent"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS2"
+                    android:textColor="@color/textColorHeading"
+                    android:textStyle="bold"
+                    android:text="Contact"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <ImageButton
+                        android:id="@+id/imgbtnSelectContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/add_entry_add"
+                        android:background="@color/trasnperent"
+                        />
+
+                    <!--<SearchView
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:showDividers="none"
+                        android:searchIcon="@null"
+                        android:theme="@style/AppSearchView"
+                        android:iconifiedByDefault="false"
+                        android:layout_toLeftOf="@id/imgbtnAddContact"
+                        android:queryHint="Search Your Contact"
+                        android:queryBackground="@null"
+                        />-->
+
+                    <TextView
+                        android:id="@+id/txtContactName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/imgbtnSelectContact"
+                        android:hint="Select Contact"
+                        android:textSize="@dimen/txtS2"
+                        android:layout_centerVertical="true"
+                        android:textColorHint="@color/textColorLightGray"
+                        android:textColor="@color/textColorDark"/>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/textColorLightGray"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS2"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorHeading"
+                    android:text="Amount"/>
+
+                <EditText
+                    android:id="@+id/etAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Enter Amount"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@null"
+                    android:inputType="numberDecimal"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/textColorLightGray"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS2"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorHeading"
+                    android:text="Payment Type"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <ImageButton
+                        android:id="@+id/imgbtnAddPayment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/add_entry_add"
+                        android:background="@color/trasnperent"
+                        />
+
+                    <Spinner
+                        android:id="@+id/spPaymentType"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/imgbtnAddPayment"/>
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/textColorLightGray"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS2"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorHeading"
+                    android:text="Description"/>
+
+                <EditText
+                    android:id="@+id/etDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Enter Description"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@null"
+                    android:inputType="numberDecimal"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/textColorLightGray"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/imgbtnSave"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="false"
-            android:background="@color/debit"
-            android:textColor="@color/white"
-            android:text="Spent" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Contact"/>
-
-        <SearchView
-            android:id="@+id/svContact"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:showDividers="middle"
-            android:iconifiedByDefault="false"
-            android:queryHint="enter"
+            android:src="@drawable/add_entry_btn_save"
+            android:layout_alignParentBottom="true"
+            android:background="@color/trasnperent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
             />
+    </RelativeLayout>
 
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Add"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layoutContactSearch"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="match_parent"
+        android:background="@color/dilogBackground"
+        android:visibility="gone">
 
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Amount"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/dilog_bg"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
 
-        <EditText
-            android:id="@+id/etAmount"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:hint="enter amount"
-            android:inputType="numberDecimal"/>
+            <RelativeLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Contact"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txtS2"
+                    android:textColor="@color/textColorDark"/>
+
+                <ImageButton
+                    android:id="@+id/btnContactClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_close"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/searchLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/headerLayout"
+                android:layout_marginTop="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/contact_search_bg"
+                    android:layout_toLeftOf="@+id/imgbtnNewContact"
+                    android:layout_marginRight="10dp">
 
 
+                    <SearchView
+                        android:id="@+id/svContact"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:showDividers="none"
+                        android:searchIcon="@null"
+                        android:theme="@style/AppSearchView"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="Search Your Contact"
+                        android:queryBackground="@null"
+                        />
 
-    </LinearLayout>
+                </RelativeLayout>
 
-    <LinearLayout
+                <ImageButton
+                    android:id="@+id/imgbtnNewContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/contact_new_contact"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent"/>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvContact"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/searchLayout">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutAddContact"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="match_parent"
+        android:background="@color/dilogBackground"
+        android:visibility="visible">
 
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Payment Type"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/dilog_bg"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
 
-        <Spinner
-            android:id="@+id/spPaymentType"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"/>
+            <RelativeLayout
+                android:id="@+id/headerLayoutNewContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
 
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Add"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Contact"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txtS2"
+                    android:textColor="@color/textColorDark"/>
+
+                <ImageButton
+                    android:id="@+id/btnNewContactClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_close"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/headerLayoutNewContact"
+                android:layout_above="@+id/imgbtnSaveContact"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/imgbtnSaveContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_entry_btn_save"
+                android:layout_alignParentBottom="true"
+                android:background="@color/trasnperent"
+                android:layout_centerHorizontal="true"
+                />
+
+        </RelativeLayout>
 
 
+    </RelativeLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layoutAddPayment"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="match_parent"
+        android:background="@color/dilogBackground"
+        android:visibility="gone">
 
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Description"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/dilog_bg"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
 
-        <EditText
-            android:id="@+id/etDesc"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:hint="enter Desc"/>
+            <RelativeLayout
+                android:id="@+id/headerLayoutNewPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Payment"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txtS2"
+                    android:textColor="@color/textColorDark"/>
+
+                <ImageButton
+                    android:id="@+id/btnNewPaymentClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_close"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/headerLayoutNewPayment"
+                android:layout_above="@+id/imgbtnSavePayment"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/imgbtnSavePayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_entry_btn_save"
+                android:layout_alignParentBottom="true"
+                android:background="@color/trasnperent"
+                android:layout_centerHorizontal="true"
+                />
+
+        </RelativeLayout>
 
 
+    </RelativeLayout>
 
-    </LinearLayout>
-
-   <!-- <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Date"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="1 Jan. 2023"/>
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="select"/>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="Time"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="00:00 AM"/>
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="select"/>
-
-    </LinearLayout>-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Add"/>
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Cancel"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

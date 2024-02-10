@@ -38,6 +38,7 @@
             android:text="Name"
             android:layout_toRightOf="@id/img"
             android:layout_marginLeft="10dp"
+            android:textStyle="bold"
             android:textColor="@color/textColorDark"
             android:layout_centerVertical="true"/>
 

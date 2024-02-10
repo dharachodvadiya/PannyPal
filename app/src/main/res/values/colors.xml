@@ -9,7 +9,10 @@
     <color name="creditLight">#EAFFFB</color>
     <color name="debitLight">#FDECEC</color>
     <color name="textColorLight">#545A66</color>
+    <color name="textColorHeading">#8F8F8F</color>
+    <color name="textColorLightGray">#B0B0B0</color>
     <color name="unselectButton">#90545A66</color>
     <color name="textColorDark">#FF000000</color>
+    <color name="dilogBackground">#AB000000</color>
     <color name="contactDataBg">#F7F7F7</color>
 </resources>

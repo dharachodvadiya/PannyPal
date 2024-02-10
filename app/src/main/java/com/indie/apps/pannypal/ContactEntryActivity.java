@@ -2,48 +2,62 @@ package com.indie.apps.pannypal;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.database.MergeCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.indie.apps.pannypal.Adapter.SearchContactFromNewEntryAdapter;
 import com.indie.apps.pannypal.Database.DbHelper;
 import com.indie.apps.pannypal.Database.DbManager;
 import com.indie.apps.pannypal.Model.ContactData;
+import com.indie.apps.pannypal.Model.suggestContactData;
+import com.indie.apps.pannypal.Thread.AsyncTaskExecutorService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class ContactEntryActivity extends AppCompatActivity  implements View.OnClickListener{
 
-    Button btnSave, btnBack, btnReceive, btnSpent;
+    ImageButton btnSave, btnBack;
+    ImageButton btnReceive, btnSpent, btnSelectContact;
 
-    SearchView svContact ;
+
+    TextView txtContactName;
+    SearchContactFromNewEntryAdapter searchContactFromNewEntryAdapter;
     Spinner spPaymentType;
     EditText etAmount, etDesc;
     int currAmtType= -1;
-    int currContactTypeId = -1;
-    int currPaymentTypeId = -1;
-
-    SimpleCursorAdapter cursorAdapter;
+    long currContactTypeId = -1;
+    long currPaymentTypeId = -1;
     DbManager dbManager;
+
+    // search layout data
+    RelativeLayout layoutContactSearch;
+    RecyclerView rvSuggestContact;
+    SearchView svContact ;
+    ImageButton btnContactClose, btnNewContact;
+    List<suggestContactData> suggestContactAllData = new ArrayList<>();
+    List<suggestContactData> suggestContactadapterData = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +71,14 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         dbManager= new DbManager(ContactEntryActivity.this);
         dbManager.open();
 
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnBack = (Button) findViewById(R.id.btnCancel);
-        btnReceive = (Button) findViewById(R.id.btnReceive);
-        btnSpent = (Button) findViewById(R.id.btnSpent);
-        svContact = findViewById(R.id.svContact);
+        getOnBackPressedDispatcher().addCallback(this,callback);
+
+        btnSave =findViewById(R.id.imgbtnSave);
+        btnBack =findViewById(R.id.imgbtnBack);
+        btnReceive = findViewById(R.id.imgbtnReceive);
+        btnSpent =findViewById(R.id.imgbtnSpent);
+        txtContactName =findViewById(R.id.txtContactName);
+        btnSelectContact =findViewById(R.id.imgbtnSelectContact);
         spPaymentType = findViewById(R.id.spPaymentType);
         etAmount = findViewById(R.id.etAmount);
         etDesc = findViewById(R.id.etDesc);
@@ -70,79 +87,13 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         btnBack.setOnClickListener(this);
         btnReceive.setOnClickListener(this);
         btnSpent.setOnClickListener(this);
-
-        getOnBackPressedDispatcher().addCallback(this,callback);
-
-
-        final String[] from = new String[] {DbHelper.C_NAME};
-        final int[] to = new int[] {R.id.txtName};
-
-        cursorAdapter = new SimpleCursorAdapter(ContactEntryActivity.this,R.layout.item_suggestion_contact_entry,dbManager.get_Contacts_suggestion(""),from, to,0);
-        svContact.setSuggestionsAdapter(cursorAdapter);
-        AutoCompleteTextView textview = (AutoCompleteTextView) svContact.findViewById(getResources().getIdentifier("android:id/search_src_text", null, null));
-        ImageView close_btn = (ImageView) svContact.findViewById(getResources().getIdentifier("android:id/search_close_btn", null, null));
-        textview.setThreshold(0);
-        svContact.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int i) {
-                Log.d("aaa" , "onSuggestionSelect");
+        btnSelectContact.setOnClickListener(this);
 
 
-                return true;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int i) {
-                Log.d("aaa" , "onSuggestionClick");
-
-                CursorAdapter ca = svContact.getSuggestionsAdapter();
-                Cursor cursor = cursorAdapter.getCursor();
-                cursor.moveToPosition(i);
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-                if(id != -1)
-                {
-                    currContactTypeId = id;
-                    String word = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.C_NAME));
-                    svContact.setQuery(word,true);
-
-                    svContact.clearFocus();
-                    svContact.setFocusable(false);
-                    close_btn.setVisibility(View.GONE);
-                    return true;
-                }else {
-
-                }
-                return false;
-
-            }
-        });
-
-        svContact.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                Log.d("aaa" , "onQueryTextSubmit");
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-
-                Cursor cursor = dbManager.get_Contacts_suggestion(s);
-                if(cursor == null)
-                {
-                    MatrixCursor extras = new MatrixCursor(new String[] { "_id", DbHelper.C_NAME });
-                    extras.addRow(new String[] { "-1", "Not found" });
-                    cursor = extras;
-                }
-                Log.d("aaa" , "onQueryTextChange" + s + "Count " + cursor.getCount());
-                cursorAdapter.changeCursor(cursor);
-                return false;
-            }
-        });
 
         String[] courses = { "cash", "Bank"};
-        ArrayAdapter ad = new ArrayAdapter(this,android.R.layout.simple_spinner_item,courses);
-        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter ad = new ArrayAdapter(this,R.layout.spinner_item,courses);
+        ad.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spPaymentType.setAdapter(ad);
         spPaymentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,23 +106,108 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
 
             }
         });
+
+        // search layout data
+
+        layoutContactSearch = findViewById(R.id.layoutContactSearch);
+        svContact = findViewById(R.id.svContact);
+        rvSuggestContact = findViewById(R.id.rvContact);
+        btnContactClose = findViewById(R.id.btnContactClose);
+        btnNewContact = findViewById(R.id.imgbtnNewContact);
+
+        btnContactClose.setOnClickListener(this);
+        btnNewContact.setOnClickListener(this);
+
+        layoutContactSearch.setVisibility(View.GONE);
+
+        rvSuggestContact.setHasFixedSize(true);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        rvSuggestContact.setLayoutManager(layoutManager);
+
+        searchContactFromNewEntryAdapter = new SearchContactFromNewEntryAdapter(suggestContactadapterData, new SearchContactFromNewEntryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(suggestContactData item) {
+                currContactTypeId = item.getId();
+                txtContactName.setText(item.getName());
+                closeContactSuggestionLayout();
+            }
+        });
+        rvSuggestContact.setAdapter(searchContactFromNewEntryAdapter);
+
+        svContact.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                String text = s.toString();
+
+                if(!text.isEmpty())
+                {
+                    suggestContactadapterData.clear();
+
+                    for (int i= suggestContactAllData.size()-1 ;i>=0;i--)
+                    {
+                        if(suggestContactAllData.get(i).getName().toLowerCase().contains(text.toLowerCase()))
+                        {
+                            suggestContactadapterData.add(suggestContactAllData.get(i));
+                        }
+                    }
+
+                    searchContactFromNewEntryAdapter.notifyDataSetChanged();
+
+                }else {
+                    suggestContactadapterData.clear();
+                    suggestContactadapterData.addAll(suggestContactAllData);
+                    searchContactFromNewEntryAdapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+        });
+
+    }
+
+    void openContactSuggestionLayout()
+    {
+        layoutContactSearch.setVisibility(View.VISIBLE);
+        svContact.setQuery(null, true);
+        new loadContactSuggestionData().execute();
+    }
+
+    void closeContactSuggestionLayout()
+    {
+        layoutContactSearch.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId())
         {
-            case R.id.btnSave:
+            case R.id.imgbtnSave:
                 saveData();
                 break;
-            case R.id.btnCancel:
+            case R.id.imgbtnBack:
                 backAction();
                 break;
-            case R.id.btnReceive:
+            case R.id.imgbtnReceive:
                 selectAmountType(1);
                 break;
-            case R.id.btnSpent:
+            case R.id.imgbtnSpent:
                 selectAmountType(-1);
+                break;
+
+            case R.id.imgbtnSelectContact:
+               openContactSuggestionLayout();
+                break;
+
+            case R.id.btnContactClose:
+                closeContactSuggestionLayout();
+                break;
+
+            case R.id.imgbtnNewContact:
                 break;
         }
     }
@@ -211,11 +247,11 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         currAmtType = type;
         if(currAmtType == 1)
         {
-            btnReceive.setBackgroundColor(getResources().getColor(R.color.credit, getApplication().getTheme()));
-            btnSpent.setBackgroundColor(getResources().getColor(R.color.unselectButton,getApplication().getTheme()));
+            btnReceive.setBackground(getResources().getDrawable(R.drawable.add_entry_select_credit, getApplication().getTheme()));
+            btnSpent.setBackground(getResources().getDrawable(R.drawable.add_entry_unselect_debit, getApplication().getTheme()));
         }else {
-            btnSpent.setBackgroundColor(getResources().getColor(R.color.debit, getApplication().getTheme()));
-            btnReceive.setBackgroundColor(getResources().getColor(R.color.unselectButton,getApplication().getTheme()));
+            btnReceive.setBackground(getResources().getDrawable(R.drawable.add_entry_unselect_credit, getApplication().getTheme()));
+            btnSpent.setBackground(getResources().getDrawable(R.drawable.add_entry_select_debit, getApplication().getTheme()));
         }
     }
 
@@ -233,5 +269,31 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_left,
                 R.anim.slide_out_right);
+    }
+
+    public class loadContactSuggestionData extends AsyncTaskExecutorService< Void, Void, Void > {
+
+        @Override
+        protected void onPreExecute() {
+            // before start background execution
+        }
+
+        @Override
+        protected Void doInBackground(Void params) {
+            // perform background task load app and return a result based on need
+            suggestContactAllData.clear();
+            suggestContactadapterData.clear();
+            suggestContactAllData =dbManager.get_ContactsNameList();
+
+            suggestContactadapterData.addAll(suggestContactAllData);
+
+            return params;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            searchContactFromNewEntryAdapter.notifyDataSetChanged();
+        }
+
     }
 }

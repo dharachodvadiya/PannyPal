@@ -8,8 +8,11 @@
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/txtS1"
+        android:textSize="@dimen/txtS2"
         android:text="Name"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
         android:textColor="@color/textColorDark"/>
 
 </LinearLayout>

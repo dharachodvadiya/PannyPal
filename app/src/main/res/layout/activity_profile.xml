@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textSize="@dimen/txtS1"
+                android:textStyle="bold"
                 android:textColor="@color/textColorDark"
                 android:layout_centerHorizontal="true"/>
 
@@ -70,6 +71,7 @@
                 android:textColor="@color/credit"
                 android:text="000000 Rs."
                 android:textSize="@dimen/txtL1"
+                android:textStyle="bold"
                 android:textAlignment="center"/>
 
         </LinearLayout>
@@ -115,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/txtS1"
                     android:text="000"
+                    android:textStyle="bold"
                     android:textColor="@color/textColorDark"/>
 
             </LinearLayout>
@@ -152,6 +155,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/txtS1"
                     android:text="000"
+                    android:textStyle="bold"
                     android:textColor="@color/textColorDark"/>
             </LinearLayout>
         </LinearLayout>

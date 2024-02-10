@@ -9,10 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.util.Log;
 
+import com.indie.apps.pannypal.Adapter.SearchContactFromNewEntryAdapter;
 import com.indie.apps.pannypal.Model.ContactData;
 import com.indie.apps.pannypal.Model.Contacts;
 import com.indie.apps.pannypal.Model.PaymentType;
 import com.indie.apps.pannypal.Model.UserProfile;
+import com.indie.apps.pannypal.Model.suggestContactData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -244,6 +246,54 @@ public class DbManager {
             Log.d("dbManager" , "Contacts Count "+ dataList.size()+"");
         }
         return dataList;
+    }
+
+    public List<suggestContactData> get_ContactsNameList() {
+        String[] columns = new String[] { DbHelper.ID,
+                DbHelper.C_NAME,
+                DbHelper.C_PHNO,
+                DbHelper.C_ISLIMIT,
+                DbHelper.C_LIMITAMT,
+                DbHelper.C_PROFILEURL,
+                DbHelper.C_CREDITAMT,
+                DbHelper.C_DEBITAMT,
+                DbHelper.C_TOTALAMT,
+                DbHelper.C_DATE
+        };
+
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, null, null, null, null, null);
+        List<suggestContactData> dataList = new ArrayList<>();
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+
+            do{
+                @SuppressLint("Range") suggestContactData info = new suggestContactData(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.C_NAME))
+                );
+
+                dataList.add(info);
+
+            }while (cursor.moveToNext());
+
+            Log.d("dbManager" , "Contacts Count "+ dataList.size()+"");
+        }
+        return dataList;
+    }
+
+    public long get_ContactsFromName(String name) {
+        String[] columns = new String[] { DbHelper.ID
+        };
+
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, DbHelper.C_NAME + " = '" + name +"'", null, null, null, null);
+        List<Contacts> dataList = new ArrayList<>();
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+
+            @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(DbHelper.ID));
+            Log.d("dbManager" , "Contacts Count from name Id-  "+id +"");
+            return id;
+        }
+        return -1;
     }
 
     public Cursor get_Contacts_suggestion(String name) {

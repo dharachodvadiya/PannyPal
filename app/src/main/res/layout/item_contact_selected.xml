@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/txtS1"
                 android:text="Amount"
+                android:textStyle="bold"
                 android:textColor="@color/textColorDark"/>
 
             <TextView
@@ -76,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/txtS1"
                 android:text="Amount"
+                android:textStyle="bold"
                 android:textAlignment="textEnd"
                 android:textColor="@color/textColorDark"/>
 
