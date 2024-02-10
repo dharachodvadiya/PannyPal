@@ -361,12 +361,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="@drawable/dilog_bg"
+            android:layout_height="450dp"
+            android:background="@drawable/dilog_bg_9"
             android:padding="10dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
@@ -395,16 +395,72 @@
                     android:background="@color/trasnperent"/>
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/headerLayoutNewContact"
                 android:layout_above="@+id/imgbtnSaveContact"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                >
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
 
-            </RelativeLayout>
+                <EditText
+                    android:id="@+id/etContactName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"/>
+
+                <EditText
+                    android:id="@+id/etContactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:inputType="numberDecimal"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:padding="15dp"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:orientation="vertical">
+
+                    <Switch
+                        android:id="@+id/switchLimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Set Limit"
+                        android:textSize="@dimen/txtS2"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/etLimitAmt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Limit Amount (Rs)"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/textColorHeading"
+                        android:textSize="@dimen/txtS2"
+                        android:background="@color/textBg"
+                        android:inputType="numberDecimal"
+                        android:layout_marginTop="15dp"
+                        android:padding="10dp"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/imgbtnSaveContact"
@@ -426,12 +482,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="@drawable/dilog_bg"
+            android:layout_height="250dp"
+            android:background="@drawable/dilog_bg_9"
             android:padding="10dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
@@ -460,16 +516,26 @@
                     android:background="@color/trasnperent"/>
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/headerLayoutNewPayment"
                 android:layout_above="@+id/imgbtnSavePayment"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                >
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
 
-            </RelativeLayout>
+                <EditText
+                    android:id="@+id/etContactType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"/>
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/imgbtnSavePayment"
