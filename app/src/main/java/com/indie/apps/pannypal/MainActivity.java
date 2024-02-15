@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(Globle.MyProfile == null)
                 {
                     Globle.MyProfile = new UserProfile("guest", null, null,0.0,0.0,0.0);
-                    dbManager.add_UserProfile(Globle.MyProfile);
+                    Globle.MyProfile.setId(dbManager.add_UserProfile(Globle.MyProfile));
                 }
 
                 dbManager.close();

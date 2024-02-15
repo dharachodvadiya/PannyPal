@@ -98,6 +98,9 @@ public class Contacts {
         this.creditAmt = creditAmt;
     }
 
+    public void addCreditAmt(Double creditAmt) {
+        this.creditAmt += creditAmt;
+    }
     public Double getDebitAmt() {
         return debitAmt;
     }
@@ -106,12 +109,20 @@ public class Contacts {
         this.debitAmt = debitAmt;
     }
 
+    public void addDebitAmt(Double debitAmt) {
+        this.debitAmt += debitAmt;
+    }
     public Double getTotalAmt() {
         return totalAmt;
     }
 
     public void setTotalAmt(Double totalAmt) {
         this.totalAmt = totalAmt;
+    }
+
+    public  void addRemoveAmt(double amt)
+    {
+        this.totalAmt += totalAmt;
     }
 
     public long getDateTime() {

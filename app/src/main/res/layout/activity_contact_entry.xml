@@ -267,6 +267,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
+        android:clickable="true"
         android:visibility="gone">
 
         <RelativeLayout
@@ -360,7 +361,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
-        android:visibility="visible">
+        android:clickable="true"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -429,7 +431,8 @@
                         app:ccp_autoDetectCountry="true"
                         app:ccp_showFlag="false"
                         app:ccp_showNameCode="false"
-                        app:ccp_showFullName="false">
+                        app:ccp_showFullName="false"
+                        app:ccp_textSize="@dimen/txtS2">
                     </com.hbb20.CountryCodePicker>
 
                     <RelativeLayout
@@ -525,6 +528,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
+        android:clickable="true"
         android:visibility="gone">
 
         <RelativeLayout

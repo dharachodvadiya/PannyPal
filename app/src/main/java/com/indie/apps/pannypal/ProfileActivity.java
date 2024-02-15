@@ -25,11 +25,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         init();
 
-        txtName.setText(Globle.MyProfile.getName());
-        txtTotal.setText(Globle.getFormattedValue(Globle.MyProfile.getTotalAmt()));
-        txtCredit.setText(Globle.getFormattedValue(Globle.MyProfile.getCreditAmt()));
-        txtDebit.setText(Globle.getFormattedValue(Globle.MyProfile.getDebitAmt()));
-
         if(Globle.MyProfile.getTotalAmt() >=0)
         {
             layoutbg.setBackgroundResource(R.drawable.profile_bg_credit);
@@ -52,6 +47,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         imgbtnBack = findViewById(R.id.imgbtnBack);
         imgbtnBack.setOnClickListener(this);
+
+        txtName.setText(Globle.MyProfile.getName());
+        txtTotal.setText(Globle.getFormattedValue(Globle.MyProfile.getTotalAmt()));
+        txtCredit.setText(Globle.getFormattedValue(Globle.MyProfile.getCreditAmt()));
+        txtDebit.setText(Globle.getFormattedValue(Globle.MyProfile.getDebitAmt()));
 
         getOnBackPressedDispatcher().addCallback(this,callback);
     }

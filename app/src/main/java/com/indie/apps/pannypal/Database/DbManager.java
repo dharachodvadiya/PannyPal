@@ -10,6 +10,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.indie.apps.pannypal.Adapter.SearchContactFromNewEntryAdapter;
+import com.indie.apps.pannypal.Globle;
 import com.indie.apps.pannypal.Model.ContactData;
 import com.indie.apps.pannypal.Model.Contacts;
 import com.indie.apps.pannypal.Model.PaymentType;
@@ -103,7 +104,7 @@ public class DbManager {
         };
         UserProfile info = null;
         try {
-            @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, null, null, null, null, null);
+            @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_USERPROFILE, columns, null, null, null, null, null);
 
             if (cursor != null && cursor.getCount() >0) {
                 cursor.moveToFirst();
@@ -263,6 +264,45 @@ public class DbManager {
         return dataList;
     }
 
+    @SuppressLint("Range")
+    public Contacts get_ContactFromId(long id) {
+        String[] columns = new String[] { DbHelper.ID,
+                DbHelper.C_NAME,
+                DbHelper.C_PHNO,
+                DbHelper.C_ISLIMIT,
+                DbHelper.C_LIMITAMT,
+                DbHelper.C_PROFILEURL,
+                DbHelper.C_CREDITAMT,
+                DbHelper.C_DEBITAMT,
+                DbHelper.C_TOTALAMT,
+                DbHelper.C_DATE
+        };
+
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, DbHelper.ID +"=?",new String[]{String.valueOf(id)}, null, null, null);
+        Contacts data = null;
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+
+            do{
+                data = new Contacts(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.C_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.C_PHNO)),
+                        cursor.getInt(cursor.getColumnIndex(DbHelper.C_ISLIMIT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_LIMITAMT)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.C_PROFILEURL)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_CREDITAMT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_DEBITAMT)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_TOTALAMT)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.C_DATE))
+                );
+
+            }while (cursor.moveToNext());
+
+            Log.d("dbManager" , "Contact from Id "+ data.getId()+"");
+        }
+        return data;
+    }
+
     public List<suggestContactData> get_ContactsNameList() {
         String[] columns = new String[] { DbHelper.ID,
                 DbHelper.C_NAME,
@@ -295,7 +335,7 @@ public class DbManager {
         return dataList;
     }
 
-    public long get_ContactsFromName(String name) {
+    /*public long get_ContactsFromName(String name) {
         String query ="select " + DbHelper.ID + " from " + DbHelper.TBL_CONTACTS + " where " + DbHelper.C_NAME + " = '" + name + "' COLLATE NOCASE" ;
         @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query, null);
         if (cursor != null && cursor.getCount() >0) {
@@ -306,7 +346,7 @@ public class DbManager {
             return id;
         }
         return -1;
-    }
+    }*/
 
     public Cursor get_Contacts_suggestion(String name) {
         String[] columns = new String[] { DbHelper.ID,
@@ -337,6 +377,26 @@ return cursor;
 
         Log.d("DbManager" , "Add ContactData");
 
+        Contacts contacts = get_ContactFromId(data.getC_id());
+
+        if(data.getType() == 1)
+        {
+            Globle.MyProfile.addCreditAmt(data.getAmount());
+            Globle.MyProfile.addRemoveAmt(data.getAmount());
+
+            contacts.addCreditAmt(data.getAmount());
+            contacts.addRemoveAmt(data.getAmount());
+        }else {
+            Globle.MyProfile.addDebitAmt(data.getAmount());
+            Globle.MyProfile.addRemoveAmt(-data.getAmount());
+
+            contacts.addDebitAmt(data.getAmount());
+            contacts.addRemoveAmt(-data.getAmount());
+        }
+
+        contacts.setDateTime(data.getDateTime());
+        edit_UserProfile(Globle.MyProfile);
+        edit_Contacts(contacts);
         return  id;
     }
 

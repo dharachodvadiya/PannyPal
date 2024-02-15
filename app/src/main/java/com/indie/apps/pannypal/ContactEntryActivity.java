@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -142,7 +143,14 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         spPaymentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                currPaymentTypeId = paymentTypes.get(i+1).getId();
+
+                if(i==0)
+                {
+                    currPaymentTypeId = -1;
+                }else {
+                    currPaymentTypeId = paymentTypes.get(i-1).getId();
+                }
+
             }
 
             @Override
@@ -304,7 +312,11 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         switch (view.getId())
         {
             case R.id.imgbtnSave:
-                saveData();
+                if(saveData())
+                {
+                    Intent i = new Intent(ContactEntryActivity.this, HomeActivity.class);
+                    startActivity(i);
+                }
                 break;
             case R.id.imgbtnBack:
                 backAction();
@@ -333,8 +345,12 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
             case R.id.imgbtnSaveContact:
-                if(saveNewContact())
+                Contacts contacts = saveNewContact();
+                if(contacts != null)
                 {
+                    currContactTypeId = contacts.getId();
+                    txtContactName.setText(contacts.getName());
+                    closeContactSuggestionLayout();
                     closeNewContactLayout();
                 }
                 break;
@@ -436,14 +452,16 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
 
     }
 
-    void saveData()
+    boolean saveData()
     {
         if (currContactTypeId == -1)
         {
             Toast.makeText(getApplicationContext(),"Please select Contact",Toast.LENGTH_LONG).show();
+            return false;
         }else if(etAmount.getText().toString().trim().length() <=0)
         {
             Toast.makeText(getApplicationContext(),"Please enter Amount",Toast.LENGTH_LONG).show();
+            return false;
         }else {
             Double amount = Double.parseDouble(etAmount.getText().toString());
             String desc = etDesc.getText().toString().trim();
@@ -459,30 +477,25 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
 
             Toast.makeText(getApplicationContext(),"Add Contact Successfully",Toast.LENGTH_LONG).show();
 
-            Intent i = new Intent(ContactEntryActivity.this, HomeActivity.class);
-            startActivity(i);
+           return true;
         }
 
     }
 
-    Boolean saveNewContact()
+    Contacts saveNewContact()
     {
         if(etContactName.getText().toString().trim().length() <=0)
         {
             Toast.makeText(getApplicationContext(),"Please enter Name",Toast.LENGTH_LONG).show();
-            return  false;
+            return  null;
         }else if(!Globle.isValidPhoneNumber(codePicker.getSelectedCountryNameCode(),etPhno.getText().toString()))
         {
             Toast.makeText(getApplicationContext(),"Please enter Valid Contact Number",Toast.LENGTH_LONG).show();
-            return false;
+            return null;
         }else if(switchLimit.isChecked() && etLimitAmt.getText().toString().trim().length() <=0)
         {
             Toast.makeText(getApplicationContext(),"Please enter Limit Amount",Toast.LENGTH_LONG).show();
-            return  false;
-        }else if(dbManager.get_ContactsFromName(etContactName.getText().toString().trim()) != -1)
-        {
-            Toast.makeText(getApplicationContext(),"Name  already exist",Toast.LENGTH_LONG).show();
-            return  false;
+            return  null;
         }
         else
         {
@@ -493,7 +506,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 limitAmount = Double.parseDouble(etLimitAmt.getText().toString());
             }
             String name = etContactName.getText().toString().trim();
-            String phno = etPhno.getText().toString().trim();
+            String phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
             Contacts contactData = new Contacts(
                     name,
                     phno,
@@ -505,10 +518,10 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                     0.0,
                     Calendar.getInstance().getTimeInMillis());
 
-            dbManager.add_Contacts(contactData);
+            contactData.setId(dbManager.add_Contacts(contactData));
 
             Toast.makeText(getApplicationContext(),"Add new Contact Successfully",Toast.LENGTH_LONG).show();
-            return  true;
+            return  contactData;
         }
     }
 
@@ -536,15 +549,15 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
 
     void selectAmountType(int type)
     {
-        //1 = credit,  -1= debit
         currAmtType = type;
+        //1 = credit,  -1= debit
         if(currAmtType == 1)
         {
-            btnReceive.setBackground(getResources().getDrawable(R.drawable.add_entry_select_credit, getApplication().getTheme()));
-            btnSpent.setBackground(getResources().getDrawable(R.drawable.add_entry_unselect_debit, getApplication().getTheme()));
+            btnReceive.setImageResource(R.drawable.add_entry_select_credit);
+            btnSpent.setImageResource(R.drawable.add_entry_unselect_debit);
         }else {
-            btnReceive.setBackground(getResources().getDrawable(R.drawable.add_entry_unselect_credit, getApplication().getTheme()));
-            btnSpent.setBackground(getResources().getDrawable(R.drawable.add_entry_select_debit, getApplication().getTheme()));
+            btnReceive.setImageResource(R.drawable.add_entry_unselect_credit);
+            btnSpent.setImageResource(R.drawable.add_entry_select_debit);
         }
     }
 
