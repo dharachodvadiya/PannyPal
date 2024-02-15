@@ -5,30 +5,42 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
 import com.indie.apps.pannypal.Adapter.SearchContactFromNewEntryAdapter;
 import com.indie.apps.pannypal.Database.DbHelper;
 import com.indie.apps.pannypal.Database.DbManager;
 import com.indie.apps.pannypal.Model.ContactData;
+import com.indie.apps.pannypal.Model.Contacts;
+import com.indie.apps.pannypal.Model.PaymentType;
 import com.indie.apps.pannypal.Model.suggestContactData;
 import com.indie.apps.pannypal.Thread.AsyncTaskExecutorService;
 
@@ -36,10 +48,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ContactEntryActivity extends AppCompatActivity  implements View.OnClickListener{
+public class ContactEntryActivity extends AppCompatActivity  implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     ImageButton btnSave, btnBack;
-    ImageButton btnReceive, btnSpent, btnSelectContact;
+    ImageButton btnReceive, btnSpent, btnSelectContact, btnAddPayment;
 
 
     TextView txtContactName;
@@ -58,6 +70,30 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
     ImageButton btnContactClose, btnNewContact;
     List<suggestContactData> suggestContactAllData = new ArrayList<>();
     List<suggestContactData> suggestContactadapterData = new ArrayList<>();
+
+    List<PaymentType> paymentTypes = new ArrayList<>();
+    List<String> paymentTypeName = new ArrayList<>();
+
+    ArrayAdapter<PaymentType> paymentAdapter;
+
+    // new Contact
+    RelativeLayout layoutAddContact;
+    ImageButton btnNewContactClose,btnSaveNewContact;
+
+    RelativeLayout layoutLimit,layoutLimitAnim;
+    EditText etContactName, etPhno , etLimitAmt;
+
+    CountryCodePicker codePicker;
+    Switch switchLimit;
+
+    // new Payment
+
+    RelativeLayout layoutAddPayment;
+    ImageButton btnNewPaymentClose,btnSaveNewPayment;
+
+    EditText etPaymentName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +113,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         btnBack =findViewById(R.id.imgbtnBack);
         btnReceive = findViewById(R.id.imgbtnReceive);
         btnSpent =findViewById(R.id.imgbtnSpent);
+        btnAddPayment =findViewById(R.id.imgbtnAddPayment);
         txtContactName =findViewById(R.id.txtContactName);
         btnSelectContact =findViewById(R.id.imgbtnSelectContact);
         spPaymentType = findViewById(R.id.spPaymentType);
@@ -88,17 +125,24 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         btnReceive.setOnClickListener(this);
         btnSpent.setOnClickListener(this);
         btnSelectContact.setOnClickListener(this);
+        btnAddPayment.setOnClickListener(this);
 
+        paymentTypeName.clear();
+        paymentTypeName.add("None");
+        paymentTypes = dbManager.get_PaymentType();
+        int count = paymentTypes.size();
+        for (int i= 0; i< count; i++)
+        {
+            paymentTypeName.add(paymentTypes.get(i).getType());
+        }
 
-
-        String[] courses = { "cash", "Bank"};
-        ArrayAdapter ad = new ArrayAdapter(this,R.layout.spinner_item,courses);
-        ad.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spPaymentType.setAdapter(ad);
+        paymentAdapter = new ArrayAdapter(this,R.layout.spinner_item,paymentTypeName);
+        paymentAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spPaymentType.setAdapter(paymentAdapter);
         spPaymentType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                currPaymentTypeId = i;
+                currPaymentTypeId = paymentTypes.get(i+1).getId();
             }
 
             @Override
@@ -168,11 +212,41 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
             }
         });
 
+        //new contact
+
+        layoutAddContact = findViewById(R.id.layoutAddContact);
+        btnNewContactClose = findViewById(R.id.btnNewContactClose);
+        btnSaveNewContact = findViewById(R.id.imgbtnSaveContact);
+
+        etContactName = findViewById(R.id.etContactName);
+        etPhno = findViewById(R.id.etContactNumber);
+        switchLimit = findViewById(R.id.switchLimit);
+        etLimitAmt = findViewById(R.id.etLimitAmt);
+        layoutLimit = findViewById(R.id.layoutLimit);
+        layoutLimitAnim = findViewById(R.id.layoutLimitAnim);
+        codePicker=findViewById(R.id.country_code);
+
+        btnNewContactClose.setOnClickListener(this);
+        btnSaveNewContact.setOnClickListener(this);
+        switchLimit.setOnCheckedChangeListener(this);
+
+
+        //new payment
+        layoutAddPayment = findViewById(R.id.layoutAddPayment);
+        btnNewPaymentClose = findViewById(R.id.btnNewPaymentClose);
+        btnSaveNewPayment = findViewById(R.id.imgbtnSavePayment);
+        etPaymentName = findViewById(R.id.etContactType);
+
+        btnNewPaymentClose.setOnClickListener(this);
+        btnSaveNewPayment.setOnClickListener(this);
+
     }
 
     void openContactSuggestionLayout()
     {
         layoutContactSearch.setVisibility(View.VISIBLE);
+        layoutAddContact.setVisibility(View.GONE);
+        layoutAddPayment.setVisibility(View.GONE);
         svContact.setQuery(null, true);
         new loadContactSuggestionData().execute();
     }
@@ -180,6 +254,49 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
     void closeContactSuggestionLayout()
     {
         layoutContactSearch.setVisibility(View.GONE);
+    }
+
+    void openNewContactLayout()
+    {
+        layoutContactSearch.setVisibility(View.GONE);
+        layoutAddContact.setVisibility(View.VISIBLE);
+        layoutAddPayment.setVisibility(View.GONE);
+
+        etContactName.setText("");
+        etPhno.setText("");
+        switchLimit.setChecked(false);
+    }
+
+    void closeNewContactLayout()
+    {
+        layoutAddContact.setVisibility(View.GONE);
+    }
+
+    void openNewPaymentLayout()
+    {
+        layoutContactSearch.setVisibility(View.GONE);
+        layoutAddContact.setVisibility(View.GONE);
+        layoutAddPayment.setVisibility(View.VISIBLE);
+
+        etPaymentName.setText("");
+    }
+
+    void closeNewPaymentLayout(boolean isNewData)
+    {
+        layoutAddPayment.setVisibility(View.GONE);
+        if(isNewData)
+        {
+            paymentTypeName.clear();
+            paymentTypeName.add("None");
+            paymentTypes = dbManager.get_PaymentType();
+            int count = paymentTypes.size();
+            for (int i= 0; i< count; i++)
+            {
+                paymentTypeName.add(paymentTypes.get(i).getType());
+            }
+            paymentAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
@@ -208,8 +325,115 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
             case R.id.imgbtnNewContact:
+                openNewContactLayout();
                 break;
+
+            case R.id.btnNewContactClose:
+                closeNewContactLayout();
+                break;
+
+            case R.id.imgbtnSaveContact:
+                if(saveNewContact())
+                {
+                    closeNewContactLayout();
+                }
+                break;
+
+            case R.id.imgbtnAddPayment:
+                openNewPaymentLayout();
+                break;
+
+            case R.id.btnNewPaymentClose:
+                closeNewPaymentLayout(false);
+                break;
+
+            case R.id.imgbtnSavePayment:
+                if(saveNewPayment())
+                {
+                    closeNewPaymentLayout(true);
+                }
+                break;
+
         }
+    }
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+        if(b)
+        {
+
+            //layoutLimit.setBackground(null);
+            //layoutLimitAnim.setBackground(getResources().getDrawable(R.drawable.dilog_field_bg_9,getApplication().getTheme()));
+
+            etLimitAmt.setVisibility(View.VISIBLE);
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1,1,0,1,1,0);
+            scaleAnimation.setDuration(300);
+            scaleAnimation.setFillAfter(true);
+            scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    //layoutLimit.setBackground(getResources().getDrawable(R.drawable.dilog_field_bg_9,getApplication().getTheme()));
+                    //layoutLimitAnim.setBackground(null);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            etLimitAmt.startAnimation(scaleAnimation);
+
+            ScaleAnimation scaleAnimation1 = new ScaleAnimation(1,1,0.5f,1,1,1);
+            scaleAnimation1.setDuration(300);
+            scaleAnimation1.setFillAfter(true);
+
+            layoutLimitAnim.startAnimation(scaleAnimation1);
+
+        }else {
+            //layoutLimit.setBackground(null);
+           // layoutLimitAnim.setBackground(getResources().getDrawable(R.drawable.dilog_field_bg_9,getApplication().getTheme()));
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1,1,1,0,1,0);
+            scaleAnimation.setDuration(300);
+            scaleAnimation.setFillAfter(true);
+
+            scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    etLimitAmt.setVisibility(View.GONE);
+                    //layoutLimit.setBackground(getResources().getDrawable(R.drawable.dilog_field_bg_9,getApplication().getTheme()));
+                   // layoutLimitAnim.setBackground(null);
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            etLimitAmt.startAnimation(scaleAnimation);
+
+
+
+            ScaleAnimation scaleAnimation1 = new ScaleAnimation(1,1,1,0.5f,1,1);
+            scaleAnimation1.setDuration(300);
+            scaleAnimation1.setFillAfter(true);
+
+            layoutLimitAnim.startAnimation(scaleAnimation1);
+        }
+
     }
 
     void saveData()
@@ -241,6 +465,75 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
 
     }
 
+    Boolean saveNewContact()
+    {
+        if(etContactName.getText().toString().trim().length() <=0)
+        {
+            Toast.makeText(getApplicationContext(),"Please enter Name",Toast.LENGTH_LONG).show();
+            return  false;
+        }else if(!Globle.isValidPhoneNumber(codePicker.getSelectedCountryNameCode(),etPhno.getText().toString()))
+        {
+            Toast.makeText(getApplicationContext(),"Please enter Valid Contact Number",Toast.LENGTH_LONG).show();
+            return false;
+        }else if(switchLimit.isChecked() && etLimitAmt.getText().toString().trim().length() <=0)
+        {
+            Toast.makeText(getApplicationContext(),"Please enter Limit Amount",Toast.LENGTH_LONG).show();
+            return  false;
+        }else if(dbManager.get_ContactsFromName(etContactName.getText().toString().trim()) != -1)
+        {
+            Toast.makeText(getApplicationContext(),"Name  already exist",Toast.LENGTH_LONG).show();
+            return  false;
+        }
+        else
+        {
+            Double limitAmount = 0.0;
+            int isLimit = switchLimit.isChecked()? 1 :0;
+            if(isLimit == 1)
+            {
+                limitAmount = Double.parseDouble(etLimitAmt.getText().toString());
+            }
+            String name = etContactName.getText().toString().trim();
+            String phno = etPhno.getText().toString().trim();
+            Contacts contactData = new Contacts(
+                    name,
+                    phno,
+                    isLimit,
+                    limitAmount,
+                    null,
+                    0.0,
+                    0.0,
+                    0.0,
+                    Calendar.getInstance().getTimeInMillis());
+
+            dbManager.add_Contacts(contactData);
+
+            Toast.makeText(getApplicationContext(),"Add new Contact Successfully",Toast.LENGTH_LONG).show();
+            return  true;
+        }
+    }
+
+    boolean  saveNewPayment()
+    {
+        if(etPaymentName.getText().toString().trim().length() <=0)
+        {
+            Toast.makeText(getApplicationContext(),"Please enter Payment Type",Toast.LENGTH_LONG).show();
+            return  false;
+        }else if(dbManager.get_PaymentFromType(etPaymentName.getText().toString().trim()) != -1)
+        {
+            Toast.makeText(getApplicationContext(),"Payment type  already exist",Toast.LENGTH_LONG).show();
+            return  false;
+        }else {
+            String name = etPaymentName.getText().toString().trim();
+            PaymentType data = new PaymentType(
+                    name);
+
+            dbManager.add_PaymentType(data);
+
+            Toast.makeText(getApplicationContext(),"Add new Payment Successfully",Toast.LENGTH_LONG).show();
+            return  true;
+        }
+    }
+
     void selectAmountType(int type)
     {
         //1 = credit,  -1= debit
@@ -265,11 +558,23 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
 
     void backAction()
     {
-        Intent i = new Intent(ContactEntryActivity.this, HomeActivity.class);
-        startActivity(i);
-        overridePendingTransition(R.anim.slide_in_left,
-                R.anim.slide_out_right);
+        if(layoutContactSearch.getVisibility() == View.VISIBLE)
+        {
+            closeContactSuggestionLayout();
+        }else if(layoutAddContact.getVisibility() == View.VISIBLE)
+        {
+            closeNewContactLayout();
+        }else if(layoutAddPayment.getVisibility() == View.VISIBLE)
+        {
+            closeNewPaymentLayout(false);
+        }else {
+            Intent i = new Intent(ContactEntryActivity.this, HomeActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_left,
+                    R.anim.slide_out_right);
+        }
     }
+
 
     public class loadContactSuggestionData extends AsyncTaskExecutorService< Void, Void, Void > {
 
@@ -295,5 +600,30 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
             searchContactFromNewEntryAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    public void slideUp(View view){
+        view.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                view.getHeight(),  // fromYDelta
+                0);
+        // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+    }
+
+    // slide the view from its current position to below itself
+    public void slideDown(View view){
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                view.getHeight()); // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
     }
 }

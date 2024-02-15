@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ContactEntryActivity">
 
     <RelativeLayout
@@ -361,7 +360,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -415,49 +414,93 @@
                     android:layout_marginTop="15dp"
                     android:paddingLeft="15dp"/>
 
-                <EditText
-                    android:id="@+id/etContactNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone Number"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/textColorLightGray"
-                    android:textSize="@dimen/txtS2"
-                    android:background="@drawable/dilog_field_bg_9"
-                    android:inputType="numberDecimal"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="15dp"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_marginTop="15dp"
-                    android:padding="15dp"
                     android:background="@drawable/dilog_field_bg_9"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical">
 
-                    <Switch
-                        android:id="@+id/switchLimit"
-                        android:layout_width="match_parent"
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/country_code"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Set Limit"
-                        android:textSize="@dimen/txtS2"
-                        android:textStyle="bold"/>
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showFullName="false">
+                    </com.hbb20.CountryCodePicker>
+
+                    <RelativeLayout
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/textColorLight"/>
 
                     <EditText
-                        android:id="@+id/etLimitAmt"
-                        android:layout_width="match_parent"
+                        android:id="@+id/etContactNumber"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Limit Amount (Rs)"
+                        android:hint="Phone Number"
                         android:textColor="@color/black"
-                        android:textColorHint="@color/textColorHeading"
+                        android:background="@null"
+                        android:textColorHint="@color/textColorLightGray"
                         android:textSize="@dimen/txtS2"
-                        android:background="@color/textBg"
                         android:inputType="numberDecimal"
-                        android:layout_marginTop="15dp"
-                        android:padding="10dp"/>
+                        android:paddingLeft="15dp"/>
 
                 </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/layoutLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                   >
+
+                    <RelativeLayout
+                        android:id="@+id/layoutLimitAnim"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:visibility="visible"
+                        android:background="@drawable/dilog_field_bg_9">
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+                        <Switch
+                            android:id="@+id/switchLimit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Set Limit"
+                            android:textSize="@dimen/txtS2"
+                            android:textStyle="bold"/>
+
+                        <EditText
+                            android:id="@+id/etLimitAmt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Limit Amount (Rs)"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textColorHeading"
+                            android:textSize="@dimen/txtS2"
+                            android:background="@color/textBg"
+                            android:inputType="numberDecimal"
+                            android:layout_marginTop="15dp"
+                            android:padding="10dp"
+                            android:layout_below="@+id/switchLimit"
+                            android:visibility="visible"/>
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
 
 
             </LinearLayout>
@@ -482,7 +525,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dilogBackground"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"

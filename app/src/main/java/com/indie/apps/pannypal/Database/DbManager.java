@@ -170,6 +170,21 @@ public class DbManager {
         return dataList;
     }
 
+    public long get_PaymentFromType(String name) {
+
+        String query ="select " + DbHelper.ID + " from " + DbHelper.TBL_PAYMENTTYPE + " where " + DbHelper.P_TYPE + " = '" + name + "' COLLATE NOCASE" ;
+        @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+
+            @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(DbHelper.ID));
+            Log.d("dbManager" , "Payment Count from name Id-  "+id +"");
+            return id;
+        }
+        return -1;
+    }
+
     public long add_Contacts(Contacts data) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DbHelper.C_NAME,data.getName());
@@ -281,11 +296,8 @@ public class DbManager {
     }
 
     public long get_ContactsFromName(String name) {
-        String[] columns = new String[] { DbHelper.ID
-        };
-
-        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, DbHelper.C_NAME + " = '" + name +"'", null, null, null, null);
-        List<Contacts> dataList = new ArrayList<>();
+        String query ="select " + DbHelper.ID + " from " + DbHelper.TBL_CONTACTS + " where " + DbHelper.C_NAME + " = '" + name + "' COLLATE NOCASE" ;
+        @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query, null);
         if (cursor != null && cursor.getCount() >0) {
             cursor.moveToFirst();
 
@@ -377,5 +389,7 @@ return cursor;
         }
         return dataList;
     }
+
+
 
 }
