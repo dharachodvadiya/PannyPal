@@ -6,4 +6,5 @@
     <dimen name="txtS1">22sp</dimen>
     <dimen name="txtS2">17sp</dimen>
     <dimen name="txtS3">14sp</dimen>
+    <dimen name="txtS4">12sp</dimen>
 </resources>

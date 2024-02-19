@@ -1,6 +1,8 @@
 package com.indie.apps.pannypal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.indie.apps.pannypal.Adapter.HomeDataAdapter;
+import com.indie.apps.pannypal.Database.DbManager;
+import com.indie.apps.pannypal.Model.ContactData;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -20,10 +28,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton imgbtnProfile;
 
     Button btnNewEntry;
+
+    HomeDataAdapter homeDataAdapter;
+
+    List<ContactData> contactDataList;
+
+    RecyclerView recycleviewData;
+
+    DbManager dbManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        dbManager= new DbManager(HomeActivity.this);
+        dbManager.open();
+
         init();
 
         txtTotalBalance.setText(Globle.getFormattedValue(Globle.MyProfile.getTotalAmt()));
@@ -35,6 +55,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             layoutTotalBg.setBackgroundResource(R.drawable.home_totalbg_gradient_debit);
             layoutTotalBgLine.setBackgroundResource(R.drawable.home_totalbg_debit);
         }
+
+          recycleviewData.setHasFixedSize(true);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recycleviewData.setLayoutManager(layoutManager);
+
+        contactDataList = dbManager.get_ContactData_reverseList();
+        homeDataAdapter = new HomeDataAdapter(getApplicationContext(),contactDataList, new HomeDataAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ContactData item) {
+
+            }
+        });
+        recycleviewData.setAdapter(homeDataAdapter);
     }
 
     void init()
@@ -46,6 +79,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         imgbtnContact = findViewById(R.id.imgbtnContact);
         imgbtnHome = findViewById(R.id.imgbtnHome);
         imgbtnCalculator = findViewById(R.id.imgbtnCalculator);
+
+        recycleviewData = findViewById(R.id.recycleviewData);
 
         imgbtnHome.setSelected(true);
         imgbtnContact.setSelected(false);

@@ -4,24 +4,31 @@ public class ContactData {
     private long id;
     private long c_id;
     private long p_id;
+
+    private String c_name;
+    private String p_name;
     private int type; // credit = 1 debit = -1
     private Double amount;
     private String remark;
     private long dateTime;
 
-    public ContactData(long id, long c_id, long p_id, int type, Double amount, String remark, long dateTime) {
+    public ContactData(long id, long c_id, long p_id, String c_name, String p_name, int type, Double amount, String remark, long dateTime) {
         this.id = id;
         this.c_id = c_id;
         this.p_id = p_id;
+        this.c_name = c_name;
+        this.p_name = p_name;
         this.type = type;
         this.amount = amount;
         this.remark = remark;
         this.dateTime = dateTime;
     }
 
-    public ContactData(long c_id, long p_id, int type, Double amount, String remark, long dateTime) {
+    public ContactData(long c_id, long p_id, String c_name, String p_name, int type, Double amount, String remark, long dateTime) {
         this.c_id = c_id;
         this.p_id = p_id;
+        this.c_name = c_name;
+        this.p_name = p_name;
         this.type = type;
         this.amount = amount;
         this.remark = remark;
@@ -83,5 +90,21 @@ public class ContactData {
 
     public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getC_name() {
+        return c_name;
+    }
+
+    public void setC_name(String c_name) {
+        this.c_name = c_name;
+    }
+
+    public String getP_name() {
+        return p_name;
+    }
+
+    public void setP_name(String p_name) {
+        this.p_name = p_name;
     }
 }

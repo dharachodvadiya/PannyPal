@@ -367,6 +367,8 @@ return cursor;
         ContentValues contentValue = new ContentValues();
         contentValue.put(DbHelper.CD_CID,data.getC_id());
         contentValue.put(DbHelper.CD_PID,data.getP_id());
+        contentValue.put(DbHelper.CD_C_NAME,data.getC_name());
+        contentValue.put(DbHelper.CD_P_NAME,data.getP_name());
         contentValue.put(DbHelper.CD_TYPE,data.getType());
         contentValue.put(DbHelper.CD_AMT,data.getAmount());
         contentValue.put(DbHelper.CD_REMARK,data.getRemark());
@@ -404,6 +406,8 @@ return cursor;
         ContentValues contentValue = new ContentValues();
         contentValue.put(DbHelper.CD_CID,data.getC_id());
         contentValue.put(DbHelper.CD_PID,data.getP_id());
+        contentValue.put(DbHelper.CD_C_NAME,data.getC_name());
+        contentValue.put(DbHelper.CD_P_NAME,data.getP_name());
         contentValue.put(DbHelper.CD_TYPE,data.getType());
         contentValue.put(DbHelper.CD_AMT,data.getAmount());
         contentValue.put(DbHelper.CD_REMARK,data.getRemark());
@@ -420,6 +424,8 @@ return cursor;
         String[] columns = new String[] { DbHelper.ID,
                 DbHelper.CD_CID,
                 DbHelper.CD_PID,
+                DbHelper.CD_C_NAME,
+                DbHelper.CD_P_NAME,
                 DbHelper.CD_TYPE,
                 DbHelper.CD_AMT,
                 DbHelper.CD_REMARK,
@@ -435,6 +441,8 @@ return cursor;
                 @SuppressLint("Range") ContactData info = new ContactData(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
                         cursor.getLong(cursor.getColumnIndex(DbHelper.CD_CID)),
                         cursor.getLong(cursor.getColumnIndex(DbHelper.CD_PID)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_C_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_P_NAME)),
                         cursor.getInt(cursor.getColumnIndex(DbHelper.CD_TYPE)),
                         cursor.getDouble(cursor.getColumnIndex(DbHelper.CD_AMT)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.CD_REMARK)),
@@ -450,6 +458,43 @@ return cursor;
         return dataList;
     }
 
+    public List<ContactData> get_ContactData_reverseList() {
+        String[] columns = new String[] { DbHelper.ID,
+                DbHelper.CD_CID,
+                DbHelper.CD_PID,
+                DbHelper.CD_C_NAME,
+                DbHelper.CD_P_NAME,
+                DbHelper.CD_TYPE,
+                DbHelper.CD_AMT,
+                DbHelper.CD_REMARK,
+                DbHelper.CD_DATE
+        };
+
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, null, null, null, null, null);
+        List<ContactData> dataList = new ArrayList<>();
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+
+            do{
+                @SuppressLint("Range") ContactData info = new ContactData(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_CID)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_PID)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_C_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_P_NAME)),
+                        cursor.getInt(cursor.getColumnIndex(DbHelper.CD_TYPE)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.CD_AMT)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_REMARK)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_DATE))
+                );
+
+                dataList.add(0,info);
+
+            }while (cursor.moveToNext());
+
+            Log.d("dbManager" , "ContactData Count "+ dataList.size()+"");
+        }
+        return dataList;
+    }
 
 
 }

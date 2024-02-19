@@ -61,7 +61,9 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
     EditText etAmount, etDesc;
     int currAmtType= -1;
     long currContactTypeId = -1;
+    String currContactName;
     long currPaymentTypeId = -1;
+    String currPaymentName;
     DbManager dbManager;
 
     // search layout data
@@ -147,8 +149,10 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 if(i==0)
                 {
                     currPaymentTypeId = -1;
+                    currPaymentName = "";
                 }else {
                     currPaymentTypeId = paymentTypes.get(i-1).getId();
+                    currPaymentName = paymentTypes.get(i-1).getType();
                 }
 
             }
@@ -180,6 +184,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
             @Override
             public void onItemClick(suggestContactData item) {
                 currContactTypeId = item.getId();
+                currContactName = item.getName();
                 txtContactName.setText(item.getName());
                 closeContactSuggestionLayout();
             }
@@ -349,6 +354,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 if(contacts != null)
                 {
                     currContactTypeId = contacts.getId();
+                    currContactName = contacts.getName();
                     txtContactName.setText(contacts.getName());
                     closeContactSuggestionLayout();
                     closeNewContactLayout();
@@ -468,6 +474,8 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
             ContactData contactData = new ContactData(
                     currContactTypeId,
                     currPaymentTypeId,
+                    currContactName,
+                    currPaymentName,
                     currAmtType,
                     amount,
                     desc,

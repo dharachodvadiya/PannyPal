@@ -1,60 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/credit"
-        android:layout_centerVertical="true"/>
-
-    <TextView
-        android:id="@+id/txtRs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/txtS1"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="+000 Rs."
-        android:textColor="@color/textColorDark"/>
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp">
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:id="@+id/layoutDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/img"
-        android:layout_toLeftOf="@id/txtRs"
-        android:layout_marginLeft="15dp">
+        android:paddingBottom="10dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/txtS1"
-            android:text="Name"
-            android:textColor="@color/textColorDark"/>
-
-        <TextView
+            android:id="@+id/txtDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/txtS3"
-            android:text="description"
+            android:text="Date"
+            android:textStyle="bold"
             android:textColor="@color/textColorDark"
             android:alpha="0.5"/>
 
+        <TextView
+            android:id="@+id/txtTotalAmt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txtS2"
+            android:text="Rupies"
+            android:textStyle="bold"
+            android:textColor="@color/textColorDark"/>
+
     </LinearLayout>
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgCrDr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/credit"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/txtRs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txtS2"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="+000 Rs."
+            android:textStyle="bold"
+            android:textColor="@color/textColorDark"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/imgCrDr"
+            android:layout_toLeftOf="@id/txtRs"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS2"
+                android:text="Name"
+                android:textStyle="bold"
+                android:textColor="@color/textColorDark"/>
+
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txtS4"
+                android:text="description"
+                android:textColor="@color/textColorDark"
+                android:alpha="0.3"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/layoutLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:background="@color/textColorLight"
-        android:layout_alignParentBottom="true"
+        android:visibility="visible"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:alpha="0.1"/>
 
 
-</RelativeLayout>
+</LinearLayout>

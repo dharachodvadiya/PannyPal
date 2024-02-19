@@ -46,6 +46,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public static final String CD_CID = "cd_cId";
     public static final String CD_PID = "cd_pId";
+    public static final String CD_C_NAME = "cd_c_name";
+    public static final String CD_P_NAME = "cd_p_name";
     public static final String CD_TYPE = "cd_type";
     public static final String CD_AMT = "cd_amount";
     public static final String CD_REMARK = "cd_remark";
@@ -83,6 +85,8 @@ public class DbHelper extends SQLiteOpenHelper {
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CD_CID + " TEXT , " +
             CD_PID + " TEXT , " +
+            CD_C_NAME + " TEXT , " +
+            CD_P_NAME + " TEXT , " +
             CD_TYPE + " TEXT , " +
             CD_AMT + " TEXT , " +
             CD_REMARK + " TEXT,  " +

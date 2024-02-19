@@ -107,9 +107,11 @@
         android:id="@+id/recycleviewData"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/totalBg"
         android:layout_above="@id/bottonBg"
-        android:paddingTop="15dp"/>
+        android:layout_below="@+id/totalBg"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="2dp"
+        android:paddingTop="15dp" />
 
     <Button
         android:id="@+id/btnNewEntry"
