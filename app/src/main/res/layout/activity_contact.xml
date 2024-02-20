@@ -7,120 +7,300 @@
     tools:context=".ContactActivity">
 
     <RelativeLayout
-        android:id="@+id/topBg"
+        android:id="@+id/layoutContactList"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/topBg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            >
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:padding="10dp">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/contact_search_bg"
-                android:layout_toLeftOf="@+id/imtbtnNewContact"
-                android:layout_marginRight="10dp">
+                android:gravity="center_vertical"
+                >
 
-                <EditText
+                <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Search contact"
-                    android:textSize="@dimen/txtS2"
-                    android:background="@color/trasnperent"
-                    android:layout_marginLeft="10dp"></EditText>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/contact_search_bg"
+                    android:layout_toLeftOf="@+id/imgbtnNewContact"
+                    android:layout_marginRight="10dp">
 
-                <ImageView
+                    <SearchView
+                        android:id="@+id/svContact"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:showDividers="none"
+                        android:searchIcon="@null"
+                        android:theme="@style/AppSearchView"
+                        android:iconifiedByDefault="false"
+                        android:queryHint="Search Your Contact"
+                        android:queryBackground="@null"
+                        />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@+id/imgbtnNewContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/contact_search"
+                    android:src="@drawable/contact_new_contact"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"/>
+                    android:background="@color/trasnperent"/>
             </RelativeLayout>
 
-            <ImageButton
-                android:id="@+id/imgbtnNewContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/contact_new_contact"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@color/trasnperent"/>
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottonBg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:gravity="center"
+            android:background="@drawable/bottombg">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/imgbtnContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_contact"
+                    android:background="@color/white"
+                    android:contentDescription="Contact"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/imgbtnHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_home"
+                    android:background="@color/white"
+                    android:contentDescription="Home"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/imgbtnCalculator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_calculator"
+                    android:background="@color/white"
+                    android:contentDescription="Calculator"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleviewData"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/topBg"
+            android:layout_above="@id/bottonBg"
+            android:paddingTop="15dp"/>
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/bottonBg"
+
+
+    <RelativeLayout
+        android:id="@+id/layoutAddContact"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center"
-        android:background="@drawable/bottombg">
+        android:layout_height="match_parent"
+        android:background="@color/dilogBackground"
+        android:clickable="true"
+        android:visibility="gone">
 
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:background="@drawable/dilog_bg_9"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:id="@+id/headerLayoutNewContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Contact"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txtS2"
+                    android:textColor="@color/textColorDark"/>
+
+                <ImageButton
+                    android:id="@+id/btnNewContactClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_close"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/headerLayoutNewContact"
+                android:layout_above="@+id/imgbtnSaveContact"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etContactName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:gravity="center_vertical">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/country_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showFullName="false"
+                        app:ccp_textSize="@dimen/txtS2">
+                    </com.hbb20.CountryCodePicker>
+
+                    <RelativeLayout
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/textColorLight"/>
+
+                    <EditText
+                        android:id="@+id/etContactNumber"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        android:textColor="@color/black"
+                        android:background="@null"
+                        android:textColorHint="@color/textColorLightGray"
+                        android:textSize="@dimen/txtS2"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="15dp"/>
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/layoutLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/layoutLimitAnim"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:visibility="visible"
+                        android:background="@drawable/dilog_field_bg_9">
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+                        <Switch
+                            android:id="@+id/switchLimit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Set Limit"
+                            android:textSize="@dimen/txtS2"
+                            android:textStyle="bold"/>
+
+                        <EditText
+                            android:id="@+id/etLimitAmt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Limit Amount (Rs)"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textColorHeading"
+                            android:textSize="@dimen/txtS2"
+                            android:background="@color/textBg"
+                            android:inputType="numberDecimal"
+                            android:layout_marginTop="15dp"
+                            android:padding="10dp"
+                            android:layout_below="@+id/switchLimit"
+                            android:visibility="visible"/>
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
             <ImageButton
-                android:id="@+id/imgbtnContact"
+                android:id="@+id/imgbtnSaveContact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/btn_contact"
-                android:background="@color/white"
-                android:contentDescription="Contact"/>
+                android:src="@drawable/add_entry_btn_save"
+                android:layout_alignParentBottom="true"
+                android:background="@color/trasnperent"
+                android:layout_centerHorizontal="true"
+                />
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
 
-            <ImageButton
-                android:id="@+id/imgbtnHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/btn_home"
-                android:background="@color/white"
-                android:contentDescription="Home"/>
+    </RelativeLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageButton
-                android:id="@+id/imgbtnCalculator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/btn_calculator"
-                android:background="@color/white"
-                android:contentDescription="Calculator"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleviewData"
+    <RelativeLayout
+        android:id="@+id/layoutSpecificContact"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/topBg"
-        android:layout_above="@id/bottonBg"
-        android:paddingTop="15dp"/>
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+    </RelativeLayout>
 
 </RelativeLayout>

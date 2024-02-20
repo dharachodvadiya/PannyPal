@@ -33,11 +33,13 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
     MyViewHolder currDayViewHolder;
     String todayDate,yesterDayDate;
 
+    boolean isSearch;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    public HomeDataAdapter(Context c, List<ContactData> dataList, OnItemClickListener listener) {
+    public HomeDataAdapter(Context c, List<ContactData> dataList, boolean isSearch, OnItemClickListener listener) {
         this.c = c;
         this.dataList = dataList;
         this.listener = listener;
+        this.isSearch = isSearch;
 
         Calendar calendar = Calendar.getInstance();
         todayDate = simpleDateFormat.format(calendar.getTimeInMillis());
@@ -102,62 +104,68 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
         }
 
 
-
-        String currDate = simpleDateFormat.format(data.getDateTime());
-        String prevDate = "";
-        String nextDate = "";
-
-        if(position != 0)
+        if(isSearch)
         {
-            prevDate = simpleDateFormat.format(dataList.get(position-1).getDateTime());
-        }
-
-        if(position != dataList.size()-1)
-        {
-            nextDate = simpleDateFormat.format(dataList.get(position+1).getDateTime());
-        }
-
-
-
-        if(!currDate.equals(prevDate))
-        {
-            holder.layoutDate.setVisibility(View.VISIBLE);
-
-            if(currDate.equals(todayDate))
-            {
-                holder.txtDate.setText("Today");
-            }else if(currDate.equals(yesterDayDate))
-            {
-                holder.txtDate.setText("Yesterday");
-            }else {
-                holder.txtDate.setText(currDate);
-            }
-
-
-            currDayViewHolder = holder;
-
-        }else {
             holder.layoutDate.setVisibility(View.GONE);
-        }
+        }else {
+            String currDate = simpleDateFormat.format(data.getDateTime());
+            String prevDate = "";
+            String nextDate = "";
 
-
-        if(!currDate.equals(nextDate))
-        {
-            holder.layoutLine.setVisibility(View.GONE);
-
-            currDayViewHolder.txtTotalAmt.setText("" + Globle.getFormattedValue(totalPerDay));
-            if(totalPerDay >=0)
+            if(position != 0)
             {
-                currDayViewHolder.txtTotalAmt.setTextColor(c.getResources().getColor(R.color.credit));
-            }else {
-                currDayViewHolder.txtTotalAmt.setTextColor(c.getResources().getColor(R.color.debit));
+                prevDate = simpleDateFormat.format(dataList.get(position-1).getDateTime());
             }
 
-            totalPerDay = 0.0;
+            if(position != dataList.size()-1)
+            {
+                nextDate = simpleDateFormat.format(dataList.get(position+1).getDateTime());
+            }
 
-        }else {
-            holder.layoutLine.setVisibility(View.VISIBLE);
+
+
+            if(!currDate.equals(prevDate))
+            {
+                holder.layoutDate.setVisibility(View.VISIBLE);
+
+                if(currDate.equals(todayDate))
+                {
+                    holder.txtDate.setText("Today");
+                }else if(currDate.equals(yesterDayDate))
+                {
+                    holder.txtDate.setText("Yesterday");
+                }else {
+                    holder.txtDate.setText(currDate);
+                }
+
+
+                currDayViewHolder = holder;
+
+            }else {
+                holder.layoutDate.setVisibility(View.GONE);
+            }
+
+
+            if(!currDate.equals(nextDate))
+            {
+                holder.layoutLine.setVisibility(View.GONE);
+
+                currDayViewHolder.txtTotalAmt.setText("" + Globle.getFormattedValue(totalPerDay));
+                if(totalPerDay >=0)
+                {
+                    currDayViewHolder.txtTotalAmt.setTextColor(c.getResources().getColor(R.color.credit));
+                }else {
+                    currDayViewHolder.txtTotalAmt.setTextColor(c.getResources().getColor(R.color.debit));
+                }
+
+                totalPerDay = 0.0;
+
+            }else {
+                holder.layoutLine.setVisibility(View.VISIBLE);
+            }
         }
+
+
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
@@ -18,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -82,20 +84,15 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
     // new Contact
     RelativeLayout layoutAddContact;
     ImageButton btnNewContactClose,btnSaveNewContact;
-
     RelativeLayout layoutLimit,layoutLimitAnim;
     EditText etContactName, etPhno , etLimitAmt;
-
     CountryCodePicker codePicker;
     Switch switchLimit;
 
     // new Payment
-
     RelativeLayout layoutAddPayment;
     ImageButton btnNewPaymentClose,btnSaveNewPayment;
-
     EditText etPaymentName;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -334,6 +331,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
             case R.id.imgbtnSelectContact:
+                hideKeyboard(this);
                openContactSuggestionLayout();
                 break;
 
@@ -342,11 +340,14 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
             case R.id.imgbtnNewContact:
+                hideKeyboard(this);
                 openNewContactLayout();
                 break;
 
             case R.id.btnNewContactClose:
                 closeNewContactLayout();
+                hideKeyboard(this);
+                openContactSuggestionLayout();
                 break;
 
             case R.id.imgbtnSaveContact:
@@ -362,6 +363,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
             case R.id.imgbtnAddPayment:
+                hideKeyboard(this);
                 openNewPaymentLayout();
                 break;
 
@@ -377,6 +379,18 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
         }
+    }
+
+    // Close keyboard. Wont work if an EditText has focus.
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -469,6 +483,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
             Toast.makeText(getApplicationContext(),"Please enter Amount",Toast.LENGTH_LONG).show();
             return false;
         }else {
+
             Double amount = Double.parseDouble(etAmount.getText().toString());
             String desc = etDesc.getText().toString().trim();
             ContactData contactData = new ContactData(
@@ -507,29 +522,37 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         }
         else
         {
-            Double limitAmount = 0.0;
-            int isLimit = switchLimit.isChecked()? 1 :0;
-            if(isLimit == 1)
-            {
-                limitAmount = Double.parseDouble(etLimitAmt.getText().toString());
-            }
             String name = etContactName.getText().toString().trim();
-            String phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
-            Contacts contactData = new Contacts(
-                    name,
-                    phno,
-                    isLimit,
-                    limitAmount,
-                    null,
-                    0.0,
-                    0.0,
-                    0.0,
-                    Calendar.getInstance().getTimeInMillis());
+            if(dbManager.get_ContactsFromName(name) == -1)
+            {
+                Double limitAmount = 0.0;
+                int isLimit = switchLimit.isChecked()? 1 :0;
+                if(isLimit == 1)
+                {
+                    limitAmount = Double.parseDouble(etLimitAmt.getText().toString());
+                }
 
-            contactData.setId(dbManager.add_Contacts(contactData));
+                String phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
+                Contacts contactData = new Contacts(
+                        name,
+                        phno,
+                        isLimit,
+                        limitAmount,
+                        null,
+                        0.0,
+                        0.0,
+                        0.0,
+                        Calendar.getInstance().getTimeInMillis());
 
-            Toast.makeText(getApplicationContext(),"Add new Contact Successfully",Toast.LENGTH_LONG).show();
-            return  contactData;
+                contactData.setId(dbManager.add_Contacts(contactData));
+
+                Toast.makeText(getApplicationContext(),"Add new Contact Successfully",Toast.LENGTH_LONG).show();
+                return  contactData;
+            }else {
+                Toast.makeText(getApplicationContext(),"Contact Name Already Exist",Toast.LENGTH_LONG).show();
+                return  null;
+            }
+
         }
     }
 

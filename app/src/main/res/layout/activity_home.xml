@@ -6,179 +6,245 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <!--<RelativeLayout
+    <RelativeLayout
+        android:id="@+id/layoutContact"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/screen2done"
-        android:layout_marginTop="-35dp"></RelativeLayout>
--->
-    <RelativeLayout
-        android:id="@+id/topBg"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:padding="10dp">
+        android:visibility="visible">
 
         <RelativeLayout
+            android:id="@+id/topBg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <ImageButton
-                android:id="@+id/imgbtnProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile_bg"
-                android:background="@color/trasnperent"
-                android:gravity="center">
-           </ImageButton>
-
-            <ImageButton
-                android:id="@+id/imgbtnSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_search"
-                android:background="@color/trasnperent"
-                android:layout_centerVertical="true"
-                android:padding="12dp"
-                android:layout_alignParentRight="true"
-                android:contentDescription="Search Contact"/>
-
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/totalBg"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_below="@+id/topBg"
-        android:background="@drawable/home_totalbg_gradient_credit">
-
-        <RelativeLayout
-            android:id="@+id/totalBgLine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/home_totalbg_credit"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp">
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:padding="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/home_totalbg"
-                android:layout_marginTop="3dp"
-                android:gravity="center">
+                >
 
-                <LinearLayout
+                <ImageButton
+                    android:id="@+id/imgbtnProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:src="@drawable/profile_bg"
+                    android:background="@color/trasnperent"
                     android:gravity="center">
+                </ImageButton>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textColorLight"
-                        android:text="Balance"
-                        android:textSize="@dimen/txtL2"
-                        android:textAlignment="center"
-                        android:textStyle="bold"/>
+                <ImageButton
+                    android:id="@+id/imgbtnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    android:background="@color/trasnperent"
+                    android:layout_centerVertical="true"
+                    android:padding="12dp"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="Search Contact"
+                    android:visibility="gone"/>
 
-                    <TextView
-                        android:id="@+id/txtTotalBalance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textColorDark"
-                        android:text="000000"
-                        android:textSize="@dimen/txtL1"
-                        android:textAlignment="center"/>
-
-                </LinearLayout>
 
             </RelativeLayout>
+
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/totalBg"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_below="@+id/topBg"
+            android:background="@drawable/home_totalbg_gradient_credit">
+
+            <RelativeLayout
+                android:id="@+id/totalBgLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_totalbg_credit"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_totalbg"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorLight"
+                            android:text="Balance"
+                            android:textSize="@dimen/txtL2"
+                            android:textAlignment="center"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/txtTotalBalance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorDark"
+                            android:text="000000"
+                            android:textSize="@dimen/txtL1"
+                            android:textAlignment="center"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleviewData"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/bottonBg"
+            android:layout_below="@+id/totalBg"
+            android:layout_marginTop="-2dp"
+            android:layout_marginBottom="2dp"
+            android:paddingTop="15dp" />
+
+        <Button
+            android:id="@+id/btnNewEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_btn_newentry"
+            android:layout_above="@+id/bottonBg"
+            android:layout_alignParentRight="true"/>
+
+        <LinearLayout
+            android:id="@+id/bottonBg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:gravity="center"
+            android:background="@drawable/bottombg">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/imgbtnContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_contact"
+                    android:background="@color/white"
+                    android:contentDescription="Contact"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/imgbtnHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_home"
+                    android:background="@color/white"
+                    android:contentDescription="Home"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/imgbtnCalculator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_calculator"
+                    android:background="@color/white"
+                    android:contentDescription="Calculator"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleviewData"
+    <RelativeLayout
+        android:id="@+id/layoutContactSearch"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/bottonBg"
-        android:layout_below="@+id/totalBg"
-        android:layout_marginTop="-2dp"
-        android:layout_marginBottom="2dp"
-        android:paddingTop="15dp" />
-
-    <Button
-        android:id="@+id/btnNewEntry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_btn_newentry"
-        android:layout_above="@+id/bottonBg"
-        android:layout_alignParentRight="true"/>
-    
-    <LinearLayout
-        android:id="@+id/bottonBg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:gravity="center"
-        android:background="@drawable/bottombg">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:id="@+id/topBgSearch"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:padding="10dp">
 
-            <ImageButton
-                android:id="@+id/imgbtnContact"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/btn_contact"
-                android:background="@color/white"
-                android:contentDescription="Contact"/>
+                >
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent">
+                </ImageButton>
+
+                <SearchView
+                    android:id="@+id/svContact"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:showDividers="none"
+                    android:searchIcon="@null"
+                    android:theme="@style/AppSearchView"
+                    android:layout_toRightOf="@+id/btnBack"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Search Your Contact"
+                    android:queryBackground="@null"
+                    />
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
 
-            <ImageButton
-                android:id="@+id/imgbtnHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/btn_home"
-                android:background="@color/white"
-                android:contentDescription="Home"/>
 
-        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleviewDataSearch"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/topBgSearch"
+            android:layout_marginTop="-2dp"
+            android:layout_marginBottom="2dp"
+            android:paddingTop="15dp" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
 
-            <ImageButton
-                android:id="@+id/imgbtnCalculator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/btn_calculator"
-                android:background="@color/white"
-                android:contentDescription="Calculator"/>
 
-        </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </RelativeLayout>

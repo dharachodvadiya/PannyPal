@@ -237,7 +237,7 @@ public class DbManager {
                 DbHelper.C_DATE
         };
 
-        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, null, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, null, null, null, null, DbHelper.C_DATE+" DESC");
         List<Contacts> dataList = new ArrayList<>();
         if (cursor != null && cursor.getCount() >0) {
             cursor.moveToFirst();
@@ -316,7 +316,7 @@ public class DbManager {
                 DbHelper.C_DATE
         };
 
-        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, null, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTS, columns, null, null, null, null, DbHelper.C_DATE+" DESC");
         List<suggestContactData> dataList = new ArrayList<>();
         if (cursor != null && cursor.getCount() >0) {
             cursor.moveToFirst();
@@ -335,7 +335,7 @@ public class DbManager {
         return dataList;
     }
 
-    /*public long get_ContactsFromName(String name) {
+    public long get_ContactsFromName(String name) {
         String query ="select " + DbHelper.ID + " from " + DbHelper.TBL_CONTACTS + " where " + DbHelper.C_NAME + " = '" + name + "' COLLATE NOCASE" ;
         @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query, null);
         if (cursor != null && cursor.getCount() >0) {
@@ -346,7 +346,7 @@ public class DbManager {
             return id;
         }
         return -1;
-    }*/
+    }
 
     public Cursor get_Contacts_suggestion(String name) {
         String[] columns = new String[] { DbHelper.ID,
@@ -458,7 +458,7 @@ return cursor;
         return dataList;
     }
 
-    public List<ContactData> get_ContactData_reverseList() {
+    public List<ContactData> get_ContactData_List_DESC() {
         String[] columns = new String[] { DbHelper.ID,
                 DbHelper.CD_CID,
                 DbHelper.CD_PID,
@@ -470,7 +470,7 @@ return cursor;
                 DbHelper.CD_DATE
         };
 
-        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, null, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, null, null, null, null, DbHelper.CD_DATE+" DESC");
         List<ContactData> dataList = new ArrayList<>();
         if (cursor != null && cursor.getCount() >0) {
             cursor.moveToFirst();
@@ -487,7 +487,7 @@ return cursor;
                         cursor.getLong(cursor.getColumnIndex(DbHelper.CD_DATE))
                 );
 
-                dataList.add(0,info);
+                dataList.add(info);
 
             }while (cursor.moveToNext());
 
