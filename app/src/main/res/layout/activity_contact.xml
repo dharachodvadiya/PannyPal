@@ -16,12 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:gravity="center"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="visible">
 
             <RelativeLayout
+                android:id="@+id/layoutSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:visibility="visible"
                 >
 
                 <RelativeLayout
@@ -54,7 +57,44 @@
                     android:background="@color/trasnperent"/>
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/layoutMultiselect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent">
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/imgBtnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/trasnperent"
+                    android:layout_marginRight="10dp"/>
+
+                <ImageButton
+                    android:id="@+id/imgBtnMultiDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:layout_toLeftOf="@+id/imgBtnEdit"
+                    android:background="@color/trasnperent"
+                    android:layout_marginRight="10dp"/>
+
+            </RelativeLayout>
+
         </RelativeLayout>
+
+
 
         <LinearLayout
             android:id="@+id/bottonBg"

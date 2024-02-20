@@ -33,7 +33,7 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     // contact list layout data
-    RelativeLayout layoutContactList;
+    RelativeLayout layoutSearch, layoutMultiSelect;
     ImageButton imgbtnContact, imgbtnHome, imgbtnCalculator;
     RecyclerView recycleviewData;
     SearchView svContact ;
@@ -42,6 +42,8 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     ContactAdapter contactAdapter;
     List<Contacts> suggestContactAllData = new ArrayList<>();
     List<Contacts> suggestContactadapterData = new ArrayList<>();
+
+    List<Contacts> selectContactList = new ArrayList<>();
 
     //new contact
     RelativeLayout layoutAddContact;
@@ -70,10 +72,12 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
         // contact list layout data
 
-        layoutContactList = findViewById(R.id.layoutContactList);
         imgbtnContact = findViewById(R.id.imgbtnContact);
         imgbtnHome = findViewById(R.id.imgbtnHome);
         imgbtnCalculator = findViewById(R.id.imgbtnCalculator);
+
+        layoutMultiSelect = findViewById(R.id.layoutMultiselect);
+        layoutSearch = findViewById(R.id.layoutSearch);
 
         recycleviewData = findViewById(R.id.recycleviewData);
         svContact = findViewById(R.id.svContact);
@@ -92,12 +96,32 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recycleviewData.setLayoutManager(layoutManager);
 
-        contactAdapter = new ContactAdapter(this,suggestContactadapterData, new ContactAdapter.OnItemClickListener() {
+        contactAdapter = new ContactAdapter(this,this,suggestContactadapterData, new ContactAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Contacts item) {
                 Intent i = new Intent(ContactActivity.this, ContactSelectedActivity.class);
                 startActivity(i);
             }
+
+            @Override
+            public void OnItemLongClickAdd(Contacts item) {
+                selectContactList.add(item);
+                openMultiselectLayout();
+            }
+
+            @Override
+            public void OnItemLongClickRemove(Contacts item) {
+                selectContactList.remove(item);
+
+                if(selectContactList.size() == 0)
+                {
+                    contactAdapter.setSelected(false);
+                    openSearchLayout();
+                }else {
+                    openMultiselectLayout();
+                }
+            }
+
         });
         recycleviewData.setAdapter(contactAdapter);
 
@@ -176,6 +200,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.imgbtnNewContact:
                 hideKeyboard(this);
+                svContact.setQuery(null,true);
                 openNewContactLayout();
                 break;
 
@@ -248,12 +273,23 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
     void backAction()
     {
-
+        if(!svContact.getQuery().toString().isEmpty())
+        {
+            svContact.setQuery(null,true);
+        }else if(layoutMultiSelect.getVisibility() == View.VISIBLE)
+        {
+            selectContactList.clear();
+            contactAdapter.setSelected(false);
+            openSearchLayout();
+        }else  if(layoutAddContact.getVisibility() == View.VISIBLE)
+        {
+            closeNewContactLayout();
+        }
     }
 
     void openContactListLayout(boolean isComeFromNewData, Contacts contacts)
     {
-        layoutContactList.setVisibility(View.VISIBLE);
+        openSearchLayout();
         layoutAddContact.setVisibility(View.GONE);
         svContact.setQuery(null, true);
 
@@ -335,5 +371,29 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             }
 
         }
+    }
+
+    void  openSearchLayout()
+    {
+        layoutMultiSelect.setVisibility(View.GONE);
+        layoutSearch.setVisibility(View.VISIBLE);
+    }
+
+    void openMultiselectLayout()
+    {
+        layoutMultiSelect.setVisibility(View.VISIBLE);
+        layoutSearch.setVisibility(View.GONE);
+
+        if(selectContactList.size() == 1)
+        {
+            //show edit button
+        }else {
+            //hide edit button
+        }
+    }
+
+    public boolean isLongClickAvailable()
+    {
+        return svContact.getQuery().toString().isEmpty();
     }
 }
