@@ -351,6 +351,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 break;
 
             case R.id.imgbtnSaveContact:
+                hideKeyboard(this);
                 Contacts contacts = saveNewContact();
                 if(contacts != null)
                 {
@@ -511,7 +512,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
         {
             Toast.makeText(getApplicationContext(),"Please enter Name",Toast.LENGTH_LONG).show();
             return  null;
-        }else if(!Globle.isValidPhoneNumber(codePicker.getSelectedCountryNameCode(),etPhno.getText().toString()))
+        }else if(!etPhno.getText().toString().isEmpty() && !Globle.isValidPhoneNumber(codePicker.getSelectedCountryNameCode(),etPhno.getText().toString()))
         {
             Toast.makeText(getApplicationContext(),"Please enter Valid Contact Number",Toast.LENGTH_LONG).show();
             return null;
@@ -531,8 +532,11 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 {
                     limitAmount = Double.parseDouble(etLimitAmt.getText().toString());
                 }
-
-                String phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
+                String phno="";
+                if(!etPhno.getText().toString().isEmpty() )
+                {
+                    phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
+                }
                 Contacts contactData = new Contacts(
                         name,
                         phno,

@@ -122,7 +122,7 @@ public class Contacts {
 
     public  void addRemoveAmt(double amt)
     {
-        this.totalAmt += totalAmt;
+        this.totalAmt += amt;
     }
 
     public long getDateTime() {

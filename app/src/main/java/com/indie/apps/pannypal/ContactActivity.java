@@ -51,8 +51,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     CountryCodePicker codePicker;
     Switch switchLimit;
 
-    //specific contact
-    RelativeLayout layoutSpecificContact;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,10 +92,11 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recycleviewData.setLayoutManager(layoutManager);
 
-        contactAdapter = new ContactAdapter(suggestContactadapterData, new ContactAdapter.OnItemClickListener() {
+        contactAdapter = new ContactAdapter(this,suggestContactadapterData, new ContactAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Contacts item) {
-                openSpecificContactLayout(item);
+                Intent i = new Intent(ContactActivity.this, ContactSelectedActivity.class);
+                startActivity(i);
             }
         });
         recycleviewData.setAdapter(contactAdapter);
@@ -153,10 +153,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         btnSaveNewContact.setOnClickListener(this);
         switchLimit.setOnCheckedChangeListener(this);
 
-        //specific contact
-
-        layoutSpecificContact = findViewById(R.id.layoutSpecificContact);
-
         openContactListLayout(false,null);
     }
 
@@ -189,6 +185,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.imgbtnSaveContact:
+                hideKeyboard(this);
                 Contacts contacts = saveNewContact();
                 if(contacts != null)
                 {
@@ -258,7 +255,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     {
         layoutContactList.setVisibility(View.VISIBLE);
         layoutAddContact.setVisibility(View.GONE);
-        layoutSpecificContact.setVisibility(View.GONE);
         svContact.setQuery(null, true);
 
         if(isComeFromNewData)
@@ -273,17 +269,9 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    void openSpecificContactLayout(Contacts currContact)
-    {
-        layoutContactList.setVisibility(View.GONE);
-        layoutAddContact.setVisibility(View.GONE);
-        layoutSpecificContact.setVisibility(View.VISIBLE);
-    }
-
     void openNewContactLayout()
     {
         layoutAddContact.setVisibility(View.VISIBLE);
-        layoutSpecificContact.setVisibility(View.GONE);
 
         etContactName.setText("");
         etPhno.setText("");
@@ -301,7 +289,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         {
             Toast.makeText(getApplicationContext(),"Please enter Name",Toast.LENGTH_LONG).show();
             return  null;
-        }else if(!Globle.isValidPhoneNumber(codePicker.getSelectedCountryNameCode(),etPhno.getText().toString()))
+        }else if(!etPhno.getText().toString().isEmpty() && !Globle.isValidPhoneNumber(codePicker.getSelectedCountryNameCode(),etPhno.getText().toString()))
         {
             Toast.makeText(getApplicationContext(),"Please enter Valid Contact Number",Toast.LENGTH_LONG).show();
             return null;
@@ -321,8 +309,11 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                 {
                     limitAmount = Double.parseDouble(etLimitAmt.getText().toString());
                 }
-               // String name = etContactName.getText().toString().trim();
-                String phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
+                String phno="";
+                if(!etPhno.getText().toString().isEmpty() )
+                {
+                    phno = codePicker.getSelectedCountryCode() + " " +etPhno.getText().toString().trim();
+                }
                 Contacts contactData = new Contacts(
                         name,
                         phno,
@@ -342,6 +333,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(getApplicationContext(),"Contact Name Already Exist",Toast.LENGTH_LONG).show();
                 return  null;
             }
+
         }
     }
 }
