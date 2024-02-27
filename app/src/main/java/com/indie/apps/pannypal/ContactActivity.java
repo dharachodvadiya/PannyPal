@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hbb20.CountryCodePicker;
@@ -37,13 +38,15 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     ImageButton imgbtnContact, imgbtnHome, imgbtnCalculator;
     RecyclerView recycleviewData;
     SearchView svContact ;
-    ImageButton  btnNewContact;
+    ImageButton  btnNewContact,btnBack, imgBtnEdit, imgBtnMultiDelete;
     DbManager dbManager;
     ContactAdapter contactAdapter;
     List<Contacts> suggestContactAllData = new ArrayList<>();
     List<Contacts> suggestContactadapterData = new ArrayList<>();
 
     List<Contacts> selectContactList = new ArrayList<>();
+
+    TextView txtNoDataFound;
 
     //new contact
     RelativeLayout layoutAddContact;
@@ -82,6 +85,10 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         recycleviewData = findViewById(R.id.recycleviewData);
         svContact = findViewById(R.id.svContact);
         btnNewContact = findViewById(R.id.imgbtnNewContact);
+        btnBack = findViewById(R.id.btnBack);
+        imgBtnEdit = findViewById(R.id.imgBtnEdit);
+        imgBtnMultiDelete = findViewById(R.id.imgBtnMultiDelete);
+        txtNoDataFound = findViewById(R.id.txtNoDataFound);
 
         imgbtnHome.setSelected(false);
         imgbtnContact.setSelected(true);
@@ -91,12 +98,15 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         imgbtnContact.setOnClickListener(this);
         imgbtnCalculator.setOnClickListener(this);
         btnNewContact.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
+        imgBtnEdit.setOnClickListener(this);
+        imgBtnMultiDelete.setOnClickListener(this);
 
         recycleviewData.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recycleviewData.setLayoutManager(layoutManager);
 
-        contactAdapter = new ContactAdapter(this,this,suggestContactadapterData, new ContactAdapter.OnItemClickListener() {
+        contactAdapter = new ContactAdapter(this,this,suggestContactadapterData, txtNoDataFound,new ContactAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Contacts item) {
                 Intent i = new Intent(ContactActivity.this, ContactSelectedActivity.class);
@@ -148,12 +158,12 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     }
 
-                    contactAdapter.notifyDataSetChanged();
+                    contactAdapter.dataChange();
 
                 }else {
                     suggestContactadapterData.clear();
                     suggestContactadapterData.addAll(suggestContactAllData);
-                    contactAdapter.notifyDataSetChanged();
+                    contactAdapter.dataChange();
                 }
                 return false;
             }
@@ -218,6 +228,30 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                     openContactListLayout(true,contacts);
                 }
                 break;
+            case R.id.btnBack:
+                hideKeyboard(this);
+                backAction();
+                break;
+
+            case R.id.imgBtnEdit:
+                break;
+
+            case R.id.imgBtnMultiDelete:
+                int count = selectContactList.size();
+
+                if(dbManager.delete_ContactFromIds(selectContactList) >0)
+                {
+                    for (int j = 0; j< count ;j++)
+                    {
+                        suggestContactadapterData.remove(selectContactList.get(j));
+                    }
+                    selectContactList.clear();
+                    contactAdapter.setSelected(false);
+                    openSearchLayout();
+                   // contactAdapter.notifyDataSetChanged();
+
+                }
+                break;
         }
     }
 
@@ -258,7 +292,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(Void result) {
-            contactAdapter.notifyDataSetChanged();
+            contactAdapter.dataChange();
         }
 
     }
@@ -298,7 +332,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             suggestContactAllData.add(0,contacts);
             suggestContactadapterData.add(0,contacts);
 
-            contactAdapter.notifyItemInserted(0);
+            contactAdapter.itemInsertDataChange(0);
         }else {
             new loadContactSuggestionData().execute();
         }
@@ -358,7 +392,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                         null,
                         0.0,
                         0.0,
-                        0.0,
                         Calendar.getInstance().getTimeInMillis());
 
                 contactData.setId(dbManager.add_Contacts(contactData));
@@ -387,8 +420,10 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         if(selectContactList.size() == 1)
         {
             //show edit button
+            imgBtnEdit.setVisibility(View.VISIBLE);
         }else {
             //hide edit button
+            imgBtnEdit.setVisibility(View.GONE);
         }
     }
 

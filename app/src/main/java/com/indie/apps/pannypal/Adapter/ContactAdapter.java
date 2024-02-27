@@ -27,12 +27,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     private OnItemClickListener listener;
 
     boolean isSelected = false;
+    TextView txtNoDataFound;
 
-    public ContactAdapter(ContactActivity activity,Context c,List<Contacts> dataList, OnItemClickListener listener) {
+    public ContactAdapter(ContactActivity activity,Context c,List<Contacts> dataList,TextView txtNoDataFound, OnItemClickListener listener) {
         this.c = c;
         this.contactActivity = activity;
         this.dataList = dataList;
         this.listener = listener;
+        this.txtNoDataFound = txtNoDataFound;
         setSelected(false);
     }
 
@@ -72,6 +74,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         {
             holder.chkSelect.setVisibility(View.VISIBLE);
         }else {
+            holder.chkSelect.setChecked(false);
             holder.chkSelect.setVisibility(View.GONE);
         }
 
@@ -91,12 +94,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             holder.txtLimitAmt.setText(data.getLimitAmt() +"");
         }
 
-        if(data.getTotalAmt() >=0)
+        double total = data.getCreditAmt()-data.getDebitAmt();
+        if(total >=0)
         {
             holder.txtAmt.setText("+" + Globle.getFormattedValue(data.getCreditAmt()));
             holder.txtAmt.setTextColor(c.getResources().getColor(R.color.credit));
         }else {
-            holder.txtAmt.setText("" + Globle.getFormattedValue(data.getTotalAmt()));
+            holder.txtAmt.setText("-" + Globle.getFormattedValue(data.getDebitAmt()));
             holder.txtAmt.setTextColor(c.getResources().getColor(R.color.debit));
         }
         holder.v.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +158,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         {
             isSelected = isSelect;
             notifyDataSetChanged();
+            if(dataList.size() >0)
+            {
+                txtNoDataFound.setVisibility(View.GONE);
+            }else {
+                txtNoDataFound.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -168,6 +178,28 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         void OnItemLongClickAdd(Contacts item);
         void OnItemLongClickRemove(Contacts item);
 
+    }
+
+    public  void itemInsertDataChange(int pos)
+    {
+        if(dataList.size() > 0)
+        {
+            txtNoDataFound.setVisibility(View.GONE);
+        }else {
+            txtNoDataFound.setVisibility(View.VISIBLE);
+        }
+        notifyItemInserted(pos);
+    }
+
+    public  void dataChange()
+    {
+        if(dataList.size() > 0)
+        {
+            txtNoDataFound.setVisibility(View.GONE);
+        }else {
+            txtNoDataFound.setVisibility(View.VISIBLE);
+        }
+        notifyDataSetChanged();
     }
 
 }

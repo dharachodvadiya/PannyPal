@@ -25,7 +25,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String U_PROFILE_URL = "u_url";
     public static final String U_CREDIT = "u_credit";
     public static final String U_DEBIT = "u_debit";
-    public static final String U_TOTAL = "u_total";
 
 
     //Payment_type table
@@ -39,7 +38,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String C_PROFILEURL = "c_profileURL";
     public static final String C_CREDITAMT = "c_creditAmt";
     public static final String C_DEBITAMT = "c_debitAmt";
-    public static final String C_TOTALAMT = "c_totalAmt";
     public static final String C_DATE = "c_dateTime";
 
     //Caontact data table
@@ -59,8 +57,7 @@ public class DbHelper extends SQLiteOpenHelper {
             U_EMAIL + " TEXT , " +
             U_PROFILE_URL + " TEXT , " +
             U_CREDIT + " TEXT , " +
-            U_DEBIT + " TEXT , " +
-            U_TOTAL + " TEXT " +
+            U_DEBIT + " TEXT "+
             ");";
 
     private static final String CREATE_TABLE_PAYMENTTYPE = "create table " + TBL_PAYMENTTYPE + "(" + ID
@@ -75,7 +72,6 @@ public class DbHelper extends SQLiteOpenHelper {
             C_ISLIMIT + " TEXT , " +
             C_LIMITAMT + " TEXT , " +
             C_PROFILEURL + " TEXT , " +
-            C_TOTALAMT + " TEXT ," +
             C_CREDITAMT + " TEXT ," +
             C_DEBITAMT + " TEXT ," +
             C_DATE + " TEXT " +

@@ -25,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         init();
 
-        if(Globle.MyProfile.getTotalAmt() >=0)
+        if((Globle.MyProfile.getCreditAmt() - Globle.MyProfile.getDebitAmt()) >=0)
         {
             layoutbg.setBackgroundResource(R.drawable.profile_bg_credit);
             txtTotal.setTextColor(getResources().getColor(R.color.credit));
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         imgbtnBack.setOnClickListener(this);
 
         txtName.setText(Globle.MyProfile.getName());
-        txtTotal.setText(Globle.getFormattedValue(Globle.MyProfile.getTotalAmt()));
+        txtTotal.setText(Globle.getFormattedValue((Globle.MyProfile.getCreditAmt() - Globle.MyProfile.getDebitAmt())));
         txtCredit.setText(Globle.getFormattedValue(Globle.MyProfile.getCreditAmt()));
         txtDebit.setText(Globle.getFormattedValue(Globle.MyProfile.getDebitAmt()));
 

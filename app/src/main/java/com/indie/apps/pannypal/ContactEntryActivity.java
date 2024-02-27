@@ -545,7 +545,6 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                         null,
                         0.0,
                         0.0,
-                        0.0,
                         Calendar.getInstance().getTimeInMillis());
 
                 contactData.setId(dbManager.add_Contacts(contactData));

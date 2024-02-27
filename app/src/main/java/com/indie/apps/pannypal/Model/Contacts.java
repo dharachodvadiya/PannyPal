@@ -12,10 +12,9 @@ public class Contacts {
     private String profileURL;
     private Double creditAmt;
     private Double debitAmt;
-    private Double totalAmt;
     private long dateTime;
 
-    public Contacts(long id, String name, String phno, int isLimit, Double limitAmt, String profileURL, Double creditAmt, Double debitAmt, Double totalAmt, long dateTime) {
+    public Contacts(long id, String name, String phno, int isLimit, Double limitAmt, String profileURL, Double creditAmt, Double debitAmt, long dateTime) {
         this.id = id;
         this.name = name;
         this.phno = phno;
@@ -24,11 +23,10 @@ public class Contacts {
         this.profileURL = profileURL;
         this.creditAmt = creditAmt;
         this.debitAmt = debitAmt;
-        this.totalAmt = totalAmt;
         this.dateTime = dateTime;
     }
 
-    public Contacts(String name, String phno, int isLimit, Double limitAmt, String profileURL, Double creditAmt, Double debitAmt, Double totalAmt, long dateTime) {
+    public Contacts(String name, String phno, int isLimit, Double limitAmt, String profileURL, Double creditAmt, Double debitAmt, long dateTime) {
         this.name = name;
         this.phno = phno;
         this.isLimit = isLimit;
@@ -36,7 +34,6 @@ public class Contacts {
         this.profileURL = profileURL;
         this.creditAmt = creditAmt;
         this.debitAmt = debitAmt;
-        this.totalAmt = totalAmt;
         this.dateTime = dateTime;
     }
 
@@ -111,18 +108,6 @@ public class Contacts {
 
     public void addDebitAmt(Double debitAmt) {
         this.debitAmt += debitAmt;
-    }
-    public Double getTotalAmt() {
-        return totalAmt;
-    }
-
-    public void setTotalAmt(Double totalAmt) {
-        this.totalAmt = totalAmt;
-    }
-
-    public  void addRemoveAmt(double amt)
-    {
-        this.totalAmt += amt;
     }
 
     public long getDateTime() {

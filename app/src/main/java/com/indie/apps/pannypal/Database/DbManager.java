@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.indie.apps.pannypal.Adapter.SearchContactFromNewEntryAdapter;
@@ -67,7 +68,6 @@ public class DbManager {
         contentValue.put(DbHelper.U_PROFILE_URL,data.getProfileURL());
         contentValue.put(DbHelper.U_CREDIT,data.getCreditAmt());
         contentValue.put(DbHelper.U_DEBIT,data.getDebitAmt());
-        contentValue.put(DbHelper.U_TOTAL,data.getTotalAmt());
 
         long id = database.insert(DbHelper.TBL_USERPROFILE, null, contentValue);
 
@@ -83,7 +83,6 @@ public class DbManager {
         contentValue.put(DbHelper.U_PROFILE_URL,data.getProfileURL());
         contentValue.put(DbHelper.U_CREDIT,data.getCreditAmt());
         contentValue.put(DbHelper.U_DEBIT,data.getDebitAmt());
-        contentValue.put(DbHelper.U_TOTAL,data.getTotalAmt());
 
         long id = database.update(DbHelper.TBL_USERPROFILE, contentValue,DbHelper.ID + " = " + data.getId(),null);
 
@@ -99,8 +98,7 @@ public class DbManager {
                 DbHelper.U_EMAIL,
                 DbHelper.U_PROFILE_URL,
                 DbHelper.U_CREDIT,
-                DbHelper.U_DEBIT,
-                DbHelper.U_TOTAL
+                DbHelper.U_DEBIT
         };
         UserProfile info = null;
         try {
@@ -113,8 +111,7 @@ public class DbManager {
                         cursor.getString(cursor.getColumnIndex(DbHelper.U_EMAIL)),
                         cursor.getString(cursor.getColumnIndex(DbHelper.U_PROFILE_URL)),
                         cursor.getDouble(cursor.getColumnIndex(DbHelper.U_CREDIT)),
-                        cursor.getDouble(cursor.getColumnIndex(DbHelper.U_DEBIT)),
-                        cursor.getDouble(cursor.getColumnIndex(DbHelper.U_TOTAL))
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.U_DEBIT))
                 );
 
                 Log.d("dbManager" , "UserProfile  get ");
@@ -195,7 +192,6 @@ public class DbManager {
         contentValue.put(DbHelper.C_PROFILEURL,data.getProfileURL());
         contentValue.put(DbHelper.C_CREDITAMT,data.getCreditAmt());
         contentValue.put(DbHelper.C_DEBITAMT,data.getDebitAmt());
-        contentValue.put(DbHelper.C_TOTALAMT,data.getTotalAmt());
         contentValue.put(DbHelper.C_DATE,data.getDateTime());
 
         long id = database.insert(DbHelper.TBL_CONTACTS, null, contentValue);
@@ -214,7 +210,6 @@ public class DbManager {
         contentValue.put(DbHelper.C_PROFILEURL,data.getProfileURL());
         contentValue.put(DbHelper.C_CREDITAMT,data.getCreditAmt());
         contentValue.put(DbHelper.C_DEBITAMT,data.getDebitAmt());
-        contentValue.put(DbHelper.C_TOTALAMT,data.getTotalAmt());
         contentValue.put(DbHelper.C_DATE,data.getDateTime());
 
         long id = database.update(DbHelper.TBL_CONTACTS, contentValue,DbHelper.ID + " = " + data.getId(),null);
@@ -233,7 +228,6 @@ public class DbManager {
                 DbHelper.C_PROFILEURL,
                 DbHelper.C_CREDITAMT,
                 DbHelper.C_DEBITAMT,
-                DbHelper.C_TOTALAMT,
                 DbHelper.C_DATE
         };
 
@@ -251,7 +245,6 @@ public class DbManager {
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_PROFILEURL)),
                         cursor.getDouble(cursor.getColumnIndex(DbHelper.C_CREDITAMT)),
                         cursor.getDouble(cursor.getColumnIndex(DbHelper.C_DEBITAMT)),
-                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_TOTALAMT)),
                         cursor.getLong(cursor.getColumnIndex(DbHelper.C_DATE))
                         );
 
@@ -274,7 +267,6 @@ public class DbManager {
                 DbHelper.C_PROFILEURL,
                 DbHelper.C_CREDITAMT,
                 DbHelper.C_DEBITAMT,
-                DbHelper.C_TOTALAMT,
                 DbHelper.C_DATE
         };
 
@@ -292,7 +284,6 @@ public class DbManager {
                         cursor.getString(cursor.getColumnIndex(DbHelper.C_PROFILEURL)),
                         cursor.getDouble(cursor.getColumnIndex(DbHelper.C_CREDITAMT)),
                         cursor.getDouble(cursor.getColumnIndex(DbHelper.C_DEBITAMT)),
-                        cursor.getDouble(cursor.getColumnIndex(DbHelper.C_TOTALAMT)),
                         cursor.getLong(cursor.getColumnIndex(DbHelper.C_DATE))
                 );
 
@@ -301,6 +292,45 @@ public class DbManager {
             Log.d("dbManager" , "Contact from Id "+ data.getId()+"");
         }
         return data;
+    }
+
+    public int delete_ContactFromIds(List<Contacts> contacts) {
+
+        int count = contacts.size();
+        double creditAmt=0, debitAmt = 0;
+        String[] arrayId = new String[count];
+        for(int j = 0 ; j< count; j++)
+        {
+            Contacts tmp = contacts.get(j);
+            arrayId[j] = tmp.getId()+"";
+            creditAmt += tmp.getCreditAmt();
+            debitAmt += tmp.getDebitAmt();
+
+        }
+       // List<CrDrInfo> tmpInfo = fetchCrDrFromId(id);
+        int deleteCount = database.delete(DbHelper.TBL_CONTACTS, DbHelper.ID + " IN (" + TextUtils.join(",", arrayId) + ")", null);
+        Log.d("dbManager" , "delete_ContactFromIds "+ deleteCount);
+
+        if(deleteCount >0)
+        {
+            delete_ContactDataFromIds(arrayId);
+
+            if(creditAmt >0)
+            {
+                Globle.MyProfile.addCreditAmt(-creditAmt);
+
+            }
+            if(debitAmt >0){
+                Globle.MyProfile.addDebitAmt(-debitAmt);
+
+            }
+
+            edit_UserProfile(Globle.MyProfile);
+        }
+
+        return deleteCount;
+
+
     }
 
     public List<suggestContactData> get_ContactsNameList() {
@@ -312,7 +342,6 @@ public class DbManager {
                 DbHelper.C_PROFILEURL,
                 DbHelper.C_CREDITAMT,
                 DbHelper.C_DEBITAMT,
-                DbHelper.C_TOTALAMT,
                 DbHelper.C_DATE
         };
 
@@ -384,16 +413,12 @@ return cursor;
         if(data.getType() == 1)
         {
             Globle.MyProfile.addCreditAmt(data.getAmount());
-            Globle.MyProfile.addRemoveAmt(data.getAmount());
 
             contacts.addCreditAmt(data.getAmount());
-            contacts.addRemoveAmt(data.getAmount());
         }else {
             Globle.MyProfile.addDebitAmt(data.getAmount());
-            Globle.MyProfile.addRemoveAmt(-data.getAmount());
 
             contacts.addDebitAmt(data.getAmount());
-            contacts.addRemoveAmt(-data.getAmount());
         }
 
         contacts.setDateTime(data.getDateTime());
@@ -496,5 +521,14 @@ return cursor;
         return dataList;
     }
 
+    public int delete_ContactDataFromIds(String[] ids) {
+
+        // List<CrDrInfo> tmpInfo = fetchCrDrFromId(id);
+        int deleteCount = database.delete(DbHelper.TBL_CONTACTDATA, DbHelper.CD_CID + " IN (" + TextUtils.join(",", ids) + ")", null);
+        Log.d("dbManager" , "delete_ContactDataFromIds "+ deleteCount+"");
+        return deleteCount;
+
+
+    }
 
 }

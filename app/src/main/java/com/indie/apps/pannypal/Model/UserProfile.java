@@ -8,25 +8,22 @@ public class UserProfile {
     private String profileURL;
     private Double creditAmt;
     private Double debitAmt;
-    private Double totalAmt;
 
-    public UserProfile(long id, String name, String email, String profileURL, Double creditAmt, Double debitAmt, Double totalAmt) {
+    public UserProfile(long id, String name, String email, String profileURL, Double creditAmt, Double debitAmt) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.profileURL = profileURL;
         this.creditAmt = creditAmt;
         this.debitAmt = debitAmt;
-        this.totalAmt = totalAmt;
     }
 
-    public UserProfile(String name, String email, String profileURL, Double creditAmt, Double debitAmt, Double totalAmt) {
+    public UserProfile(String name, String email, String profileURL, Double creditAmt, Double debitAmt) {
         this.name = name;
         this.email = email;
         this.profileURL = profileURL;
         this.creditAmt = creditAmt;
         this.debitAmt = debitAmt;
-        this.totalAmt = totalAmt;
     }
 
     public String getName() {
@@ -84,16 +81,5 @@ public class UserProfile {
     public void addDebitAmt(Double debitAmt) {
         this.debitAmt += debitAmt;
     }
-    public Double getTotalAmt() {
-        return totalAmt;
-    }
-
-    public void setTotalAmt(Double totalAmt) {
-        this.totalAmt = totalAmt;
-    }
-
-    public  void addRemoveAmt(double amt)
-    {
-        this.totalAmt += amt;
-    }
 }
+

@@ -53,8 +53,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
 
-        txtTotalBalance.setText(Globle.getFormattedValue(Globle.MyProfile.getTotalAmt()));
-        if(Globle.MyProfile.getTotalAmt() >=0)
+        double total = Globle.MyProfile.getCreditAmt()-Globle.MyProfile.getDebitAmt();
+        txtTotalBalance.setText(Globle.getFormattedValue(total));
+        if(total >=0)
         {
             layoutTotalBg.setBackgroundResource(R.drawable.home_totalbg_gradient_credit);
             layoutTotalBgLine.setBackgroundResource(R.drawable.home_totalbg_credit);
