@@ -19,7 +19,9 @@ import com.indie.apps.pannypal.Model.UserProfile;
 import com.indie.apps.pannypal.Model.suggestContactData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DbManager {
 
@@ -294,18 +296,20 @@ public class DbManager {
         return data;
     }
 
-    public int delete_ContactFromIds(List<Contacts> contacts) {
+    public int delete_ContactFromIds(HashMap<Integer, Contacts> contacts) {
 
         int count = contacts.size();
         double creditAmt=0, debitAmt = 0;
+        int j= 0;
         String[] arrayId = new String[count];
-        for(int j = 0 ; j< count; j++)
+
+        for (Map.Entry<Integer, Contacts> e : contacts.entrySet())
         {
-            Contacts tmp = contacts.get(j);
+            Contacts tmp = e.getValue();
             arrayId[j] = tmp.getId()+"";
             creditAmt += tmp.getCreditAmt();
             debitAmt += tmp.getDebitAmt();
-
+            j++;
         }
        // List<CrDrInfo> tmpInfo = fetchCrDrFromId(id);
         int deleteCount = database.delete(DbHelper.TBL_CONTACTS, DbHelper.ID + " IN (" + TextUtils.join(",", arrayId) + ")", null);

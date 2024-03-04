@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
@@ -29,7 +30,10 @@ import com.indie.apps.pannypal.Thread.AsyncTaskExecutorService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContactActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -44,17 +48,22 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     List<Contacts> suggestContactAllData = new ArrayList<>();
     List<Contacts> suggestContactadapterData = new ArrayList<>();
 
-    List<Contacts> selectContactList = new ArrayList<>();
+    HashMap<Integer,Contacts> selectContactList = new HashMap<>();
 
     TextView txtNoDataFound;
 
     //new contact
+    TextView txtContactDilogHeading;
     RelativeLayout layoutAddContact;
     ImageButton btnNewContactClose,btnSaveNewContact;
     RelativeLayout layoutLimit,layoutLimitAnim;
     EditText etContactName, etPhno , etLimitAmt;
     CountryCodePicker codePicker;
     Switch switchLimit;
+
+    boolean isEdit = false;
+    int editItemPos;
+    Contacts editItem;
 
 
     @Override
@@ -114,13 +123,13 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void OnItemLongClickAdd(Contacts item) {
-                selectContactList.add(item);
+            public void OnItemLongClickAdd(Contacts item, int pos) {
+                selectContactList.put(pos,item);
                 openMultiselectLayout();
             }
 
             @Override
-            public void OnItemLongClickRemove(Contacts item) {
+            public void OnItemLongClickRemove(Contacts item, int pos) {
                 selectContactList.remove(item);
 
                 if(selectContactList.size() == 0)
@@ -175,6 +184,8 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         btnNewContactClose = findViewById(R.id.btnNewContactClose);
         btnSaveNewContact = findViewById(R.id.imgbtnSaveContact);
 
+        txtContactDilogHeading = findViewById(R.id.txtContactDilogHeading);
+
         etContactName = findViewById(R.id.etContactName);
         etPhno = findViewById(R.id.etContactNumber);
         switchLimit = findViewById(R.id.switchLimit);
@@ -210,7 +221,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.imgbtnNewContact:
                 hideKeyboard(this);
-                svContact.setQuery(null,true);
+                //svContact.setQuery(null,true);
                 openNewContactLayout();
                 break;
 
@@ -221,11 +232,11 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.imgbtnSaveContact:
                 hideKeyboard(this);
-                Contacts contacts = saveNewContact();
+                Contacts contacts = saveOrEditNewContact();
                 if(contacts != null)
                 {
-                    closeNewContactLayout();
                     openContactListLayout(true,contacts);
+                    closeNewContactLayout();
                 }
                 break;
             case R.id.btnBack:
@@ -234,6 +245,18 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.imgBtnEdit:
+                isEdit =true;
+
+                for (Map.Entry<Integer, Contacts> e : selectContactList.entrySet())
+                {
+                    editItemPos = e.getKey();
+                    editItem = e.getValue();
+                    break;
+                }
+
+                hideKeyboard(this);
+                svContact.setQuery(null,true);
+                openNewContactLayout();
                 break;
 
             case R.id.imgBtnMultiDelete:
@@ -307,7 +330,10 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
     void backAction()
     {
-        if(!svContact.getQuery().toString().isEmpty())
+        if(layoutAddContact.getVisibility() == View.VISIBLE)
+        {
+            closeNewContactLayout();
+        }else if(!svContact.getQuery().toString().isEmpty())
         {
             svContact.setQuery(null,true);
         }else if(layoutMultiSelect.getVisibility() == View.VISIBLE)
@@ -315,9 +341,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             selectContactList.clear();
             contactAdapter.setSelected(false);
             openSearchLayout();
-        }else  if(layoutAddContact.getVisibility() == View.VISIBLE)
-        {
-            closeNewContactLayout();
         }
     }
 
@@ -329,10 +352,20 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
         if(isComeFromNewData)
         {
-            suggestContactAllData.add(0,contacts);
-            suggestContactadapterData.add(0,contacts);
+            if(isEdit)
+            {
+                suggestContactAllData.set(editItemPos,contacts);
+                suggestContactadapterData.set(editItemPos,contacts);
+                contactAdapter.setSelected(false);
+                //contactAdapter.itemEditDataChange(editItemPos);
 
-            contactAdapter.itemInsertDataChange(0);
+            }else {
+                suggestContactAllData.add(0,contacts);
+                suggestContactadapterData.add(0,contacts);
+
+                contactAdapter.itemInsertDataChange(0);
+            }
+
         }else {
             new loadContactSuggestionData().execute();
         }
@@ -343,17 +376,44 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     {
         layoutAddContact.setVisibility(View.VISIBLE);
 
-        etContactName.setText("");
-        etPhno.setText("");
-        switchLimit.setChecked(false);
+        if(isEdit)
+        {
+            txtContactDilogHeading.setText("Edit Contact");
+            etContactName.setText(editItem.getName());
+            if(!editItem.getPhno().isEmpty())
+            {
+                String[] phno = etPhno.getText().toString().split(" ");
+
+                codePicker.setCountryForPhoneCode(Integer.parseInt(phno[0]));
+                etPhno.setText(phno[2]);
+            }
+
+            if(editItem.getIsLimit() == 1)
+            {
+                switchLimit.setChecked(true);
+                etLimitAmt.setText(editItem.getLimitAmt()+"");
+            }else {
+                switchLimit.setChecked(false);
+            }
+
+
+        }else {
+            txtContactDilogHeading.setText("Add New Contact");
+            etContactName.setText("");
+            etPhno.setText("");
+            switchLimit.setChecked(false);
+        }
     }
 
     void closeNewContactLayout()
     {
+        isEdit = false;
+        editItem = null;
+        editItemPos = -1;
         layoutAddContact.setVisibility(View.GONE);
     }
 
-    Contacts saveNewContact()
+    Contacts saveOrEditNewContact()
     {
         if(etContactName.getText().toString().trim().length() <=0)
         {
@@ -371,7 +431,8 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         else
         {
             String name = etContactName.getText().toString().trim();
-            if(dbManager.get_ContactsFromName(name) == -1)
+            if((!isEdit && dbManager.get_ContactsFromName(name) == -1) ||
+                    (isEdit && dbManager.get_ContactsFromName(name) <=1))
             {
                 Double limitAmount = 0.0;
                 int isLimit = switchLimit.isChecked()? 1 :0;
@@ -394,9 +455,17 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
                         0.0,
                         Calendar.getInstance().getTimeInMillis());
 
-                contactData.setId(dbManager.add_Contacts(contactData));
+                if(!isEdit)
+                {
+                    contactData.setId(dbManager.add_Contacts(contactData));
+                    Toast.makeText(getApplicationContext(),"Add new Contact Successfully",Toast.LENGTH_LONG).show();
+                }else {
 
-                Toast.makeText(getApplicationContext(),"Add new Contact Successfully",Toast.LENGTH_LONG).show();
+                    contactData.setId(editItem.getId());
+                    dbManager.edit_Contacts(contactData);
+
+                    Toast.makeText(getApplicationContext(),"Contact Edit Successfully",Toast.LENGTH_LONG).show();
+                }
                 return  contactData;
             }else {
                 Toast.makeText(getApplicationContext(),"Contact Name Already Exist",Toast.LENGTH_LONG).show();

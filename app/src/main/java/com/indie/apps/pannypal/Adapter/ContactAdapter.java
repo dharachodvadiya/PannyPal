@@ -1,5 +1,6 @@
 package com.indie.apps.pannypal.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -66,7 +67,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Contacts data = dataList.get(position);
 
@@ -111,10 +112,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                     if(holder.chkSelect.isChecked())
                     {
                         holder.chkSelect.setChecked(false);
-                        listener.OnItemLongClickRemove(data);
+                        listener.OnItemLongClickRemove(data,position);
                     }else{
                         holder.chkSelect.setChecked(true);
-                        listener.OnItemLongClickAdd(data);
+                        listener.OnItemLongClickAdd(data,position);
                     }
                 }else {
                     listener.onItemClick(data);
@@ -133,16 +134,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                     if(holder.chkSelect.isChecked())
                     {
                         holder.chkSelect.setChecked(false);
-                        listener.OnItemLongClickRemove(data);
+                        listener.OnItemLongClickRemove(data,position);
                     }else{
                         holder.chkSelect.setChecked(true);
-                        listener.OnItemLongClickAdd(data);
+                        listener.OnItemLongClickAdd(data,position);
                     }
 
                     if(!isSelected)
                     {
                         setSelected(true);
-                        notifyDataSetChanged();
+                        //notifyDataSetChanged();
                     }
 
                 }
@@ -175,8 +176,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     public interface OnItemClickListener {
         void onItemClick(Contacts item);
 
-        void OnItemLongClickAdd(Contacts item);
-        void OnItemLongClickRemove(Contacts item);
+        void OnItemLongClickAdd(Contacts item, int pos);
+        void OnItemLongClickRemove(Contacts item, int pos);
 
     }
 
@@ -189,6 +190,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             txtNoDataFound.setVisibility(View.VISIBLE);
         }
         notifyItemInserted(pos);
+    }
+
+    public  void itemEditDataChange(int pos)
+    {
+        if(dataList.size() > 0)
+        {
+            txtNoDataFound.setVisibility(View.GONE);
+        }else {
+            txtNoDataFound.setVisibility(View.VISIBLE);
+        }
+        notifyItemChanged(pos);
     }
 
     public  void dataChange()
