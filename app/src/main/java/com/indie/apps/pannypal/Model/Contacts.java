@@ -1,8 +1,12 @@
 package com.indie.apps.pannypal.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.renderscript.Double4;
 
-public class Contacts {
+import androidx.annotation.NonNull;
+
+public class Contacts implements Parcelable {
 
     private long id;
     private String name;
@@ -36,6 +40,42 @@ public class Contacts {
         this.debitAmt = debitAmt;
         this.dateTime = dateTime;
     }
+
+    protected Contacts(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        phno = in.readString();
+        isLimit = in.readInt();
+        if (in.readByte() == 0) {
+            limitAmt = null;
+        } else {
+            limitAmt = in.readDouble();
+        }
+        profileURL = in.readString();
+        if (in.readByte() == 0) {
+            creditAmt = null;
+        } else {
+            creditAmt = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            debitAmt = null;
+        } else {
+            debitAmt = in.readDouble();
+        }
+        dateTime = in.readLong();
+    }
+
+    public static final Creator<Contacts> CREATOR = new Creator<Contacts>() {
+        @Override
+        public Contacts createFromParcel(Parcel in) {
+            return new Contacts(in);
+        }
+
+        @Override
+        public Contacts[] newArray(int size) {
+            return new Contacts[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -116,5 +156,15 @@ public class Contacts {
 
     public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeValue(this);
     }
 }

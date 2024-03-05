@@ -4,114 +4,213 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
-    <LinearLayout
-        android:id="@+id/layoutCredit"
+    <RelativeLayout
+        android:id="@+id/layoutDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_toRightOf="@+id/txtDate"
+            android:background="@color/textColorLight"
+            android:layout_centerVertical="true"
+            android:alpha="0.3"
+            android:layout_marginLeft="10dp"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_toLeftOf="@+id/txtDate"
+            android:background="@color/textColorLight"
+            android:layout_centerVertical="true"
+            android:alpha="0.3"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:alpha="0.3"
+            android:text="description"
+            android:textColor="@color/textColorDark"
+            android:textSize="@dimen/txtS3" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutCradit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_below="@+id/layoutDate"
         android:visibility="gone">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/layoutCrAmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/contact_selected_data_credit_bg"
-            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp">
+            android:padding="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/txtS1"
-                android:text="Amount"
-                android:textStyle="bold"
-                android:textColor="@color/textColorDark"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/txtS2"
-                android:text="Payment type"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/textColorDark"/>
+                <TextView
+                    android:id="@+id/txtCrAmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS1"
+                    android:text="Amount"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"/>
 
-            <TextView
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/txtCrPaymentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS3"
+                    android:text="Payment type"
+                    android:textColor="@color/textColorDark"/>
+
+                <TextView
+                    android:id="@+id/txtCrRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS3"
+                    android:text="description"
+                    android:textColor="@color/textColorDark"
+                    android:alpha="0.3"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnCrMore"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/txtS3"
-                android:text="description"
-                android:textColor="@color/textColorDark"
-                android:layout_marginTop="10dp"
-                android:alpha="0.5"/>
-        </LinearLayout>
+                android:src="@drawable/more"
+                android:background="@color/trasnperent"
+                android:layout_gravity="right"/>
+
+
+        </FrameLayout>
 
         <TextView
+            android:id="@+id/txtCrTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00 AM"
             android:textColor="@color/textColorDark"
             android:alpha="0.5"
-            android:textSize="@dimen/txtS3"
+            android:textSize="@dimen/txtS5"
             android:layout_marginTop="5dp"
+            android:layout_below="@id/layoutCrAmt"
             />
 
-    </LinearLayout>
+        <CheckBox
+            android:id="@+id/chkCrSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:button="@drawable/customdrawablecheckbox"
+            android:layout_alignParentRight="true"
+            ></CheckBox>
 
-    <LinearLayout
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/layoutDebit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/layoutDate"
+        android:visibility="visible">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/layoutDeAmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/contact_selected_data_debit_bg"
-            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:paddingRight="10dp">
+            android:layout_alignParentRight="true"
+            android:padding="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/txtS1"
-                android:text="Amount"
-                android:textStyle="bold"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorDark"/>
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/txtS2"
-                android:text="Payment type"
-                android:layout_marginTop="5dp"
-                android:textAlignment="textEnd"
-                android:textColor="@color/textColorDark"/>
+                android:orientation="vertical"
+                android:layout_gravity="right">
 
-            <TextView
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/txtDeAmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS1"
+                    android:text="Amount"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorDark"/>
+
+                <TextView
+                    android:id="@+id/txtDePaymentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS3"
+                    android:text="Payment type"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textColorDark"/>
+
+                <TextView
+                    android:id="@+id/txtDeRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/txtS3"
+                    android:text="description"
+                    android:textColor="@color/textColorDark"
+                    android:textAlignment="textEnd"
+                    android:alpha="0.3"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnDeMore"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/txtS3"
-                android:text="description"
-                android:textColor="@color/textColorDark"
-                android:layout_marginTop="10dp"
-                android:textAlignment="textEnd"
-                android:alpha="0.5"/>
-        </LinearLayout>
+                android:src="@drawable/more"
+                android:background="@color/trasnperent"
+                android:layout_gravity="left"/>
+        </FrameLayout>
 
         <TextView
+            android:id="@+id/txtDeTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:00 AM"
             android:textColor="@color/textColorDark"
             android:alpha="0.5"
-            android:textSize="@dimen/txtS3"
+            android:textSize="@dimen/txtS5"
             android:layout_marginTop="5dp"
             android:layout_gravity="right"
+            android:layout_below="@+id/layoutDeAmt"
+            android:layout_alignParentRight="true"
             />
 
-    </LinearLayout>
+        <CheckBox
+            android:id="@+id/chkDeSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:button="@drawable/customdrawablecheckbox"
+            ></CheckBox>
+
+    </RelativeLayout>
 
 </RelativeLayout>

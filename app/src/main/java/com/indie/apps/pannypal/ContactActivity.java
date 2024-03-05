@@ -20,13 +20,17 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
 import com.indie.apps.pannypal.Adapter.ContactAdapter;
 import com.indie.apps.pannypal.Adapter.SearchContactFromNewEntryAdapter;
 import com.indie.apps.pannypal.Database.DbManager;
+import com.indie.apps.pannypal.Model.ContactData;
 import com.indie.apps.pannypal.Model.Contacts;
 import com.indie.apps.pannypal.Model.suggestContactData;
 import com.indie.apps.pannypal.Thread.AsyncTaskExecutorService;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -119,6 +123,8 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onItemClick(Contacts item) {
                 Intent i = new Intent(ContactActivity.this, ContactSelectedActivity.class);
+                Gson gson = new Gson();
+                i.putExtra("selected_item", gson.toJson(item));
                 startActivity(i);
             }
 
@@ -130,7 +136,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void OnItemLongClickRemove(Contacts item, int pos) {
-                selectContactList.remove(item);
+                selectContactList.remove(pos);
 
                 if(selectContactList.size() == 0)
                 {
@@ -264,9 +270,9 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
                 if(dbManager.delete_ContactFromIds(selectContactList) >0)
                 {
-                    for (int j = 0; j< count ;j++)
+                    for (Map.Entry<Integer, Contacts> e : selectContactList.entrySet())
                     {
-                        suggestContactadapterData.remove(selectContactList.get(j));
+                        suggestContactadapterData.remove(e.getValue());
                     }
                     selectContactList.clear();
                     contactAdapter.setSelected(false);
@@ -341,6 +347,11 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             selectContactList.clear();
             contactAdapter.setSelected(false);
             openSearchLayout();
+        }else{
+            Intent i = new Intent(ContactActivity.this, HomeActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right,
+                    R.anim.slide_out_left);
         }
     }
 

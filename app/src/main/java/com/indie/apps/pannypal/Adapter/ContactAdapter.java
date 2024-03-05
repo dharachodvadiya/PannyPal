@@ -36,7 +36,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         this.dataList = dataList;
         this.listener = listener;
         this.txtNoDataFound = txtNoDataFound;
-        setSelected(false);
+
+        if(dataList.size() >0)
+        {
+            txtNoDataFound.setVisibility(View.GONE);
+        }else {
+            txtNoDataFound.setVisibility(View.VISIBLE);
+        }
+        //setSelected(false);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -92,16 +99,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         {
             holder.txtLimitAmt.setText("Not set");
         }else {
-            holder.txtLimitAmt.setText(data.getLimitAmt() +"");
+            holder.txtLimitAmt.setText(Globle.getFormattedValue(data.getLimitAmt()) +"");
         }
 
         double total = data.getCreditAmt()-data.getDebitAmt();
         if(total >=0)
         {
-            holder.txtAmt.setText("+" + Globle.getFormattedValue(data.getCreditAmt()));
+            holder.txtAmt.setText("+" + Globle.getFormattedValue(total));
             holder.txtAmt.setTextColor(c.getResources().getColor(R.color.credit));
         }else {
-            holder.txtAmt.setText("-" + Globle.getFormattedValue(data.getDebitAmt()));
+            holder.txtAmt.setText(Globle.getFormattedValue(total));
             holder.txtAmt.setTextColor(c.getResources().getColor(R.color.debit));
         }
         holder.v.setOnClickListener(new View.OnClickListener() {

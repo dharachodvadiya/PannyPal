@@ -19,6 +19,7 @@ import com.indie.apps.pannypal.Model.UserProfile;
 import com.indie.apps.pannypal.Model.suggestContactData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -317,7 +318,7 @@ public class DbManager {
 
         if(deleteCount >0)
         {
-            delete_ContactDataFromIds(arrayId);
+            delete_ContactDataFromContactIds(arrayId);
 
             if(creditAmt >0)
             {
@@ -487,6 +488,44 @@ return cursor;
         return dataList;
     }
 
+    public List<ContactData> get_ContactDataFromContactId(long id) {
+        String[] columns = new String[] { DbHelper.ID,
+                DbHelper.CD_CID,
+                DbHelper.CD_PID,
+                DbHelper.CD_C_NAME,
+                DbHelper.CD_P_NAME,
+                DbHelper.CD_TYPE,
+                DbHelper.CD_AMT,
+                DbHelper.CD_REMARK,
+                DbHelper.CD_DATE
+        };
+
+        @SuppressLint("Recycle") Cursor cursor = database.query(DbHelper.TBL_CONTACTDATA, columns, DbHelper.CD_CID +"=?",new String[]{String.valueOf(id)}, null, null, null, null);
+        List<ContactData> dataList = new ArrayList<>();
+        if (cursor != null && cursor.getCount() >0) {
+            cursor.moveToFirst();
+
+            do{
+                @SuppressLint("Range") ContactData info = new ContactData(cursor.getLong(cursor.getColumnIndex(DbHelper.ID)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_CID)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_PID)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_C_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_P_NAME)),
+                        cursor.getInt(cursor.getColumnIndex(DbHelper.CD_TYPE)),
+                        cursor.getDouble(cursor.getColumnIndex(DbHelper.CD_AMT)),
+                        cursor.getString(cursor.getColumnIndex(DbHelper.CD_REMARK)),
+                        cursor.getLong(cursor.getColumnIndex(DbHelper.CD_DATE))
+                );
+
+                dataList.add(info);
+
+            }while (cursor.moveToNext());
+
+            Log.d("dbManager" , "ContactData Count "+ dataList.size()+"");
+        }
+        return dataList;
+    }
+
     public List<ContactData> get_ContactData_List_DESC() {
         String[] columns = new String[] { DbHelper.ID,
                 DbHelper.CD_CID,
@@ -525,14 +564,65 @@ return cursor;
         return dataList;
     }
 
-    public int delete_ContactDataFromIds(String[] ids) {
+    public int delete_ContactDataFromContactIds(String[] ids) {
 
         // List<CrDrInfo> tmpInfo = fetchCrDrFromId(id);
         int deleteCount = database.delete(DbHelper.TBL_CONTACTDATA, DbHelper.CD_CID + " IN (" + TextUtils.join(",", ids) + ")", null);
-        Log.d("dbManager" , "delete_ContactDataFromIds "+ deleteCount+"");
+        Log.d("dbManager" , "delete_ContactDataFromContactIds "+ deleteCount+"");
         return deleteCount;
-
-
     }
+
+    public int delete_ContactDataFromIds(HashMap<Integer, ContactData> contactsData, long ContactId) {
+
+        int count = contactsData.size();
+        double creditAmt=0, debitAmt = 0;
+        int j= 0;
+        String[] arrayId = new String[count];
+
+        for (Map.Entry<Integer, ContactData> e : contactsData.entrySet())
+        {
+            ContactData tmp = e.getValue();
+            arrayId[j] = tmp.getId()+"";
+            if(tmp.getType() == 1)
+            {
+                creditAmt += tmp.getAmount();
+            }else {
+                debitAmt += tmp.getAmount();
+            }
+
+
+            j++;
+        }
+
+        // List<CrDrInfo> tmpInfo = fetchCrDrFromId(id);
+        int deleteCount = database.delete(DbHelper.TBL_CONTACTDATA, DbHelper.ID + " IN (" + TextUtils.join(",", arrayId) + ")", null);
+        Log.d("dbManager" , "delete_ContactDataFromIds "+ deleteCount+"");
+
+
+        if(deleteCount >0)
+        {
+            Contacts contacts = get_ContactFromId(ContactId);
+
+            if(creditAmt >0)
+            {
+                Globle.MyProfile.addCreditAmt(-creditAmt);
+
+                contacts.addCreditAmt(-creditAmt);
+
+            }
+            if(debitAmt >0){
+                Globle.MyProfile.addDebitAmt(-debitAmt);
+                contacts.addDebitAmt(-debitAmt);
+
+            }
+
+            edit_UserProfile(Globle.MyProfile);
+            contacts.setDateTime(Calendar.getInstance().getTimeInMillis());
+            edit_Contacts(contacts);
+        }
+        return deleteCount;
+    }
+
+
 
 }
