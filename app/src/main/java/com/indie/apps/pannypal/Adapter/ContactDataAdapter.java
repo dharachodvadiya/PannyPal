@@ -226,7 +226,13 @@ public class ContactDataAdapter extends RecyclerView.Adapter<ContactDataAdapter.
                         listener.OnItemLongClickAdd(data,position);
                     }
                 }else {
-                    listener.onItemClick(data);
+                    if(data.getType() == 1)
+                    {
+                        listener.onItemClick(data, holder.btnCrMore, position);
+                    }else {
+                        listener.onItemClick(data, holder.btnDeMore, position);
+                    }
+
                 }
             }
         });
@@ -289,7 +295,7 @@ public class ContactDataAdapter extends RecyclerView.Adapter<ContactDataAdapter.
     }
 
     public interface OnItemClickListener {
-        void onItemClick(ContactData item);
+        void onItemClick(ContactData item, View v, int pos);
 
         void OnItemLongClickAdd(ContactData item, int pos);
         void OnItemLongClickRemove(ContactData item, int pos);

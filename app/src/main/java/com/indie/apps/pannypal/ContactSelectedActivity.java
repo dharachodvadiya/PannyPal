@@ -9,8 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ContactSelectedActivity extends AppCompatActivity implements View.OnClickListener {
+public class ContactSelectedActivity extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     Contacts currContact;
 
@@ -43,6 +45,9 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
     RelativeLayout layoutTotal, layoutMultiselect;
     TextView txtCrTotal,txtdeTotal,txtTotal;
     ImageButton imgBtnMultiDeletelete;
+
+    ContactData currSelectedData;
+    int currSelectedDataPos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,10 +108,12 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
 
         contactDataAdapter = new ContactDataAdapter(this,suggestContactadapterData, txtNoDataFound,new ContactDataAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(ContactData item) {
+            public void onItemClick(ContactData item, View v, int pos) {
               /*  Intent i = new Intent(ContactActivity.this, ContactSelectedActivity.class);
                 i.putExtra("selected_item", item);
                 startActivity(i);*/
+
+                openMenu(item,v, pos );
             }
 
             @Override
@@ -130,6 +137,13 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
 
         });
         recyclerView.setAdapter(contactDataAdapter);
+
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.scrollToPosition(contactDataAdapter.getItemCount() - 1);
+            }
+        });
 
         openContactListLayout(false,null);
 
@@ -190,6 +204,42 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
         }*/
     }
 
+    void  openMenu(ContactData contactData, View view, int pos)
+    {
+        currSelectedData = contactData;
+        currSelectedDataPos = pos;
+        PopupMenu menu = new PopupMenu (ContactSelectedActivity.this, view);
+        menu.inflate (R.menu.data_menu_layout);
+        menu.show();
+
+        menu.setOnMenuItemClickListener(this);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.item_editEntry:
+                break;
+            case R.id.item_deleteEntry:
+
+                if(dbManager.delete_ContactDataFromId(currSelectedData, currContact.getId()) >0)
+                {
+
+                    suggestContactadapterData.remove(currSelectedData);
+                    currContact = dbManager.get_ContactFromId(currContact.getId());
+                    contactDataAdapter.notifyItemRemoved(currSelectedDataPos);
+                    openTotalLayout();
+
+                    currSelectedData = null;
+                    currSelectedDataPos = -1;
+                }
+
+                break;
+        }
+        return false;
+    }
+
 
     public class loadContactSuggestionData extends AsyncTaskExecutorService< Void, Void, Void > {
 
@@ -245,8 +295,6 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
                 backAction();
                 break;
             case R.id.imgBtnMultiDeletelete:
-
-                int count = selectContactList.size();
 
                 if(dbManager.delete_ContactDataFromIds(selectContactList, currContact.getId()) >0)
                 {

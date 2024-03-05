@@ -106,53 +106,32 @@
             android:gravity="center"
             android:background="@drawable/bottombg">
 
-            <RelativeLayout
+            <ImageButton
+                android:id="@+id/imgbtnContact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:src="@drawable/btn_contact"
+                android:background="@color/trasnperent"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:contentDescription="Contact"/>
 
-                <ImageButton
-                    android:id="@+id/imgbtnContact"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/btn_contact"
-                    android:background="@color/white"
-                    android:contentDescription="Contact"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <ImageButton
+                android:id="@+id/imgbtnHome"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:src="@drawable/btn_home"
+                android:background="@color/trasnperent"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:contentDescription="Home"/>
 
-                <ImageButton
-                    android:id="@+id/imgbtnHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/btn_home"
-                    android:background="@color/white"
-                    android:contentDescription="Home"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <ImageButton
+                android:id="@+id/imgbtnCalculator"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:src="@drawable/btn_calculator"
+                android:background="@color/trasnperent"
                 android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/imgbtnCalculator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/btn_calculator"
-                    android:background="@color/white"
-                    android:contentDescription="Calculator"/>
-
-            </RelativeLayout>
+                android:contentDescription="Calculator"/>
 
         </LinearLayout>
 

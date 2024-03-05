@@ -623,6 +623,36 @@ return cursor;
         return deleteCount;
     }
 
+    public int delete_ContactDataFromId(ContactData contactsData, long ContactId) {
+
+        // List<CrDrInfo> tmpInfo = fetchCrDrFromId(id);
+        int deleteCount = database.delete(DbHelper.TBL_CONTACTDATA, DbHelper.ID + "=" + contactsData.getId(), null);
+        Log.d("dbManager" , "delete_ContactDataFromIds"+ deleteCount+"");
+
+
+        if(deleteCount >0)
+        {
+            Contacts contacts = get_ContactFromId(ContactId);
+
+            if(contactsData.getType()== 1)
+            {
+                Globle.MyProfile.addCreditAmt(-contactsData.getAmount());
+
+                contacts.addCreditAmt(-contactsData.getAmount());
+
+            }else {
+                Globle.MyProfile.addDebitAmt(-contactsData.getAmount());
+                contacts.addDebitAmt(-contactsData.getAmount());
+
+            }
+
+            edit_UserProfile(Globle.MyProfile);
+            contacts.setDateTime(Calendar.getInstance().getTimeInMillis());
+            edit_Contacts(contacts);
+        }
+        return deleteCount;
+    }
+
 
 
 }
