@@ -54,6 +54,7 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
     DbManager dbManager;
     Context c;
    // RelativeLayout layoutAddContact;
+    TextView txtContactDilogHeading;
     ImageButton btnNewContactClose,btnSaveNewContact;
     RelativeLayout layoutLimit,layoutLimitAnim;
     EditText etContactName, etPhno , etLimitAmt;
@@ -62,9 +63,12 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
 
     private IDilogCallback dilogCallback;
 
+    Contacts currContact = null;
 
-    public DialogAddContact(@NonNull Context context, IDilogCallback callback) {
+
+    public DialogAddContact(@NonNull Context context, Contacts currContact, IDilogCallback callback) {
         this.c = context;
+        this.currContact = currContact;
         this.dilogCallback = callback;
     }
     @Override
@@ -95,6 +99,7 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
        // layoutAddContact = v.findViewById(R.id.layoutAddContact);
         btnNewContactClose = v.findViewById(R.id.btnNewContactClose);
         btnSaveNewContact = v.findViewById(R.id.imgbtnSaveContact);
+        txtContactDilogHeading = v.findViewById(R.id.txtContactDilogHeading);
 
         etContactName = v.findViewById(R.id.etContactName);
         etPhno = v.findViewById(R.id.etContactNumber);
@@ -114,9 +119,34 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
     {
         //layoutAddContact.setVisibility(View.VISIBLE);
 
-        etContactName.setText("");
-        etPhno.setText("");
-        switchLimit.setChecked(false);
+        if(currContact == null)
+        {
+            txtContactDilogHeading.setText("Add New Contact");
+            etContactName.setText("");
+            etPhno.setText("");
+            switchLimit.setChecked(false);
+        }else {
+            txtContactDilogHeading.setText("Edit Contact");
+            etContactName.setText(currContact.getName());
+            if(!currContact.getPhno().isEmpty())
+            {
+                String[] phno = etPhno.getText().toString().split(" ");
+
+                codePicker.setCountryForPhoneCode(Integer.parseInt(phno[0]));
+                etPhno.setText(phno[2]);
+            }
+
+            if(currContact.getIsLimit() == 1)
+            {
+                switchLimit.setChecked(true);
+                etLimitAmt.setText(currContact.getLimitAmt()+"");
+            }else {
+                switchLimit.setChecked(false);
+            }
+
+        }
+
+
     }
 
   /*  void closeNewContactLayout()
@@ -264,7 +294,8 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
         else
         {
             String name = etContactName.getText().toString().trim();
-            if(dbManager.get_ContactsFromName(name) == -1)
+            if((currContact == null && dbManager.get_ContactsFromName(name) == -1) ||
+                    (currContact != null && dbManager.get_ContactsFromName(name) <=1))
             {
                 Double limitAmount = 0.0;
                 int isLimit = switchLimit.isChecked()? 1 :0;
@@ -287,9 +318,18 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
                         0.0,
                         Calendar.getInstance().getTimeInMillis());
 
-                contactData.setId(dbManager.add_Contacts(contactData));
+                if(currContact == null)
+                {
+                    contactData.setId(dbManager.add_Contacts(contactData));
+                    Toast.makeText(c,"Add new Contact Successfully",Toast.LENGTH_LONG).show();
+                }else {
 
-                Toast.makeText(c,"Add new Contact Successfully",Toast.LENGTH_LONG).show();
+                    contactData.setId(currContact.getId());
+                    contactData.setDateTime(Calendar.getInstance().getTimeInMillis());
+                    dbManager.edit_Contacts(contactData);
+
+                    Toast.makeText(c,"Contact Edit Successfully",Toast.LENGTH_LONG).show();
+                }
                 return  contactData;
             }else {
                 Toast.makeText(c,"Contact Name Already Exist",Toast.LENGTH_LONG).show();
@@ -310,8 +350,8 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
     void backAction()
     {
         //closeNewContactLayout();
-        dilogCallback.onCancelClick();
-        dismiss();
+      //  dilogCallback.onCancelClick();
+       // dismiss();
     }
 
 

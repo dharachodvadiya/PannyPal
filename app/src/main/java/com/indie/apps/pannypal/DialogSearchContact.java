@@ -183,7 +183,7 @@ public class DialogSearchContact extends DialogFragment  implements View.OnClick
                 //openNewContactLayout();
 
                dismiss();
-                DialogFragment dialogNewContact = new DialogAddContact(c, dilogCallback);
+                DialogFragment dialogNewContact = new DialogAddContact(c, null, dilogCallback);
 
                 dialogNewContact.show(getActivity().getSupportFragmentManager(), "tag");
                 break;
@@ -216,8 +216,15 @@ public class DialogSearchContact extends DialogFragment  implements View.OnClick
     void backAction()
     {
         //closeContactSuggestionLayout();
-        dilogCallback.onCancelClick();
-        dismiss();
+
+        if(!svContact.getQuery().toString().isEmpty())
+        {
+            svContact.setQuery(null,true);
+        }else {
+            dilogCallback.onCancelClick();
+            dismiss();
+        }
+
     }
 
 

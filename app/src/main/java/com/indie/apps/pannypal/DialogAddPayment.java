@@ -169,8 +169,8 @@ public class DialogAddPayment extends DialogFragment  implements View.OnClickLis
     void backAction()
     {
         //closeNewPaymentLayout(false);
-        dilogCallback.onCancelClick();
-        dismiss();
+        //dilogCallback.onCancelClick();
+        //dismiss();
     }
 
 }

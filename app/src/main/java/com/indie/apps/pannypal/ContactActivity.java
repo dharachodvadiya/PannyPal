@@ -2,6 +2,7 @@ package com.indie.apps.pannypal;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,14 +57,14 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
     TextView txtNoDataFound;
 
-    //new contact
+   /* //new contact
     TextView txtContactDilogHeading;
     RelativeLayout layoutAddContact;
     ImageButton btnNewContactClose,btnSaveNewContact;
     RelativeLayout layoutLimit,layoutLimitAnim;
     EditText etContactName, etPhno , etLimitAmt;
     CountryCodePicker codePicker;
-    Switch switchLimit;
+    Switch switchLimit;*/
 
     boolean isEdit = false;
     int editItemPos;
@@ -184,7 +185,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        //new contact
+        /*//new contact
 
         layoutAddContact = findViewById(R.id.layoutAddContact);
         btnNewContactClose = findViewById(R.id.btnNewContactClose);
@@ -202,7 +203,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
         btnNewContactClose.setOnClickListener(this);
         btnSaveNewContact.setOnClickListener(this);
-        switchLimit.setOnCheckedChangeListener(this);
+        switchLimit.setOnCheckedChangeListener(this);*/
 
         openContactListLayout(false,null);
     }
@@ -228,22 +229,23 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.imgbtnNewContact:
                 hideKeyboard(this);
                 //svContact.setQuery(null,true);
+                editItem = null;
                 openNewContactLayout();
                 break;
 
             case R.id.btnNewContactClose:
-                closeNewContactLayout();
-                hideKeyboard(this);
+                //closeNewContactLayout();
+               // hideKeyboard(this);
                 break;
 
             case R.id.imgbtnSaveContact:
-                hideKeyboard(this);
+                /*hideKeyboard(this);
                 Contacts contacts = saveOrEditNewContact();
                 if(contacts != null)
                 {
                     openContactListLayout(true,contacts);
                     closeNewContactLayout();
-                }
+                }*/
                 break;
             case R.id.btnBack:
                 hideKeyboard(this);
@@ -336,10 +338,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
     void backAction()
     {
-        if(layoutAddContact.getVisibility() == View.VISIBLE)
-        {
-            closeNewContactLayout();
-        }else if(!svContact.getQuery().toString().isEmpty())
+        if(!svContact.getQuery().toString().isEmpty())
         {
             svContact.setQuery(null,true);
         }else if(layoutMultiSelect.getVisibility() == View.VISIBLE)
@@ -358,7 +357,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     void openContactListLayout(boolean isComeFromNewData, Contacts contacts)
     {
         openSearchLayout();
-        layoutAddContact.setVisibility(View.GONE);
+       // layoutAddContact.setVisibility(View.GONE);
         svContact.setQuery(null, true);
 
         if(isComeFromNewData)
@@ -385,7 +384,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
     void openNewContactLayout()
     {
-        layoutAddContact.setVisibility(View.VISIBLE);
+        /*layoutAddContact.setVisibility(View.VISIBLE);
 
         if(isEdit)
         {
@@ -413,18 +412,41 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             etContactName.setText("");
             etPhno.setText("");
             switchLimit.setChecked(false);
-        }
+        }*/
+
+        DialogFragment dialogNewContact = new DialogAddContact(this,editItem, new IDilogCallback() {
+            @Override
+            public void onActionClick(String data) {
+                Gson gson = new Gson();
+                Contacts contacts = gson.fromJson(data,Contacts.class);
+                if(contacts != null)
+                {
+                    openContactListLayout(true,contacts);
+                    isEdit = false;
+                    editItem = null;
+                    editItemPos = -1;
+                   // closeNewContactLayout();
+                }
+            }
+
+            @Override
+            public void onCancelClick() {
+
+            }
+        });
+
+        dialogNewContact.show(getSupportFragmentManager(), "tag");
     }
 
-    void closeNewContactLayout()
+   /* void closeNewContactLayout()
     {
         isEdit = false;
         editItem = null;
         editItemPos = -1;
         layoutAddContact.setVisibility(View.GONE);
-    }
+    }*/
 
-    Contacts saveOrEditNewContact()
+  /*  Contacts saveOrEditNewContact()
     {
         if(etContactName.getText().toString().trim().length() <=0)
         {
@@ -484,7 +506,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
             }
 
         }
-    }
+    }*/
 
     void  openSearchLayout()
     {

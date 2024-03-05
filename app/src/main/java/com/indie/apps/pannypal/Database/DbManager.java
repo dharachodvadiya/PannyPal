@@ -217,6 +217,7 @@ public class DbManager {
 
         long id = database.update(DbHelper.TBL_CONTACTS, contentValue,DbHelper.ID + " = " + data.getId(),null);
 
+        edit_ContactNameFromId(data.getName(), data.getId());
         Log.d("DbManager" , "Edit Contacts");
 
         return  id;
@@ -429,6 +430,18 @@ return cursor;
         contacts.setDateTime(data.getDateTime());
         edit_UserProfile(Globle.MyProfile);
         edit_Contacts(contacts);
+        return  id;
+    }
+
+    public long edit_ContactNameFromId(String contactName, long contactId) {
+        ContentValues contentValue = new ContentValues();
+
+        contentValue.put(DbHelper.CD_C_NAME,contactName);
+
+        long id = database.update(DbHelper.TBL_CONTACTDATA, contentValue,DbHelper.CD_CID + " = " + contactId,null);
+
+        Log.d("DbManager" , "Edit ContactData");
+
         return  id;
     }
 
