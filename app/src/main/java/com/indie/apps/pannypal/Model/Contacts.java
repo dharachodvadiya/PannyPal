@@ -6,7 +6,7 @@ import android.renderscript.Double4;
 
 import androidx.annotation.NonNull;
 
-public class Contacts implements Parcelable {
+public class Contacts {
 
     private long id;
     private String name;
@@ -64,18 +64,6 @@ public class Contacts implements Parcelable {
         }
         dateTime = in.readLong();
     }
-
-    public static final Creator<Contacts> CREATOR = new Creator<Contacts>() {
-        @Override
-        public Contacts createFromParcel(Parcel in) {
-            return new Contacts(in);
-        }
-
-        @Override
-        public Contacts[] newArray(int size) {
-            return new Contacts[size];
-        }
-    };
 
     public long getId() {
         return id;
@@ -158,13 +146,4 @@ public class Contacts implements Parcelable {
         this.dateTime = dateTime;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeValue(this);
-    }
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactEntryActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/layoutAddContact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dilogBackground"
+        android:clickable="true"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:background="@drawable/dilog_bg_9"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:id="@+id/headerLayoutNewContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Contact"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/txtS2"
+                    android:textColor="@color/textColorDark"/>
+
+                <ImageButton
+                    android:id="@+id/btnNewContactClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_close"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/trasnperent"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/headerLayoutNewContact"
+                android:layout_above="@+id/imgbtnSaveContact"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etContactName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/textColorLightGray"
+                    android:textSize="@dimen/txtS2"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/dilog_field_bg_9"
+                    android:gravity="center_vertical">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/country_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_showFlag="false"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showFullName="false"
+                        app:ccp_textSize="@dimen/txtS2">
+                    </com.hbb20.CountryCodePicker>
+
+                    <RelativeLayout
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/textColorLight"/>
+
+                    <EditText
+                        android:id="@+id/etContactNumber"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        android:textColor="@color/black"
+                        android:background="@null"
+                        android:textColorHint="@color/textColorLightGray"
+                        android:textSize="@dimen/txtS2"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="15dp"/>
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/layoutLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                   >
+
+                    <RelativeLayout
+                        android:id="@+id/layoutLimitAnim"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:visibility="visible"
+                        android:background="@drawable/dilog_field_bg_9">
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+                        <Switch
+                            android:id="@+id/switchLimit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Set Limit"
+                            android:textSize="@dimen/txtS2"
+                            android:textStyle="bold"/>
+
+                        <EditText
+                            android:id="@+id/etLimitAmt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Limit Amount (Rs)"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/textColorHeading"
+                            android:textSize="@dimen/txtS2"
+                            android:background="@color/textBg"
+                            android:inputType="numberDecimal"
+                            android:layout_marginTop="15dp"
+                            android:padding="10dp"
+                            android:layout_below="@+id/switchLimit"
+                            android:visibility="visible"/>
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imgbtnSaveContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_entry_btn_save"
+                android:layout_alignParentBottom="true"
+                android:background="@color/trasnperent"
+                android:layout_centerHorizontal="true"
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
