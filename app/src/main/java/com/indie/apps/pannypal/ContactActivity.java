@@ -364,8 +364,10 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         {
             if(isEdit)
             {
-                suggestContactAllData.set(editItemPos,contacts);
-                suggestContactadapterData.set(editItemPos,contacts);
+                suggestContactAllData.remove(editItemPos);
+                suggestContactadapterData.remove(editItemPos);
+                suggestContactAllData.add(0,contacts);
+                suggestContactadapterData.add(0,contacts);
                 contactAdapter.setSelected(false);
                 //contactAdapter.itemEditDataChange(editItemPos);
 

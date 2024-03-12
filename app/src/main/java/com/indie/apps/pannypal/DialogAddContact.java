@@ -325,6 +325,8 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
                 }else {
 
                     contactData.setId(currContact.getId());
+                    contactData.setCreditAmt(currContact.getCreditAmt());
+                    contactData.setDebitAmt(currContact.getDebitAmt());
                     contactData.setDateTime(Calendar.getInstance().getTimeInMillis());
                     dbManager.edit_Contacts(contactData);
 
