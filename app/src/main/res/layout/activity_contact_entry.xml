@@ -25,7 +25,7 @@
                 android:background="@color/trasnperent"/>
 
             <TextView
-                android:id="@+id/txtName"
+                android:id="@+id/txtHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add New Entry"
@@ -70,6 +70,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutContactName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

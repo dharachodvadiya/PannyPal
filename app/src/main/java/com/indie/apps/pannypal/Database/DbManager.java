@@ -445,7 +445,7 @@ return cursor;
         return  id;
     }
 
-    public long edit_ContactData(ContactData data) {
+    public long edit_ContactData(ContactData data, Double oldCrAmt, Double oldDeAmt) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DbHelper.CD_CID,data.getC_id());
         contentValue.put(DbHelper.CD_PID,data.getP_id());
@@ -459,6 +459,23 @@ return cursor;
         long id = database.update(DbHelper.TBL_CONTACTDATA, contentValue,DbHelper.ID + " = " + data.getId(),null);
 
         Log.d("DbManager" , "Edit ContactData");
+
+        Contacts contacts = get_ContactFromId(data.getC_id());
+
+        if(data.getType() == 1)
+        {
+            Globle.MyProfile.addCreditAmt(data.getAmount() - oldCrAmt);
+
+            contacts.addCreditAmt(data.getAmount());
+        }else {
+            Globle.MyProfile.addDebitAmt(data.getAmount() - oldDeAmt);
+
+            contacts.addDebitAmt(data.getAmount());
+        }
+
+        //contacts.setDateTime(data.getDateTime());
+        edit_UserProfile(Globle.MyProfile);
+        edit_Contacts(contacts);
 
         return  id;
     }

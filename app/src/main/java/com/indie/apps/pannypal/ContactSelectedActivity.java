@@ -220,6 +220,12 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
         int id = menuItem.getItemId();
         switch (id) {
             case R.id.item_editEntry:
+
+                Intent i = new Intent(ContactSelectedActivity.this, ContactEntryActivity.class);
+                Gson gson = new Gson();
+                i.putExtra("selected_contact", gson.toJson(currSelectedData));
+                startActivity(i);
+
                 break;
             case R.id.item_deleteEntry:
 

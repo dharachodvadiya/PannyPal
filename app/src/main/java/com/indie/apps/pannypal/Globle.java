@@ -23,6 +23,13 @@ public class Globle {
         return format.format(value) + " ₹";
     }
 
+    public static String getValue(Double value)
+    {
+        DecimalFormat format = new DecimalFormat("##0.##");
+        return format.format(value);
+    }
+
+
     public static boolean isValidPhoneNumber(String countryCode,String phoneNumber) {
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
