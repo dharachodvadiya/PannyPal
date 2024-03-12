@@ -370,17 +370,20 @@ public class DbManager {
         return dataList;
     }
 
-    public long get_ContactsFromName(String name) {
+    public long get_ContactsFromName(String name, long currId) {
         String query ="select " + DbHelper.ID + " from " + DbHelper.TBL_CONTACTS + " where " + DbHelper.C_NAME + " = '" + name + "' COLLATE NOCASE" ;
+        int totalEntry = 0;
         @SuppressLint("Recycle") Cursor cursor = database.rawQuery(query, null);
         if (cursor != null && cursor.getCount() >0) {
             cursor.moveToFirst();
 
             @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(DbHelper.ID));
             Log.d("dbManager" , "Contacts Count from name Id-  "+id +"");
-            return id;
+
+            if(id != currId)
+                totalEntry++;
         }
-        return -1;
+        return totalEntry;
     }
 
     public Cursor get_Contacts_suggestion(String name) {

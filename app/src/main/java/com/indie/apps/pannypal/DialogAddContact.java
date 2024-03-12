@@ -126,14 +126,14 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
             etPhno.setText("");
             switchLimit.setChecked(false);
         }else {
-            txtContactDilogHeading.setText("Edit Contact");
+            txtContactDilogHeading.setText("Edit Contact ");
             etContactName.setText(currContact.getName());
             if(!currContact.getPhno().isEmpty())
             {
-                String[] phno = etPhno.getText().toString().split(" ");
+                String[] phno = currContact.getPhno().split(" ");
 
                 codePicker.setCountryForPhoneCode(Integer.parseInt(phno[0]));
-                etPhno.setText(phno[2]);
+                etPhno.setText(phno[1]);
             }
 
             if(currContact.getIsLimit() == 1)
@@ -294,8 +294,8 @@ public class DialogAddContact extends DialogFragment implements View.OnClickList
         else
         {
             String name = etContactName.getText().toString().trim();
-            if((currContact == null && dbManager.get_ContactsFromName(name) == -1) ||
-                    (currContact != null && dbManager.get_ContactsFromName(name) <=1))
+            if((currContact == null && dbManager.get_ContactsFromName(name, -1) == 0) ||
+                    (currContact != null && dbManager.get_ContactsFromName(name, currContact.getId()) == 0))
             {
                 Double limitAmount = 0.0;
                 int isLimit = switchLimit.isChecked()? 1 :0;
