@@ -371,7 +371,7 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                         desc,
                         currContactData.getDateTime());
 
-                dbManager.edit_ContactData(contactData,(currContactData.getType() == 1) ? currContactData.getAmount() : 0, (currContactData.getType() == -1) ? currContactData.getAmount() : 0 );
+                dbManager.edit_ContactData(contactData,currContactData.getAmount());
 
                 Toast.makeText(getApplicationContext(),"Edit Contact Successfully",Toast.LENGTH_LONG).show();
             }
