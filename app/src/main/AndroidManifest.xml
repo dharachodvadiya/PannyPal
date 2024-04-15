@@ -13,33 +13,36 @@
         android:theme="@style/Theme.PannyPal"
         tools:targetApi="31">
         <activity
-            android:name=".ContactEntryActivity"
-            android:noHistory="true"
+            android:name=".ContactProfileActivity"
             android:exported="false" />
+        <activity
+            android:name=".ContactEntryActivity"
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".CalculatorActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".ContactSelectedActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".ContactActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".ProfileActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".HomeActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".MainActivity"
-            android:noHistory="true"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
