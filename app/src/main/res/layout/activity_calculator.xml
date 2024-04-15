@@ -4,7 +4,521 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F3F4F6"
     tools:context=".CalculatorActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@+id/bottonBg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="AC"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_back">
+                </ImageView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_module"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_div"/>
+            </FrameLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="7"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="8"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="9"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_multi"/>
+            </FrameLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="4"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="5"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="6"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_minus"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="1"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="2"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="3"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg2"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_plus"/>
+            </FrameLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:paddingBottom="7dp"
+            android:paddingTop="7dp">
+
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="00"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="0"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg1"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="."
+                    android:textStyle="bold"
+                    android:textColor="@color/textColorDark"
+                    android:textSize="@dimen/txtL2">
+                </TextView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trasnperent"
+                    android:src="@drawable/calc_bg3"
+                    android:layout_gravity="center">
+                </ImageButton>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:src="@drawable/c_equal"/>
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottonBg"
@@ -38,10 +552,10 @@
             android:id="@+id/imgbtnCalculator"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_calculator"
-            android:background="@color/trasnperent"
             android:layout_weight="1"
-            android:contentDescription="Calculator"/>
+            android:background="@color/trasnperent"
+            android:contentDescription="Calculator"
+            android:src="@drawable/btn_calculator" />
 
     </LinearLayout>
 
