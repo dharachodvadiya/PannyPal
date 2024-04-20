@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.indie.apps.pannypal.ContactActivity;
 import com.indie.apps.pannypal.Globle;
 import com.indie.apps.pannypal.Model.ContactData;
 import com.indie.apps.pannypal.Model.Contacts;

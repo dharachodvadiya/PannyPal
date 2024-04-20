@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
 public class Globle {
 
     public static UserProfile MyProfile = null;
+    public static final String CURR_FRAG  = "curr_frag";
+    public static final String SELECTED_ITEM  = "selected_item";
 
     public static String getFormattedValue(Double value)
     {

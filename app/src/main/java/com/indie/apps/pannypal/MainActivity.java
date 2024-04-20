@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 dbManager.close();
-                Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                Intent i = new Intent(MainActivity.this, HomeActivity2.class);
                 startActivity(i);
                 break;
             case R.id.btn_login_google:

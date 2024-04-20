@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.indie.apps.pannypal.ContactActivity;
+import com.indie.apps.pannypal.Fragment.ContactFragment;
 import com.indie.apps.pannypal.Globle;
 import com.indie.apps.pannypal.Model.Contacts;
 import com.indie.apps.pannypal.Model.suggestContactData;
@@ -24,13 +24,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
     List<Contacts> dataList;
     Context c;
-    ContactActivity contactActivity;
+    ContactFragment contactActivity;
     private OnItemClickListener listener;
 
     boolean isSelected = false;
     TextView txtNoDataFound;
 
-    public ContactAdapter(ContactActivity activity,Context c,List<Contacts> dataList,TextView txtNoDataFound, OnItemClickListener listener) {
+    public ContactAdapter(ContactFragment activity,Context c,List<Contacts> dataList,TextView txtNoDataFound, OnItemClickListener listener) {
         this.c = c;
         this.contactActivity = activity;
         this.dataList = dataList;

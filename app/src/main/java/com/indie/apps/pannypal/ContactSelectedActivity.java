@@ -53,7 +53,7 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_selected);
 
-        String str = getIntent().getStringExtra("selected_item");
+        String str = getIntent().getStringExtra(Globle.SELECTED_ITEM);
         Gson gson = new Gson();
         currContact = gson.fromJson(str, Contacts.class);
 
@@ -286,7 +286,8 @@ public class ContactSelectedActivity extends AppCompatActivity implements View.O
             contactDataAdapter.setSelected(false);
             openTotalLayout();
         }else {
-            Intent i = new Intent(ContactSelectedActivity.this, ContactActivity.class);
+            Intent i = new Intent(ContactSelectedActivity.this, HomeActivity2.class);
+            i.putExtra(Globle.CURR_FRAG, 1);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_left,
                     R.anim.slide_out_right);

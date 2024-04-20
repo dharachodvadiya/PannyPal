@@ -243,12 +243,12 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
                 {
                     if(currContactData == null)
                     {
-                        Intent i = new Intent(ContactEntryActivity.this, HomeActivity.class);
+                        Intent i = new Intent(ContactEntryActivity.this, HomeActivity2.class);
                         startActivity(i);
                     }else {
                         Intent i = new Intent(ContactEntryActivity.this, ContactSelectedActivity.class);
                         Gson gson = new Gson();
-                        i.putExtra("selected_item", gson.toJson(dbManager.get_ContactFromId(currContactData.getC_id())));
+                        i.putExtra(Globle.SELECTED_ITEM, gson.toJson(dbManager.get_ContactFromId(currContactData.getC_id())));
                         startActivity(i);
                     }
 
@@ -408,14 +408,14 @@ public class ContactEntryActivity extends AppCompatActivity  implements View.OnC
     {
         if(currContactData == null)
         {
-            Intent i = new Intent(ContactEntryActivity.this, HomeActivity.class);
+            Intent i = new Intent(ContactEntryActivity.this, HomeActivity2.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_left,
                     R.anim.slide_out_right);
         }else {
             Intent i = new Intent(ContactEntryActivity.this, ContactSelectedActivity.class);
             Gson gson = new Gson();
-            i.putExtra("selected_item", gson.toJson(dbManager.get_ContactFromId(currContactData.getC_id())));
+            i.putExtra(Globle.SELECTED_ITEM, gson.toJson(dbManager.get_ContactFromId(currContactData.getC_id())));
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_left,
                     R.anim.slide_out_right);

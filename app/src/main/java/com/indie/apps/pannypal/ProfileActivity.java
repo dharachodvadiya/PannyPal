@@ -71,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     void backAction()
     {
-        Intent i = new Intent(ProfileActivity.this, HomeActivity.class);
+        Intent i = new Intent(ProfileActivity.this, HomeActivity2.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_left,
                 R.anim.slide_out_right);

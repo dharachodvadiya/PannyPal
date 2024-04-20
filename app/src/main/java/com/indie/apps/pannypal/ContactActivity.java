@@ -120,12 +120,12 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recycleviewData.setLayoutManager(layoutManager);
 
-        contactAdapter = new ContactAdapter(this,this,suggestContactadapterData, txtNoDataFound,new ContactAdapter.OnItemClickListener() {
+        contactAdapter = new ContactAdapter(null,this,suggestContactadapterData, txtNoDataFound,new ContactAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Contacts item) {
                 Intent i = new Intent(ContactActivity.this, ContactSelectedActivity.class);
                 Gson gson = new Gson();
-                i.putExtra("selected_item", gson.toJson(item));
+                i.putExtra(Globle.SELECTED_ITEM, gson.toJson(item));
                 startActivity(i);
             }
 
