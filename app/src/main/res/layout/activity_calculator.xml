@@ -11,6 +11,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_above="@+id/calcLayout">
+
+        <TextView
+            android:id="@+id/userInputTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_alignParentTop="true"
+            android:gravity="end"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/inputTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="36sp"
+            android:layout_below="@id/userInputTextView"
+            android:gravity="end"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/calcLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_above="@+id/bottonBg">
 
         <LinearLayout
@@ -27,12 +56,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnAC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="ac"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,12 +80,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnDel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="del"></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -71,12 +102,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnPercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="%"></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -92,12 +124,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnDiv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="/"></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -122,12 +155,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="7"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,12 +180,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="8"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,12 +205,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="9"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -194,12 +230,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnMult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="*"></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -224,12 +261,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="4"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -248,12 +286,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="5"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -272,12 +311,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="6"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -296,12 +336,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnMinus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="-"></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -327,12 +368,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="1"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -351,12 +393,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="2"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -375,12 +418,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="3"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -399,12 +443,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnPlus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg2"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="+"></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
@@ -429,12 +474,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="00"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -453,12 +499,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btn0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="0"></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -477,12 +524,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnDot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg1"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="."></ImageButton>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -501,12 +549,13 @@
                 android:layout_weight="1">
 
                 <ImageButton
+                    android:id="@+id/btnEqual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/trasnperent"
                     android:src="@drawable/calc_bg3"
-                    android:layout_gravity="center">
-                </ImageButton>
+                    android:tag="="></ImageButton>
 
                 <ImageView
                     android:layout_width="20dp"
